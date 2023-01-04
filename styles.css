@@ -84,7 +84,10 @@ body {
     cursor: pointer;
 }
 
-
+.month-drop {
+    border: none;
+    
+}
 
 
 .month {
@@ -791,3 +794,31 @@ body {
     height: 2.5rem;
     width: 2.5rem;
 }
+
+.calendar {
+    display: flex;
+    flex-wrap: wrap;
+    width: 300px;
+    height: 300px;
+    border: 1px solid #ccc;
+    font-family: sans-serif;
+  }
+
+  
+  .calendar .day {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 14.28%; /* divide 100% evenly among 7 days */
+    height: calc(300px / 6); /* divide container height evenly among 6 rows */
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+  }
+  /* today's day styles */
+  .calendar .day.today {
+    background-color: #eee;
+  }
+  /* weekend day styles */
+  .calendar .day.weekend {
+    color: #f00;
+  }
