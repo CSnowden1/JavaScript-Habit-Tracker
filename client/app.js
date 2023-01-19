@@ -8,6 +8,7 @@ import * as ObjectMaker from './JS/App/Object Creation/habitObject.js';
 
     const modalContainer = document.querySelector('.modal-container');
     const delModalContainer = document.querySelector('.delete-modal-container');
+                                                                                         
     const saveHabitBtn = document.getElementsByClassName("save-btn");
     const cancelHabitBtn = document.getElementsByClassName("cancel-btn");
     const more = document.querySelector('#more');

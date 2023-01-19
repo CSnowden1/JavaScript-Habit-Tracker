@@ -1,0 +1,22 @@
+{
+  "name": "habit_tracker_backend",
+  "version": "1.0.0",
+  "description": "backend for habit tracker",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CSnowden1/JavaScript-Habit-Tracker.git"
+  },
+  "author": "Chris Snowden",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CSnowden1/JavaScript-Habit-Tracker/issues"
+  },
+  "homepage": "https://github.com/CSnowden1/JavaScript-Habit-Tracker#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
