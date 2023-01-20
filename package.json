@@ -4,6 +4,8 @@
   "description": "backend for habit tracker",
   "main": "index.js",
   "scripts": {
+    "start": "node backend/server.js",
+    "server": "nodemon backend/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,6 +19,10 @@
   },
   "homepage": "https://github.com/CSnowden1/JavaScript-Habit-Tracker#readme",
   "dependencies": {
-    "express": "^4.18.2"
+    "colors": "^1.4.0",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^6.8.4",
+    "nodemon": "^2.0.20"
   }
 }
