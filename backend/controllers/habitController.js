@@ -1,5 +1,5 @@
 const asyncHandler = require('express-async-handler');
-
+const Habit = require('../Models/habitModal');
 // @desc Get Habits
 // @route GET /api/goals
 // @access Private
@@ -7,7 +7,10 @@ const asyncHandler = require('express-async-handler');
 const { async } = require("jshint/src/prod-params");
 
 const getHabits = asyncHandler(async (req, res) => {
-    res.status(200).json({ message: "We Got Habits"});
+
+    const habits = await Habit.find()
+
+    res.status(200).json(habits);
 });
 
 // @desc SET Habit
