@@ -1,0 +1,28 @@
+.switch {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 200px;
+    height: 30px;
+    border-radius: 15px;
+    background-color: #ccc;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    padding: 5px;
+  }
+
+.switch-button {
+    flex: 1;
+    height: 20px;
+    border-radius: 10px;
+    background-color: #fff;
+    border: none;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s;
+  }
+
+.switch-button.active {
+    background-color: #2185d0;
+    color: #fff;
+  }
