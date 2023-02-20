@@ -9,6 +9,7 @@ function CustomContainer(props) {
     borderRadius: '1.2rem',
     marginBottom: '1rem',
     overflowY: 'hidden',
+    overflowX: 'hidden',
     display: 'flex',
     flexDirection: 'column'
 

@@ -1,38 +1,58 @@
-import { Image, Header, Segment, Grid, Divider } from 'semantic-ui-react';
+import { Image, Header, Divider, Button } from 'semantic-ui-react';
 import CircularProgressbar from '../habitTackerComponents/progressCircle';
 
-
-function Habit() {
-  const flexContainerStyles = {
+function Habit({ habit, onDelete }) {
+  const flexRow = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    height: '7rem',
+    width: 'auto',
+  };
+
+  const leftStyles = {
     width: '100%',
-    border: "1px solid rgba(0, 0, 0, 0.08)",
-    background: "white"
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
   };
 
-  const imageStyles = {
-    height: '5rem',
-    width: '5rem',
-    margin: '0.5rem',
-    border: 'solid black'
+  const middleStyles = {
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
   };
 
-  const headerStyles = {
-    margin: '0.5rem'
+  const rightStyles = {
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  };
+
+  const handleDelete = () => {
+    onDelete();
   };
 
   return (
-    <div style={flexContainerStyles}>
-      <Image src='your-image-url' style={imageStyles} />
-      <Header as='h2' style={headerStyles}>
-        Your Title
-      </Header>
-      <Divider vertical />
-      <CircularProgressbar />
-    </div>
+    <>
+      <div style={flexRow}>
+        <div style={leftStyles}>
+          <Button icon="plus" />
+          <Button icon="minus" />
+        </div>
+        <div style={middleStyles}>
+          <Image src={habit.image} />
+          <Header as='h2'>{habit.name}</Header>
+          <Divider />
+          <CircularProgressbar data={habit.progress} />
+        </div>
+        <div style={rightStyles}>
+          <Button icon="edit" />
+          <Button icon="delete" onClick={handleDelete} />
+        </div>
+      </div>
+    </>
   );
 }
 

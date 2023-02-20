@@ -43,6 +43,21 @@ const HabitForm = ({ open, onClose, onSave}) => {
         { key: "yearly", value: "yearly", text: "Yearly" },
     ];
 
+
+    const imgOptions = [
+        { key: "heart", value: "heart", text: "Heart", icon: "heart" },
+        { key: "star", value: "star", text: "Star", icon: "star" },
+        { key: "smile", value: "smile", text: "Smile", icon: "smile" },
+        { key: "thumbs up", value: "thumbs up", text: "Thumbs Up", icon: "thumbs up" },
+        { key: "flag", value: "flag", text: "Flag", icon: "flag" },
+        { key: "shopping bag", value: "shopping bag", text: "Shopping Bag", icon: "shopping bag" },
+        { key: "sun", value: "sun", text: "Sun", icon: "sun" },
+        { key: "moon", value: "moon", text: "Moon", icon: "moon" },
+        { key: "lightning", value: "lightning", text: "Lightning", icon: "lightning" },
+        { key: "cloud", value: "cloud", text: "Cloud", icon: "cloud" },
+    ];
+
+
     return (
         <Modal open={open} onClose={onClose}>
         <Modal.Header>Add a Habit</Modal.Header>
@@ -91,9 +106,14 @@ const HabitForm = ({ open, onClose, onSave}) => {
                 <input type="text" placeholder="Goal" value={goal} onChange={(e) => setGoal(e.target.value)}/>
             </Form.Field>
             <Form.Field>
-                <label>Upload an Image</label>
-                <input type="file" accept="image/*" onChange={(e) => setImage(URL.createObjectURL(e.target.files[0]))} />
-                {image && <img src={image} alt="habit" />}
+                <label>Choose an Image</label>
+                <Select
+                    placeholder="Select an Image"
+                    options={imgOptions}
+                    value={image}
+                    onChange={(e, { value }) => setImage(value)}
+                />
+                {image && <img src={`https://semantic-ui.com/images/icon/${image}.png`} alt="habit" />}
             </Form.Field>
             </Form>
         </Modal.Content>
