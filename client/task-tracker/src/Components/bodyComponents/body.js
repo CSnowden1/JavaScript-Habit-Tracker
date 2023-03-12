@@ -10,7 +10,6 @@ function Body() {
         minHeight: '100vh',
         minWidth: '100%',
         padding: '1rem 2rem 0rem 2rem',
-        border: "solid orange"
     };
 
     const navRow = {

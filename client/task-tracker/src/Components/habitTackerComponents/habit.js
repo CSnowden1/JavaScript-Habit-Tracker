@@ -1,7 +1,7 @@
 import { Image, Header, Divider, Button } from 'semantic-ui-react';
 import CircularProgressbar from '../habitTackerComponents/progressCircle';
 
-function Habit({ habit, onDelete }) {
+function HabitBar({ habit, handleDelete}) {
   const flexRow = {
     display: 'flex',
     alignItems: 'center',
@@ -30,13 +30,15 @@ function Habit({ habit, onDelete }) {
     justifyContent: 'center'
   };
 
-  const handleDelete = () => {
-    onDelete();
-  };
+
+
+
+
+
 
   return (
     <>
-      <div style={flexRow}>
+      <div key={habit.id} habit={habit} style={flexRow}>
         <div style={leftStyles}>
           <Button icon="plus" />
           <Button icon="minus" />
@@ -49,11 +51,11 @@ function Habit({ habit, onDelete }) {
         </div>
         <div style={rightStyles}>
           <Button icon="edit" />
-          <Button icon="delete" onClick={handleDelete} />
+          <Button icon="delete" onClick={() => handleDelete(habit.id)}/>
         </div>
       </div>
     </>
   );
 }
 
-export default Habit;
+export default HabitBar;

@@ -1,20 +1,24 @@
-import { useState, useEffect } from "react";
+import { useState, } from "react";
 import { Button, Modal, Form, Select } from "semantic-ui-react";
+import { v4 as uuidv4 } from 'uuid';
+
+
+
 
 const HabitForm = ({ open, onClose, onSave}) => {
     console.log("HabitForm open prop is:", open);
 
 
+    if (!localStorage.getItem("habits")) {
+        localStorage.setItem("habits", JSON.stringify([]));
+      }
+
+
+
     const [habits, setHabits] = useState(() => {
-        const storedHabits = JSON.parse(localStorage.getItem("habits"));
-        return storedHabits || [];
+        const storedHabits = localStorage.getItem("habits");
+        return storedHabits ? JSON.parse(storedHabits) : [];
       });
-
-      useEffect(() => {
-        localStorage.setItem("habits", JSON.stringify(habits));
-      }, [habits]);
-
-
 
     const [name, setName] = useState("");
     const [image, setImage] = useState("");
@@ -24,17 +28,18 @@ const HabitForm = ({ open, onClose, onSave}) => {
 
     const handleSave = () => {
         console.log("Habit Saved");
-        const habitToUpdate = habits.find((h) => h.name === name);
-        if (habitToUpdate) {
-        habitToUpdate.image = image;
-        habitToUpdate.frequency = frequency;
-        habitToUpdate.time = time;
-        habitToUpdate.goal = goal;
-        } else {
-        setHabits([...habits, { name, image, frequency, time, goal }]);
-        }
+        const newHabit = { id: uuidv4(), name, image, frequency, time, goal };
+        setHabits([...habits, newHabit]);
+        onSave(newHabit);
         onClose();
+        const updatedHabits = JSON.parse(localStorage.getItem("habits")).concat(newHabit);
+        localStorage.setItem("habits", JSON.stringify(updatedHabits));
     };
+
+
+    const addHabit = (newHabit) => {
+        setHabits([...habits, newHabit]);
+      };
 
     const options = [
         { key: "daily", value: "daily", text: "Daily" },
@@ -59,7 +64,7 @@ const HabitForm = ({ open, onClose, onSave}) => {
 
 
     return (
-        <Modal open={open} onClose={onClose}>
+        <Modal open={open} onClose={onClose} onSave={addHabit}>
         <Modal.Header>Add a Habit</Modal.Header>
         <Modal.Content>
             <Form>

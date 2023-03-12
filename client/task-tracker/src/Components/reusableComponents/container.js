@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container } from 'semantic-ui-react';
 
-function CustomContainer(props) {
+function CustomContainer({ children }) {
   const containerStyles = {
     width: '100%',
     height: '90%',
@@ -16,9 +16,9 @@ function CustomContainer(props) {
   };
 
   return (
-    <div style={containerStyles}>
-        {props.title}
-    </div>
+    <Container style={containerStyles}>
+      {children}
+    </Container>
   );
 }
 
