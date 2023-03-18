@@ -2,7 +2,7 @@ import './App.css';
 import 'semantic-ui-css/semantic.min.css';
 import NavBar from "./Components/navComponents/nav"
 import HabitSection from "./Components/habitTackerComponents/habitSection";
-import CalendarContainer from "./Components/calendarComponents/container";
+import CalendarContainer from "./Components/calendarComponents/calanderSection";
 import Footer from "./Components/bodyComponents/footer"
 
 

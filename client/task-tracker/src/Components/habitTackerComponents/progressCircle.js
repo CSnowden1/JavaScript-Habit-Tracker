@@ -1,37 +1,56 @@
 import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
-function CustomCircularProgressbar(props) {
-  const percentage = 100;
+
+
+function CustomCircularProgressbar({ habit }) {
+  const percentage = (habit.count / habit.goal) * 100;
+  const color = percentage < 50 ? 'red' : percentage < 100 ? 'orange' : 'green';
+
   const circleStyles = buildStyles({
-    pathColor: props.color,
+    pathColor: color,
     trailColor: 'rgba(0, 0, 0, 0.1)',
     strokeLinecap: 'butt',
     pathTransitionDuration: 0.5,
   });
 
-
-
   const boxStyles = {
     width: '5rem',
-    height: "5rem",
+    height: '5rem',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
-}
+    justifyContent: 'center',
+  };
 
+  const statBox = {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100%',
+    padding: '2rem',
+  };
+
+  const lineBox = {
+    border: 'solid black .25px',
+    width: '2rem',
+    height: '1px',
+  };
 
   return (
     <div style={{ display: 'flex', alignItems: 'center' }}>
-      <div style={{ marginRight: '1rem' }}>
-        <img src={props.imageUrl} alt="habit icon" style={{ width: '3rem', height: '3rem' }} />
-      </div>
       <div style={{ flexGrow: 1 }}>
-        <h2>{props.title}</h2>
         <div style={boxStyles}>
           <CircularProgressbarWithChildren value={percentage} strokeWidth={10} styles={circleStyles}>
+            <div style={statBox}>
+              <div>{habit.count}</div>
+              <div style={lineBox}>
+                <div></div>
+              </div>
+              <div>{habit.goal}</div>
+            </div>
             {[...Array(7)].map((_, i) => (
-              <div key={i} style={{ width: '10px', height: '10px', backgroundColor: props.color, transform: `rotate(${i * (360 / 7)}deg) translate(60%, -50%)` }}></div>
+              <div key={i} style={{ width: '10px', height: '10px', backgroundColor: color, transform: `rotate(${i * (360 / 7)}deg) translate(60%, -50%)` }}></div>
             ))}
           </CircularProgressbarWithChildren>
         </div>
@@ -39,5 +58,7 @@ function CustomCircularProgressbar(props) {
     </div>
   );
 }
+
+ 
 
 export default CustomCircularProgressbar;

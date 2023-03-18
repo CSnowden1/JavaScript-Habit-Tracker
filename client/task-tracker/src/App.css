@@ -1,0 +1,15 @@
+.progress-wrapper {
+    overflow: hidden;
+  }
+  
+  .progress-wrapper .CircularProgressbar path {
+    stroke-dasharray: 0 400;
+    animation: slide-in 0.5s ease-in-out forwards;
+  }
+  
+  @keyframes slide-in {
+    to {
+      stroke-dasharray: 400 400;
+      stroke-dashoffset: 0;
+    }
+  }

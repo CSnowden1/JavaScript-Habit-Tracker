@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Subheading from "../reusableComponents/subHeading";
-import CustomContainer from "../reusableComponents/container";
 import Switch from "../reusableComponents/filter";
+import CalanderContainer from "./calanderContainer";
 
 
 
@@ -12,9 +12,10 @@ function Calendarcontainer() {
     const [selectedOption, setSelectedOption] = useState("option1");
 
     const options = [
-      { label: "Option 1", value: "option1" },
-      { label: "Option 2", value: "option2" },
-      { label: "Option 3", value: "option3" },
+        { label: "All Day", value: "option1" },
+        { label: "Morning", value: "option1" },
+        { label: "Afternoon", value: "option2" },
+        { label: "Night", value: "option3" },
     ];
 
     const handleOptionChange = (value) => {
@@ -36,7 +37,7 @@ function Calendarcontainer() {
                         selectedOption={selectedOption}
                         onChange={handleOptionChange}
                     />
-                    <CustomContainer />
+                    <CalanderContainer />
             </div>
         </>
     );

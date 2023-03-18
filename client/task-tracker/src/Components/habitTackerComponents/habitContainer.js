@@ -1,7 +1,7 @@
 import CustomContainer from '../reusableComponents/container';
 import HabitBar from './habit';
 
-function HabitContainer({ habits, handleSave, deleteFunction }) {
+function HabitContainer({ habits, handleSave, deleteFunction, editFunction, Add, Minus }) {
 
   const divStyles = {
     width: '100%',
@@ -28,7 +28,7 @@ function HabitContainer({ habits, handleSave, deleteFunction }) {
       {habits.length ? (
         <CustomContainer onChange={(e) => handleSave(habits)}>
           {habits.map((habit) => (
-            <HabitBar style={divStyles} key={habit.id} habit={habit} deleteFunction={deleteFunction} />
+            <HabitBar style={divStyles} key={habit.id} habit={habit} deleteFunction={deleteFunction} editFunction={editFunction} Add={Add} Minus={Minus} />
           ))}
         </CustomContainer>
       ) : (

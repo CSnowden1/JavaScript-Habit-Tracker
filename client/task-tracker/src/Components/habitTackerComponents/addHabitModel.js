@@ -3,38 +3,56 @@ import { Button, Modal, Form, Select } from "semantic-ui-react";
 import { v4 as uuidv4 } from 'uuid';
 
 
+function HabitO(name, image, frequency, time, goal = 0, count = 0) {
+    this.id = uuidv4();
+    this.name = name;
+    this.image = image;
+    this.frequency = frequency;
+    this.time = time;
+    this.goal = parseInt(goal);
+    this.count = count;
 
 
-const HabitForm = ({ open, onClose, onSave}) => {
+}
+
+
+const HabitForm = ({ open, onClose, onSave, habit, onEdit }) => {
+    const [name, setName] = useState(habit ? habit.name : "");
+    const [image, setImage] = useState(habit ? habit.image : "");
+    const [frequency, setFrequency] = useState(habit ? habit.frequency : "");
+    const [time, setTime] = useState(habit ? habit.time : "");
+    const [goal, setGoal] = useState(habit ? habit.goal.toString() : "");
+
+
     console.log("HabitForm open prop is:", open);
-
 
     if (!localStorage.getItem("habits")) {
         localStorage.setItem("habits", JSON.stringify([]));
       }
-
-
 
     const [habits, setHabits] = useState(() => {
         const storedHabits = localStorage.getItem("habits");
         return storedHabits ? JSON.parse(storedHabits) : [];
       });
 
-    const [name, setName] = useState("");
-    const [image, setImage] = useState("");
-    const [frequency, setFrequency] = useState("");
-    const [time, setTime] = useState("");
-    const [goal, setGoal] = useState("");
 
     const handleSave = () => {
+        const newHabit = new HabitO(name, image, frequency, time, goal);
         console.log("Habit Saved");
-        const newHabit = { id: uuidv4(), name, image, frequency, time, goal };
-        setHabits([...habits, newHabit]);
-        onSave(newHabit);
+
+        if (habit) {
+            const updatedHabit = { ...habit, ...newHabit };
+            onEdit(updatedHabit);
+        } else {
+            setHabits([...habits, newHabit]);
+            onSave(newHabit);
+        }
+
         onClose();
         const updatedHabits = JSON.parse(localStorage.getItem("habits")).concat(newHabit);
         localStorage.setItem("habits", JSON.stringify(updatedHabits));
     };
+
 
 
     const addHabit = (newHabit) => {
@@ -50,16 +68,7 @@ const HabitForm = ({ open, onClose, onSave}) => {
 
 
     const imgOptions = [
-        { key: "heart", value: "heart", text: "Heart", icon: "heart" },
-        { key: "star", value: "star", text: "Star", icon: "star" },
-        { key: "smile", value: "smile", text: "Smile", icon: "smile" },
-        { key: "thumbs up", value: "thumbs up", text: "Thumbs Up", icon: "thumbs up" },
-        { key: "flag", value: "flag", text: "Flag", icon: "flag" },
-        { key: "shopping bag", value: "shopping bag", text: "Shopping Bag", icon: "shopping bag" },
-        { key: "sun", value: "sun", text: "Sun", icon: "sun" },
-        { key: "moon", value: "moon", text: "Moon", icon: "moon" },
-        { key: "lightning", value: "lightning", text: "Lightning", icon: "lightning" },
-        { key: "cloud", value: "cloud", text: "Cloud", icon: "cloud" },
+        { key: "food", value: "https://img.icons8.com/external-wanicon-flat-wanicon/1x/external-breakfast-hotel-wanicon-flat-wanicon.png", text: "Breakfast"}
     ];
 
 
@@ -108,7 +117,7 @@ const HabitForm = ({ open, onClose, onSave}) => {
             </Form.Field>
             <Form.Field>
                 <label>What is your Goal?</label>
-                <input type="text" placeholder="Goal" value={goal} onChange={(e) => setGoal(e.target.value)}/>
+                <input type="number" placeholder="Goal" value={goal} onChange={(e) => setGoal(e.target.value)} />
             </Form.Field>
             <Form.Field>
                 <label>Choose an Image</label>
@@ -118,7 +127,6 @@ const HabitForm = ({ open, onClose, onSave}) => {
                     value={image}
                     onChange={(e, { value }) => setImage(value)}
                 />
-                {image && <img src={`https://semantic-ui.com/images/icon/${image}.png`} alt="habit" />}
             </Form.Field>
             </Form>
         </Modal.Content>

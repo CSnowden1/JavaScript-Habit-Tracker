@@ -8,6 +8,7 @@ function HabitSection() {
   const [open, setOpen] = useState(false);
   const [habits, setHabits] = useState([]);
   const storedHabits = JSON.parse(localStorage.getItem('habits')) || [];
+  const [editingHabit, setEditingHabit] = useState(null);
 
 
   useEffect(() => {
@@ -27,9 +28,32 @@ function HabitSection() {
   };
 
   const handleSave = (newHabit) => {
-    setHabits([...habits, newHabit]);
+    if (editingHabit) {
+      // Editing an existing habit
+      const updatedHabits = habits.map((habit) =>
+        habit.id === editingHabit.id ? { ...newHabit, id: habit.id } : habit
+      );
+      localStorage.setItem("habits", JSON.stringify(updatedHabits));
+      setHabits(updatedHabits);
+      setEditingHabit(null);
+    } else {
+      // Adding a new habit
+      setHabits([...habits, newHabit]);
+    }
     handleClose();
   };
+
+
+  const handleEdit = (habit) => {
+    setEditingHabit(habit);
+    handleOpen();
+  };
+  
+  const handleCancelEdit = () => {
+    setEditingHabit(null);
+    handleClose();
+  };
+
 
 
   const handleDelete = (id) => {
@@ -39,22 +63,57 @@ function HabitSection() {
     console.log(`You have ${storedHabits.length - 1} habits saved`)
   };
 
-
-
-  const containersStyles = {
-    height: "auto",
+  
+  const handleAdd = (id) => {
+    const storedHabits = JSON.parse(localStorage.getItem("habits"));
+    const updatedHabits = storedHabits.map((habit) => {
+      if (habit.id === id) {
+        habit.count++;
+        console.log("Plus Clicked")
+      }
+      return habit;
+    });
+    localStorage.setItem("habits", JSON.stringify(updatedHabits));
+    setHabits(updatedHabits);
   };
+
+
+  const handleMinus = (id) => {
+    const storedHabits = JSON.parse(localStorage.getItem("habits"));
+    const updatedHabits = storedHabits.map((habit) => {
+      if (habit.id === id) {
+        habit.count--;
+        console.log("Plus Clicked")
+      }
+      return habit;
+    });
+    localStorage.setItem("habits", JSON.stringify(updatedHabits));
+    setHabits(updatedHabits);
+  };
+
 
   return (
     <>
       <div style={containersStyles} className="column">
         <Subheading title="Habits" />
-        <HabitContainer habits={habits} deleteFunction={handleDelete}  />
+        <HabitContainer habits={habits} deleteFunction={handleDelete} editFunction={handleEdit} Add={handleAdd} Minus={handleMinus} />
         <CustomButton title="Create New Habit" onClick={handleOpen} />
-        <HabitForm open={open} onClose={handleClose} onSave={handleSave} />
+        <HabitForm 
+          open={open} 
+          onSave={handleSave} 
+          onClose={editingHabit ? handleCancelEdit : handleClose} 
+          editingHabit={editingHabit}
+        />
       </div>
     </>
   );
 }
+
+
+const containersStyles = {
+  height: "auto",
+};
+
+
 
 export default HabitSection;
