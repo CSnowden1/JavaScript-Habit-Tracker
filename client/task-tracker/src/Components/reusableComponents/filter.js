@@ -7,25 +7,24 @@ const Switch = ({ options, selectedOption, onChange }) => {
 
   const filterStyles = {
     height: '2.5rem',
-    width: '25rem',
+    width: 'auto',
     padding: '1rem',
     marginBottom: '1rem'
   }
 
   const buttonStyles = {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
     flex: 1,
-    height: '20px',
-    borderRadius: '10px',
-    backgroundColor: '#fff',
-    border: 'none',
-    textAlign: 'center',
-    cursor: 'pointer',
-    boxShadow: '0 0 5px rgba(0, 0, 0, 0.1)',
-    transition: 'all 0.2s',
-  }
+    padding: "0.5rem 1rem",
+    borderRadius: "10px",
+    backgroundColor: "#fff",
+    border: "none",
+    textAlign: "center",
+    cursor: "pointer",
+    boxShadow: "0 0 5px rgba(0, 0, 0, 0.1)",
+  };
 
   const activeButtonStyles = {
     backgroundColor: '#2185d0',
