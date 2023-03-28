@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Subheading from "../reusableComponents/subHeading";
 import Switch from "../reusableComponents/filter";
 import CalenderBar from "./calanderBar";
+import CustomContainer from '../reusableComponents/container';
 
 function CalendarSection() {
   const [selectedOption, setSelectedOption] = useState("option1");
@@ -54,11 +55,11 @@ function CalendarSection() {
           selectedOption={selectedOption}
           onChange={handleOptionChange}
         />
-        <div id="calendar-container">
+        <CustomContainer id="calendar-container">
           {filteredHabits.map((habit) => (
             <CalenderBar key={habit.id} habit={habit} />
           ))}
-        </div>
+        </CustomContainer>
       </div>
     </>
   );

@@ -4,7 +4,7 @@ import HabitBar from './habit';
 function HabitContainer({ habits, handleSave, deleteFunction, editFunction, Add, Minus }) {
 
   const divStyles = {
-    width: '100%',
+    width: 'auto',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',

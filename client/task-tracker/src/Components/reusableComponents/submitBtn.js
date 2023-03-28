@@ -5,12 +5,13 @@ function CustomButton(props) {
     borderRadius: '1.2rem',
     backgroundColor: 'rgba(49, 21, 219, 0.72)',
     color: "white",
-    width: '70%',
+    width: '100%',
     height: '3rem',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: '1rem'
+    marginBottom: '1rem',
+    justifySelf: 'center'
   };
 
   return (

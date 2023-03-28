@@ -105,6 +105,7 @@ function HabitSection() {
 
 const containersStyles = {
   height: "auto",
+  width: "100%"
 };
 
 

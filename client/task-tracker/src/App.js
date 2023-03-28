@@ -23,7 +23,8 @@ function App() {
   };
 
   const navRow = {
-    height: '3rem'
+    height: '3rem',
+    marginBottom: '2rem'
   }
 
   const habitRow = {
@@ -36,13 +37,16 @@ function App() {
   const calendarColumn = {
     height: '100%',
     display: 'flex',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    alignContent: 'center',
   }
 
   const habitColumn = {
     height: '100%',
+    width: '100%',
     display: 'flex',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 
   const footerRow = {

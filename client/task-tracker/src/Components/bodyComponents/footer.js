@@ -11,7 +11,7 @@ function container() {
     return(
         <>
             <div style={footerStyles} class="row">
-                The Footer Works
+                
             </div>
         </>
     )

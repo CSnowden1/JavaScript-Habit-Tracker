@@ -8,11 +8,12 @@ function HabitBar({ habit, deleteFunction, editFunction, Add, Minus, completed})
     alignItems: 'center',
     justifyContent: 'center',
     width: 'auto',
-    backgroundColor: habit.count === habit.goal ? 'gold' : 'transparent',
+    backgroundColor: habit.count >= habit.goal ? 'gold' : 'transparent',
     transition: 'background-color 0.5s ease-in-out',
-    animation: habit.count === habit.goal ? 'flash 1s 5s' : 'none',
-    animationDelay: habit.count === habit.goal ? '0.5s' : 'none',
-    marginBottom: '.5rem'
+    animation: habit.count >= habit.goal ? 'flash 1s 5s' : 'none',
+    animationDelay: habit.count >= habit.goal ? '0.5s' : 'none',
+    marginBottom: '.5rem',
+    borderBottom: 'solid white 5px'
   };
 
   const leftStyles = {
