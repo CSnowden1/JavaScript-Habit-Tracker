@@ -1,6 +1,6 @@
 import { Image, Header} from 'semantic-ui-react';
 
-function calanderBar({ habit}) {
+function calenderBar({ habit}) {
 
   const flexRow = {
     display: 'flex',
@@ -27,4 +27,4 @@ function calanderBar({ habit}) {
   );
 }
 
-export default calanderBar;
+export default calenderBar;

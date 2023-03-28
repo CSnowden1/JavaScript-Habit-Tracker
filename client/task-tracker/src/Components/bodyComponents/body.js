@@ -1,7 +1,9 @@
 import NavBar from "../navComponents/nav"
 import HabitSection from "../habitTackerComponents/habitSection";
-import Calendarcontainer from "../calendarComponents/container";
 import Footer from "./footer"
+import CalendarSection from "../calendarComponents/calanderSection"
+
+
 
 function Body() {
 
@@ -36,7 +38,7 @@ function Body() {
           </div>
           <div style={habitRow} className="row stretched">
             <div className="six wide column">
-              <Calendarcontainer />
+              <CalendarSection />
             </div>
             <div className="ten wide column">
               <HabitSection />
@@ -46,6 +48,6 @@ function Body() {
         </div>
       );
     }
-    
+
 
 export default Body;

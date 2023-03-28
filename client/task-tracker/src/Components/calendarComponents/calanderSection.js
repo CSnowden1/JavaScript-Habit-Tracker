@@ -1,75 +1,67 @@
 import { useState, useEffect } from "react";
 import Subheading from "../reusableComponents/subHeading";
 import Switch from "../reusableComponents/filter";
-import CalanderContainer from "./calanderContainer";
+import CalenderBar from "./calanderBar";
 
-function CalendarContainer() {
-  const [localStorageData, setLocalStorageData] = useState(
-    localStorage.getItem("habits") || []
-  );
+function CalendarSection() {
   const [selectedOption, setSelectedOption] = useState("option1");
+  const [habits, setHabits] = useState([]);
+  const storedHabits = JSON.parse(localStorage.getItem('habits')) || [];
 
   useEffect(() => {
-    const handleStorageChange = () => {
-      setLocalStorageData(localStorage.getItem("habits") || []);
-    };
+    setHabits(storedHabits);
+  }, [storedHabits]);
 
-    window.addEventListener("storage", handleStorageChange);
-
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-    };
+  useEffect(() => {
+    console.log("Selected option:", selectedOption);
   }, []);
 
   const options = [
     { label: "All Day", value: "option1" },
-    { label: "Morning", value: "option2" },
-    { label: "Afternoon", value: "option3" },
-    { label: "Night", value: "option4" },
+    { label: "Morning", value: "morning" },
+    { label: "Afternoon", value: "afternoon" },
+    { label: "Night", value: "night" },
   ];
 
   const handleOptionChange = (value) => {
+    console.log("Selected option:", value);
     setSelectedOption(value);
   };
 
   const filterHabitsByTimeOfDay = (habits) => {
     switch (selectedOption) {
       case "option1":
-        // Show all habits
         return habits;
-      case "option2":
-        // Show only morning habits
+      case "morning":
         return habits.filter((habit) => habit.time === "morning");
-      case "option3":
-        // Show only afternoon habits
+      case "afternoon":
         return habits.filter((habit) => habit.time === "afternoon");
-      case "option4":
-        // Show only night habits
+      case "night":
         return habits.filter((habit) => habit.time === "night");
       default:
         return habits;
     }
   };
 
-  const filteredHabits = filterHabitsByTimeOfDay(JSON.parse(localStorageData));
-
-  const calendarStyles = {
-    height: "100%",
-  };
+  const filteredHabits = filterHabitsByTimeOfDay(habits);
 
   return (
     <>
-      <div style={calendarStyles} class="column">
+      <div >
         <Subheading title="Calendar" />
         <Switch
           options={options}
           selectedOption={selectedOption}
           onChange={handleOptionChange}
         />
-        <CalanderContainer localStorageData={JSON.stringify(filteredHabits)} />
+        <div id="calendar-container">
+          {filteredHabits.map((habit) => (
+            <CalenderBar key={habit.id} habit={habit} />
+          ))}
+        </div>
       </div>
     </>
   );
 }
 
-export default CalendarContainer;
+export default CalendarSection;

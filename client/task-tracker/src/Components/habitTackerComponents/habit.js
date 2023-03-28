@@ -36,26 +36,48 @@ function HabitBar({ habit, deleteFunction, editFunction, Add, Minus, completed})
     justifyContent: 'center'
   };
 
-
-
-
-
-
+  const mediaQueryStyles = {
+    '@media screen and (max-width: 768px)': {
+      flexRow: {
+        flexDirection: 'column',
+      },
+      leftStyles: {
+        width: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-evenly'
+      },
+      middleStyles: {
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: '1rem'
+      },
+      rightStyles: {
+        width: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+        marginTop: '1rem'
+      }
+    }
+  };
 
   return (
     <>
-      <div key={habit.id} habit={habit} style={flexRow}>
-        <div style={leftStyles}>
+      <div key={habit.id} habit={habit} style={{ ...flexRow, ...mediaQueryStyles.flexRow }}>
+        <div style={{ ...leftStyles, ...mediaQueryStyles.leftStyles }}>
           <Button icon="plus" onClick={() => Add(habit.id) } />
           <Button icon="minus" onClick={() => Minus(habit.id)} />
         </div>
-        <div style={middleStyles}>
+        <div style={{ ...middleStyles, ...mediaQueryStyles.middleStyles }}>
           <Image src={habit.image}/>
           <Header as='h2'>{habit.name}</Header>
           <CircularProgressbar habit={habit} />
-          <Header as='h2'>{habit.frequency}</Header>
         </div>
-        <div style={rightStyles}>
+        <div style={{ ...rightStyles, ...mediaQueryStyles.rightStyles }}>
           <Button icon="edit" onClick={() => editFunction(habit.id)} />
           <Button icon="delete" onClick={() => deleteFunction(habit.id)}/>
         </div>

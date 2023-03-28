@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Subheading from "../reusableComponents/subHeading";
 import CustomButton from "../reusableComponents/submitBtn";
 import HabitForm from "./addHabitModel";
-import HabitContainer from "../habitTackerComponents/habitContainer"
+import HabitContainer from "../habitTackerComponents/habitContainer";
 
 function HabitSection() {
   const [open, setOpen] = useState(false);
@@ -10,12 +10,13 @@ function HabitSection() {
   const storedHabits = JSON.parse(localStorage.getItem('habits')) || [];
   const [editingHabit, setEditingHabit] = useState(null);
 
-
   useEffect(() => {
     setHabits(storedHabits);
-    console.log(storedHabits)
-  }, []);
+  }, [storedHabits]);
 
+  useEffect(() => {
+    console.log("CalendarSection mounted.");
+  }, []);
 
   const handleOpen = () => {
     console.log("The Model Open Coming This Log is coming from the habitSection component");
@@ -24,7 +25,6 @@ function HabitSection() {
 
   const handleClose = () => {
     setOpen(false);
-    console.log(`You have ${storedHabits.length + 1} habits saved`)
   };
 
   const handleSave = (newHabit) => {
@@ -43,27 +43,22 @@ function HabitSection() {
     handleClose();
   };
 
-
   const handleEdit = (habit) => {
     setEditingHabit(habit);
     handleOpen();
   };
-  
+
   const handleCancelEdit = () => {
     setEditingHabit(null);
     handleClose();
   };
 
-
-
   const handleDelete = (id) => {
     const listItems = habits.filter((item) => item.id !== id);
     localStorage.setItem('habits', JSON.stringify(listItems));
     setHabits(listItems);
-    console.log(`You have ${storedHabits.length - 1} habits saved`)
   };
 
-  
   const handleAdd = (id) => {
     const storedHabits = JSON.parse(localStorage.getItem("habits"));
     const updatedHabits = storedHabits.map((habit) => {
@@ -77,7 +72,6 @@ function HabitSection() {
     setHabits(updatedHabits);
   };
 
-
   const handleMinus = (id) => {
     const storedHabits = JSON.parse(localStorage.getItem("habits"));
     const updatedHabits = storedHabits.map((habit) => {
@@ -90,7 +84,6 @@ function HabitSection() {
     localStorage.setItem("habits", JSON.stringify(updatedHabits));
     setHabits(updatedHabits);
   };
-
 
   return (
     <>

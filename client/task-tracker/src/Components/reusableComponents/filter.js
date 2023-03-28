@@ -1,52 +1,39 @@
-import { Button } from "semantic-ui-react";
-import '../../Styles/switch.css';
-
-
+import { Dropdown } from "semantic-ui-react";
+import { useState } from "react";
+import "../../Styles/switch.css";
 
 const Switch = ({ options, selectedOption, onChange }) => {
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const filterStyles = {
-    height: '2.5rem',
-    width: 'auto',
-    padding: '1rem',
-    marginBottom: '1rem'
-  }
-
-  const buttonStyles = {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    flex: 1,
-    padding: "0.5rem 1rem",
-    borderRadius: "10px",
-    backgroundColor: "#fff",
-    border: "none",
-    textAlign: "center",
-    cursor: "pointer",
-    boxShadow: "0 0 5px rgba(0, 0, 0, 0.1)",
+    height: "auto",
+    width: "auto",
+    padding: "1rem",
+    marginBottom: "1rem",
   };
 
   const activeButtonStyles = {
-    backgroundColor: '#2185d0',
-    color: '#fff',
-  }
+    backgroundColor: "#2185d0",
+    color: "#fff",
+  };
+
+  const dropdownOptions = options.map((option) => ({
+    key: option.value,
+    text: option.label,
+    value: option.value,
+  }));
 
   return (
     <div style={filterStyles} className="switch">
-      {options.map((option) => (
-        <Button
-          key={option.value}
-          className={`switch-button ${
-            option.value === selectedOption ? "active" : null
-          }`}
-          style={
-            option.value === selectedOption ? activeButtonStyles : buttonStyles
-          }
-          onClick={() => onChange(option.value)}
-        >
-          {option.label}
-        </Button>
-      ))}
+      <label style={{marginRight: "0.5rem"}}>Time of Day:</label>
+      <Dropdown
+        fluid
+        selection
+        value={selectedOption}
+        options={dropdownOptions}
+        onChange={(e, data) => onChange(data.value)}
+        className="time-dropdown"
+      />
     </div>
   );
 };
