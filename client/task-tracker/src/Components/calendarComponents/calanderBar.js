@@ -19,8 +19,8 @@ function calenderBar({ habit}) {
 
   const dividerStyle = {
     fontSize: '3rem',
-    marginBottom: '.5rem'
-  };
+    marginBottom: '.5rem',
+  }
 
 
   const imgStyle = {

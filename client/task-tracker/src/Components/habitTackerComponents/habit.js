@@ -1,5 +1,6 @@
-import { Image, Header, Button } from 'semantic-ui-react';
+import {  Button } from 'semantic-ui-react';
 import CircularProgressbar from '../habitTackerComponents/progressCircle';
+import "./habit.css"
 
 function HabitBar({ habit, deleteFunction, editFunction, Add, Minus, completed}) {
 
@@ -13,72 +14,35 @@ function HabitBar({ habit, deleteFunction, editFunction, Add, Minus, completed})
     animation: habit.count >= habit.goal ? 'flash 1s 5s' : 'none',
     animationDelay: habit.count >= habit.goal ? '0.5s' : 'none',
     marginBottom: '.5rem',
-    borderBottom: 'solid white 5px'
+    borderBottom: 'solid white 5px',
+    padding: "1rem"
   };
 
-  const leftStyles = {
-    width: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  };
 
-  const middleStyles = {
-    width: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  };
 
-  const rightStyles = {
-    width: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  };
 
-  const mediaQueryStyles = {
-    '@media screen and (max-width: 768px)': {
-      flexRow: {
-        flexDirection: 'column',
-      },
-      leftStyles: {
-        width: '100%',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-evenly'
-      },
-      middleStyles: {
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginTop: '1rem'
-      },
-      rightStyles: {
-        width: '100%',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-evenly',
-        marginTop: '1rem'
-      }
-    }
-  };
+
+
 
   return (
     <>
-      <div key={habit.id} habit={habit} style={{ ...flexRow, ...mediaQueryStyles.flexRow }}>
-        <div style={{ ...leftStyles, ...mediaQueryStyles.leftStyles }}>
+      <div key={habit.id} habit={habit} style={{ ...flexRow,}}>
+        <div class="leftStyles">
           <Button icon="plus" onClick={() => Add(habit.id) } />
           <Button icon="minus" onClick={() => Minus(habit.id)} />
         </div>
-        <div style={{ ...middleStyles, ...mediaQueryStyles.middleStyles }}>
-          <Image src={habit.image}/>
-          <Header as='h2'>{habit.name}</Header>
-          <CircularProgressbar habit={habit} />
+        <div  class="middleStyles">
+          <div>
+            <img src={habit.image}/>
+          </div>
+          <div>
+            <p>{habit.name}</p>
+          </div>
+          <div>
+            <CircularProgressbar habit={habit} />
+          </div>
         </div>
-        <div style={{ ...rightStyles, ...mediaQueryStyles.rightStyles }}>
+        <div class="rightStyles">
           <Button icon="edit" onClick={() => editFunction(habit.id)} />
           <Button icon="delete" onClick={() => deleteFunction(habit.id)}/>
         </div>
