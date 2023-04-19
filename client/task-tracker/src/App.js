@@ -20,22 +20,19 @@ function App() {
 
 
   return (
-    <div className="App ui stackable column grid">
+    <div className="App ui centered stackable sixteen column grid">
         <div  className="row top-menu">
           <div className="column">
             <NavBar />
           </div>
         </div>
-        <div  className="row stretched">
-          <div className="seven wide column">
+        <div  className="row fluid stretched">
+          <div className="five wide column ">
             <CalendarSection habitsChanged={habitsChanged} />
           </div>
-          <div  className="nine wide column">
+          <div  className="nine wide column ">
             <HabitSection onHabitsChange={handleHabitsChange} />
           </div>
-        </div>
-        <div className="row">
-          <Footer />
         </div>
     </div>
   );

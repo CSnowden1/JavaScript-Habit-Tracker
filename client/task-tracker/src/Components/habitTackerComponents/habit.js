@@ -9,23 +9,23 @@ function HabitBar({ habit, deleteFunction, editFunction, Add, Minus, completed }
     <>
       <div key={habit.id} habit={habit} className="flexRow">
         <div className="left">
-          <Button class="btn-pad" icon="plus" onClick={() => Add(habit.id)} />
-          <Button class="btn-pad" icon="minus" onClick={() => Minus(habit.id)} />
+          <Button class="ui fluid button" icon="plus" onClick={() => Add(habit.id)} />
+          <Button class="ui fluid button" icon="minus" onClick={() => Minus(habit.id)} />
         </div>
         <div className="mid">
-          <div>
-            <img src={habit.image} alt={habit.name}/>
+          <div class="ui">
+            <img  class="fluid image" src={habit.image} alt={habit.name}/>
           </div>
-          <div>
-            <h2>{habit.name}</h2>
+          <div class="ui text">
+            <h3>{habit.name}</h3>
           </div>
-          <div>
+          <div class="">
             <CircularProgressbar habit={habit} />
           </div>
         </div>
         <div className="right">
-          <Button class="btn-pad" icon="edit" onClick={() => editFunction(habit.id)} />
-          <Button class="btn-pad" icon="delete" onClick={() => deleteFunction(habit.id)} />
+          <Button class="ui  fluid button" icon="edit" onClick={() => editFunction(habit.id)} />
+          <Button class="ui fluid button" icon="delete" onClick={() => deleteFunction(habit.id)} />
         </div>
       </div>
     </>

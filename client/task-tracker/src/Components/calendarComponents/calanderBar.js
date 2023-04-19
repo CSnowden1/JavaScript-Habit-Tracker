@@ -41,15 +41,15 @@ function calenderBar({ habit}) {
   return (
     <>
       <div key={habit.id} habit={habit} style={flexRow}>
-        <div style={imgStyle}>
-          <Image src={habit.image}  />
+        <div class="ui container"  style={imgStyle}>
+          <Image  class="ui container fluid image" src={habit.image}  />
         </div>
-        <div>
-          <Header as='h2'>{habit.name}</Header>
+        <div class="ui container text">
+          <Header as='h4'>{habit.name}</Header>
         </div>
         <div style={dividerStyle}>|</div>
-        <div>
-          <Header as='h2' style={headerStyle}>{frequency}</Header>
+        <div class="ui container text">
+          <Header as='h4' style={headerStyle}>{frequency}</Header>
         </div>
       </div>
     </>
