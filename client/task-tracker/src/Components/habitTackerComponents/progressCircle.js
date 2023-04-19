@@ -28,7 +28,7 @@ function CustomCircularProgressbar({ habit }) {
     alignItems: 'center',
     justifyContent: 'center',
     height: '100%',
-    padding: '2rem',
+    padding: '3rem',
   };
 
   const lineBox = {

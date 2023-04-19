@@ -1,50 +1,31 @@
-import {  Button } from 'semantic-ui-react';
+import React from "react";
+import "./habit.css";
+import { Button } from 'semantic-ui-react';
 import CircularProgressbar from '../habitTackerComponents/progressCircle';
-import "./habit.css"
 
-function HabitBar({ habit, deleteFunction, editFunction, Add, Minus, completed}) {
-
-  const flexRow = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 'auto',
-    backgroundColor: habit.count >= habit.goal ? 'gold' : 'transparent',
-    transition: 'background-color 0.5s ease-in-out',
-    animation: habit.count >= habit.goal ? 'flash 1s 5s' : 'none',
-    animationDelay: habit.count >= habit.goal ? '0.5s' : 'none',
-    marginBottom: '.5rem',
-    borderBottom: 'solid white 5px',
-    padding: "1rem"
-  };
-
-
-
-
-
-
+function HabitBar({ habit, deleteFunction, editFunction, Add, Minus, completed }) {
 
   return (
     <>
-      <div key={habit.id} habit={habit} style={{ ...flexRow,}}>
-        <div class="leftStyles">
-          <Button icon="plus" onClick={() => Add(habit.id) } />
-          <Button icon="minus" onClick={() => Minus(habit.id)} />
+      <div key={habit.id} habit={habit} className="flexRow">
+        <div className="left">
+          <Button class="btn-pad" icon="plus" onClick={() => Add(habit.id)} />
+          <Button class="btn-pad" icon="minus" onClick={() => Minus(habit.id)} />
         </div>
-        <div  class="middleStyles">
+        <div className="mid">
           <div>
-            <img src={habit.image}/>
+            <img src={habit.image} alt={habit.name}/>
           </div>
           <div>
-            <p>{habit.name}</p>
+            <h2>{habit.name}</h2>
           </div>
           <div>
             <CircularProgressbar habit={habit} />
           </div>
         </div>
-        <div class="rightStyles">
-          <Button icon="edit" onClick={() => editFunction(habit.id)} />
-          <Button icon="delete" onClick={() => deleteFunction(habit.id)}/>
+        <div className="right">
+          <Button class="btn-pad" icon="edit" onClick={() => editFunction(habit.id)} />
+          <Button class="btn-pad" icon="delete" onClick={() => deleteFunction(habit.id)} />
         </div>
       </div>
     </>
