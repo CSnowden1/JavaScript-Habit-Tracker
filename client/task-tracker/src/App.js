@@ -5,7 +5,7 @@ import NavBar from "./Components/navComponents/nav"
 import HabitSection from "./Components/habitTackerComponents/habitSection";
 import CalendarSection from "./Components/calendarComponents/calanderSection";
 import Footer from "./Components/bodyComponents/footer"
-
+import Search from "./Components/reusableComponents/search";
 
 function App() {
   const [habitsChanged, setHabitsChanged] = useState(false);
@@ -24,6 +24,11 @@ function App() {
         <div  className="row top-menu">
           <div className="column">
             <NavBar />
+          </div>
+        </div>
+        <div  className="row top-menu">
+          <div className="column">
+            <Search />
           </div>
         </div>
         <div  className="row fluid stretched">
