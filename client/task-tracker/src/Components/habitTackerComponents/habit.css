@@ -1,18 +1,29 @@
 
-.leftStyles {
+.flex-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    margin-bottom: .5rem;
+    border-bottom: solid white 5px;
+    padding: 1rem;
+  };
+
+
+.left-styles {
     width: auto;
     align-items: center;
     justify-content: center;
 }
 
 
-.rightStyle {
+.right-styles {
     width: auto;
     align-Items: center;
     justify-content: center;
 };
 
-.middleStyles {
+.middle-styles {
     width: 100%;
     display: flex;
     align-items: center;
@@ -22,16 +33,16 @@
 
 @media only screen and (max-width: 480px) {
 
-    .rightStyles {
+    .right-styles {
         flex-direction: column;
 
     }
 
-    .leftStyles {
+    .left-styles {
         flex-direction: column;
     }
 
-    .middleStyles {
+    .middle-styles {
         width: 5rem;
         font-size: 12px;
         display: flex;
@@ -42,7 +53,7 @@
     }
 
 
-    .middleStyles div {
+    .middle-styles div {
         display: flex;
         align-content: center;
         justify-items: center;
