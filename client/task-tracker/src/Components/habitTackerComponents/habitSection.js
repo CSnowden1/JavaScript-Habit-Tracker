@@ -3,6 +3,7 @@ import Subheading from "../reusableComponents/subHeading";
 import CustomButton from "../reusableComponents/submitBtn";
 import HabitForm from "./addHabitModel";
 import HabitContainer from "../habitTackerComponents/habitContainer";
+import SearchBar from "../reusableComponents/search";
 
 function HabitSection() {
   const [open, setOpen] = useState(false);
@@ -89,12 +90,13 @@ function HabitSection() {
     <>
       <div style={containersStyles} className="column">
         <Subheading title="Habits" />
+        <SearchBar />
         <HabitContainer habits={habits} deleteFunction={handleDelete} editFunction={handleEdit} Add={handleAdd} Minus={handleMinus} />
         <CustomButton title="Create New Habit" onClick={handleOpen} />
-        <HabitForm 
-          open={open} 
-          onSave={handleSave} 
-          onClose={editingHabit ? handleCancelEdit : handleClose} 
+        <HabitForm
+          open={open}
+          onSave={handleSave}
+          onClose={editingHabit ? handleCancelEdit : handleClose}
           editingHabit={editingHabit}
         />
       </div>
