@@ -5,7 +5,7 @@ import NavBar from "./Components/navComponents/nav"
 import HabitSection from "./Components/habitTackerComponents/habitSection";
 import CalendarSection from "./Components/calendarComponents/calanderSection";
 import Footer from "./Components/bodyComponents/footer"
-
+import Overview from "./Components/habitProgress/overviewContainer";
 
 function App() {
   const [habitsChanged, setHabitsChanged] = useState(false);
@@ -61,6 +61,9 @@ function App() {
           <div className="column">
             <NavBar />
           </div>
+        </div>
+        <div className="row">
+          <Overview />
         </div>
         <div style={habitRow} className="row stretched">
           <div style={calendarColumn} className="six wide column">
