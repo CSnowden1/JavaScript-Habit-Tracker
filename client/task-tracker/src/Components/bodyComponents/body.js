@@ -5,7 +5,7 @@ import CalendarSection from "../calendarComponents/calanderSection"
 
 
 
-function Body() {
+function Body({theme, handle}) {
 
 
     const bodyStyles = {

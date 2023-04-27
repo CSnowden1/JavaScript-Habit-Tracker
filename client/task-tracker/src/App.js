@@ -18,27 +18,30 @@ function App() {
     setHabitsChanged(!habitsChanged);
   }
 
-
   const handleToggleDarkMode = () => {
-    const root = window.document.documentElement;
-    setTheme(!theme);
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+    const link = document.getElementById('theme-link');
+    const linkDark = document.getElementById('theme-link-dark');
 
-    const link = document.querySelector('#dark-mode-link');
-    if (theme) {
-      link.href = 'light.css';
-      root.classList.remove('dark');
+    if (newTheme === 'light') {
+      link.disabled = false;
+      linkDark.disabled = true;
     } else {
-      link.href = 'dark.css';
-      root.classList.add('dark');
+      link.disabled = true;
+      linkDark.disabled = false;
     }
-  }
+  };
+
+
 
   const bodyStyles = {
     minHeight: '100vh',
     minWidth: '100%',
     padding: '1rem 2rem 0rem 2rem',
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    backgroundColor: theme !== 'light' ? 'black' : 'white'
   };
 
   const navRow = {
@@ -82,7 +85,7 @@ function App() {
           </div>
         </div>
         <div className="row">
-          <Overview />
+          <Overview habitsChanged={habitsChanged} />
         </div>
         <div style={habitRow} className="row stretched">
           <div style={calendarColumn} className="six wide column">
