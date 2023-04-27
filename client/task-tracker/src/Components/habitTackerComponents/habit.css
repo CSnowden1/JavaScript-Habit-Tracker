@@ -2,7 +2,7 @@
 .flex-row {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     width: auto;
     margin-bottom: .5rem;
     border-bottom: solid white 5px;
@@ -11,6 +11,7 @@
 
 
 .left-styles {
+    display: flex;
     width: auto;
     align-items: center;
     justify-content: center;
@@ -18,17 +19,24 @@
 
 
 .right-styles {
+    display: flex;
     width: auto;
     align-Items: center;
     justify-content: center;
 };
 
 .middle-styles {
-    width: auto;
+    width: 100%;
     display: flex;
-    align-items: center;
+    flex-direction: row;
     justify-content: space-between;
+    border: solid black 5px;
 };
+
+.middle-styles div {
+    display: flex;
+}
+
 
 
 @media only screen and (max-width: 480px) {

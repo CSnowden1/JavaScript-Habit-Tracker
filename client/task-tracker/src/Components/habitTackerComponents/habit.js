@@ -20,13 +20,13 @@ function HabitBar({ habit, deleteFunction, editFunction, Add, Minus, completed})
   return (
     <>
       <div key={habit.id} habit={habit}  class="flex-row" style={{...animations}}>
-        <div class="left-styles">
+        <div className="left-styles">
           <Button icon="plus" onClick={() => Add(habit.id) } />
           <Button icon="minus" onClick={() => Minus(habit.id)} />
         </div>
-        <div  class="middle-styles">
+        <div className="middle-styles">
           <div>
-            <img src={habit.image}/>
+            <img  alt="habit" src={habit.image}/>
           </div>
           <div>
             <p>{habit.name}</p>
@@ -35,7 +35,7 @@ function HabitBar({ habit, deleteFunction, editFunction, Add, Minus, completed})
             <CircularProgressbar habit={habit} />
           </div>
         </div>
-        <div class="right-styles">
+        <div className="right-styles">
           <Button icon="edit" onClick={() => editFunction(habit.id)} />
           <Button icon="delete" onClick={() => deleteFunction(habit.id)}/>
         </div>

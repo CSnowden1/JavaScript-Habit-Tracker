@@ -1,22 +1,8 @@
-import { useState, useEffect } from 'react';
 import { Button, Icon } from 'semantic-ui-react';
 
-function ThemeToggle() {
+function ThemeToggle({theme, handleToggleDarkMode}) {
 
-  const [isDarkMode, setIsDarkMode] = useState(false);
-
-  useEffect(() => {
-    const root = window.document.documentElement;
-    if (isDarkMode) {
-      root.classList.add('dark');
-    } else {
-      root.classList.remove('dark');
-    }
-  }, [isDarkMode]);
-
-  const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
-  };
+ 
 
 
   const toggleStyle = {
@@ -27,9 +13,9 @@ function ThemeToggle() {
   return (
     <>
       <div style={toggleStyle}>
-        <Button icon labelPosition='left' onClick={toggleTheme}>
-          <Icon name={isDarkMode ? 'sun' : 'moon'} />
-          {isDarkMode ? 'Light Mode' : 'Dark Mode'}
+        <Button icon labelPosition='left' onClick={handleToggleDarkMode}>
+          <Icon name={theme ? 'sun' : 'moon'} />
+          {theme ? 'Light Mode' : 'Dark Mode'}
         </Button>
       </div>
     </>

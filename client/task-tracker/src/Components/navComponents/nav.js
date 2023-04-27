@@ -5,7 +5,7 @@ import SettingsButton from "./settings";
 
 
 
-function navBar() {
+function navBar({theme, handleToggleDarkMode}) {
 
     const navBoxStyles = {
         height: '7rem'
@@ -23,7 +23,7 @@ function navBar() {
         <>
             <div style={navBoxStyles} class="row grid">
                 <div style={navStyles}>
-                    <ThemeToggle />
+                    <ThemeToggle  theme={theme} handleToggleDarkMode={handleToggleDarkMode} />
                     <NavigationBar />
                     <InboxButton/>
                     <SettingsButton/>
