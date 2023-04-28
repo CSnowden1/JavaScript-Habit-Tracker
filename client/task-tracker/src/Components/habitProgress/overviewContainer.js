@@ -14,11 +14,11 @@ export default function Overview() {
     return (
         <>
         <Container style={{width:"100%", border:"solid black 1px", height:"5rem", borderRadius:"1rem", display: "flex"}}>
-            <BarChart width={50} height={50} data={habits}>
+            <BarChart width={700} height={100} data={habits}>
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Tooltip />
-                <Bar dataKey="count" fill="gold" />
+                <Bar style={{border: "solid black 2px", backgroundColor: "gold", width: "1rem" }} dataKey="count" fill="gold" />
             </BarChart>
         </Container>
         </>
