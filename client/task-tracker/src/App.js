@@ -1,30 +1,27 @@
 import { useState } from "react";
-import './App.css';
-import 'semantic-ui-css/semantic.min.css';
+import "./App.css";
+import "semantic-ui-css/semantic.min.css";
 import NavBar from "./Components/navComponents/nav";
 import HabitSection from "./Components/habitTackerComponents/habitSection";
 import CalendarSection from "./Components/calendarComponents/calanderSection";
-import Footer from "./Components/bodyComponents/footer"
+import Footer from "./Components/bodyComponents/footer";
 import Overview from "./Components/habitProgress/overviewContainer";
-
 
 function App() {
   const [habitsChanged, setHabitsChanged] = useState(false);
   const [theme, setTheme] = useState("light");
 
-
-
   const handleHabitsChange = () => {
     setHabitsChanged(!habitsChanged);
-  }
+  };
 
   const handleToggleDarkMode = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light';
+    const newTheme = theme === "light" ? "dark" : "light";
     setTheme(newTheme);
-    const link = document.getElementById('theme-link');
-    const linkDark = document.getElementById('theme-link-dark');
+    const link = document.getElementById("theme-link");
+    const linkDark = document.getElementById("theme-link-dark");
 
-    if (newTheme === 'light') {
+    if (newTheme === "light") {
       link.disabled = false;
       linkDark.disabled = true;
     } else {
@@ -33,48 +30,44 @@ function App() {
     }
   };
 
-
-
   const bodyStyles = {
-    minHeight: '100vh',
-    minWidth: '100%',
-    padding: '1rem 2rem 0rem 2rem',
-    display: 'flex',
-    flexDirection: 'column',
-    backgroundColor: theme !== 'light' ? 'black' : 'white'
+    minHeight: "100vh",
+    minWidth: "170vw",
+    display: "flex",
+    flexDirection: "column",
+    backgroundColor: theme !== "light" ? "black" : "white",
   };
 
   const navRow = {
-    height: '3rem',
-    marginBottom: '2rem'
-  }
+    height: "3rem",
+    marginBottom: "2rem",
+  };
 
   const habitRow = {
-    height: 'calc(80vh - 5rem)',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center'
-  }
+    flexGrow: 1,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+  };
 
   const calendarColumn = {
-    height: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-    alignContent: 'center',
-  }
+    height: "100%",
+    display: "flex",
+    justifyContent: "center",
+    alignContent: "center",
+  };
 
   const habitColumn = {
-    height: '100%',
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  }
+    height: "100%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  };
 
   const footerRow = {
-    height: '2rem',
-    marginBottom: "1rem"
-  }
+    height: "2rem",
+    marginBottom: "1rem",
+  };
 
   return (
     <div className={`App ${theme}`}>
@@ -88,10 +81,16 @@ function App() {
           <Overview habitsChanged={habitsChanged} />
         </div>
         <div style={habitRow} className="row stretched">
-          <div style={calendarColumn} className="six wide column">
+          <div
+            style={calendarColumn}
+            className="sixteen wide mobile six wide tablet six wide computer column"
+          >
             <CalendarSection habitsChanged={habitsChanged} />
           </div>
-          <div style={habitColumn} className="ten wide column">
+          <div
+            style={habitColumn}
+            className="sixteen wide mobile ten wide tablet ten wide computer column"
+          >
             <HabitSection onHabitsChange={handleHabitsChange} />
           </div>
         </div>
