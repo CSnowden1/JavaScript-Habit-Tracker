@@ -24,7 +24,7 @@ function HabitBar({ habit, deleteFunction, editFunction, Add, Minus, completed})
           <Button icon="plus" onClick={() => Add(habit.id) } />
           <Button icon="minus" onClick={() => Minus(habit.id)} />
         </div>
-        <div className="middle-styles">
+        <div className='middle-styles'>
           <div>
             <img  alt="habit" src={habit.image}/>
           </div>

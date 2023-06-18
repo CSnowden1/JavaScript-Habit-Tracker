@@ -12,6 +12,7 @@
 
 .left-styles {
     display: flex;
+    flex-direction: row;
     width: auto;
     align-items: center;
     justify-content: center;
@@ -26,10 +27,11 @@
 };
 
 .middle-styles {
-    width: 100%;
+    width: 5rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    border: solid black 5px;
 };
 
 .middle-styles div {

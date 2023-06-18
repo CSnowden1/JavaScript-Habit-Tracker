@@ -32,69 +32,90 @@ function App() {
 
   const bodyStyles = {
     minHeight: "100vh",
-    minWidth: "170vw",
+    minWidth: "100vw",
     display: "flex",
     flexDirection: "column",
     backgroundColor: theme !== "light" ? "black" : "white",
   };
 
   const navRow = {
-    height: "3rem",
-    marginBottom: "2rem",
+    display: 'flex',
+    width: '100%',
+    height: "10%",
+    marginBottom: "1rem",
   };
 
+  const ChatRow = {
+    display: 'flex',
+    width: '100%',
+    height: "20%",
+    marginBottom: "1rem",
+  }
+
   const habitRow = {
-    flexGrow: 1,
+    flexGrow: '1',
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "row",
     justifyContent: "center",
+    marginTop: '3rem',
   };
 
   const calendarColumn = {
     height: "100%",
     display: "flex",
+    width: 'auto',
     justifyContent: "center",
     alignContent: "center",
+    height: '30rem',
+    overflowY: 'scroll',
   };
 
   const habitColumn = {
     height: "100%",
     display: "flex",
+    width: 'auto',
     justifyContent: "center",
-    alignItems: "center",
+    alignContent: "center",
+    height: '30rem',
+    overflowY: 'scroll',
   };
 
   const footerRow = {
-    height: "2rem",
-    marginBottom: "1rem",
+    height: "10%",
+    marginBottom: ".25rem",
+  };
+
+
+  const submitRow = {
+    height: "10%",
+    marginBottom: ".25rem",
   };
 
   return (
     <div className={`App ${theme}`}>
-      <div style={bodyStyles} className="ui grid container">
-        <div style={navRow} className="row top-menu">
-          <div className="column">
+      <div style={bodyStyles}>
+        <div style={navRow}>
             <NavBar theme={theme} handleToggleDarkMode={handleToggleDarkMode} />
-          </div>
         </div>
-        <div className="row">
+        <div style={ChatRow}>
           <Overview habitsChanged={habitsChanged} />
         </div>
-        <div style={habitRow} className="row stretched">
+        <div style={habitRow} >
           <div
             style={calendarColumn}
-            className="sixteen wide mobile six wide tablet six wide computer column"
           >
             <CalendarSection habitsChanged={habitsChanged} />
           </div>
           <div
             style={habitColumn}
-            className="sixteen wide mobile ten wide tablet ten wide computer column"
           >
             <HabitSection onHabitsChange={handleHabitsChange} />
           </div>
         </div>
-        <div style={footerRow} className="row">
+        <div style={submitRow}>
+          <SubmitBtn />
+        </div>
+        <div style={footerRow}>
           <Footer />
         </div>
       </div>
