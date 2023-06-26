@@ -8,7 +8,11 @@ import SettingsButton from "./settings";
 function navBar({theme, handleToggleDarkMode}) {
 
     const navBoxStyles = {
-        height: '7rem'
+        height: '7rem',
+        width: "100%",
+        margin: '1rem',
+        marginRight: "1rem",
+        padding: '1rem'
     };
 
     const navStyles = {
@@ -21,7 +25,7 @@ function navBar({theme, handleToggleDarkMode}) {
 
     return (
         <>
-            <div style={navBoxStyles} class="row grid">
+            <div style={navBoxStyles}>
                 <div style={navStyles}>
                     <ThemeToggle  theme={theme} handleToggleDarkMode={handleToggleDarkMode} />
                     <NavigationBar />

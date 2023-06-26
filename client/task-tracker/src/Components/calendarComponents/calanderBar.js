@@ -15,6 +15,7 @@ function calenderBar({ habit}) {
     borderRadius: '.3rem',
     borderBottom: 'solid white 2px',
     height: '7rem',
+    padding: '3rem',
   };
 
   const dividerStyle = {

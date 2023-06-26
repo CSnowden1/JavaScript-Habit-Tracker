@@ -5,6 +5,7 @@ import HabitForm from "./addHabitModel";
 import HabitContainer from "../habitTackerComponents/habitContainer";
 import SearchBar from "../reusableComponents/search";
 
+
 function HabitSection() {
   const [open, setOpen] = useState(false);
   const [habits, setHabits] = useState([]);
@@ -92,7 +93,6 @@ function HabitSection() {
         <Subheading title="Habits" />
         <SearchBar />
         <HabitContainer habits={habits} deleteFunction={handleDelete} editFunction={handleEdit} Add={handleAdd} Minus={handleMinus} />
-        <CustomButton title="Create New Habit" onClick={handleOpen} />
         <HabitForm
           open={open}
           onSave={handleSave}

@@ -1,5 +1,6 @@
-import { Button } from "semantic-ui-react";
 import CustomButton from "../reusableComponents/submitBtn";
+import { useState} from "react";
+
 
 function SubmitSection() {
 const [open, setOpen] = useState(false);
@@ -10,12 +11,10 @@ const handleOpen = () => {
     setOpen(true);
   };
 
- 
-
-
-
-
-
 <CustomButton title="Create New Habit" onClick={handleOpen} />
 
 }
+
+
+export default SubmitSection
+

@@ -3,9 +3,11 @@ import "./App.css";
 import "semantic-ui-css/semantic.min.css";
 import NavBar from "./Components/navComponents/nav";
 import HabitSection from "./Components/habitTackerComponents/habitSection";
-import CalendarSection from "./Components/calendarComponents/calanderSection";
-import Footer from "./Components/bodyComponents/footer";
+import CalendarSection from "./Components/calendarComponents/calenderSection";
 import Overview from "./Components/habitProgress/overviewContainer";
+import SubmitBtn from "./Components/habitTackerComponents/submitBtn";
+import Greeting from "./Components/greetingComponent/greeting";
+
 
 function App() {
   const [habitsChanged, setHabitsChanged] = useState(false);
@@ -45,6 +47,13 @@ function App() {
     marginBottom: "1rem",
   };
 
+  const greetingRow = {
+    display: 'flex',
+    width: '100%',
+    height: "10%",
+    marginBottom: "1rem",
+  };
+
   const ChatRow = {
     display: 'flex',
     width: '100%',
@@ -61,22 +70,21 @@ function App() {
   };
 
   const calendarColumn = {
-    height: "100%",
+    height: "70vh",
     display: "flex",
     width: 'auto',
+    marginLeft: '2rem',
+    marginRight: '5rem',
     justifyContent: "center",
-    alignContent: "center",
-    height: '30rem',
-    overflowY: 'scroll',
+    alignContent: "center"
   };
 
   const habitColumn = {
-    height: "100%",
+    height: "70vh",
     display: "flex",
-    width: 'auto',
+    width: '100%',
     justifyContent: "center",
     alignContent: "center",
-    height: '30rem',
     overflowY: 'scroll',
   };
 
@@ -97,6 +105,9 @@ function App() {
         <div style={navRow}>
             <NavBar theme={theme} handleToggleDarkMode={handleToggleDarkMode} />
         </div>
+        <div style={greetingRow}>
+            <Greeting time="Evening" name="Chris" day="Sunday" />
+        </div>
         <div style={ChatRow}>
           <Overview habitsChanged={habitsChanged} />
         </div>
@@ -116,7 +127,6 @@ function App() {
           <SubmitBtn />
         </div>
         <div style={footerRow}>
-          <Footer />
         </div>
       </div>
     </div>
