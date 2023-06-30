@@ -11,9 +11,21 @@ export default function Overview() {
       setHabits(storedHabits);
     }, [storedHabits]);
 
+
+    const containerStyles = {
+        background: "rgba(49, 21, 219, .03)",
+        boxShadow: "inset 4px 4px 4px rgba(87, 87, 87, 0.07)",
+        borderRadius: "10px",
+        width:"100%",
+        height:"10rem",
+        display:"flex",
+        alignContent:"center",
+        alignItems:"center"
+    }
+
     return (
         <>
-            <div style={{width:"100%", backgroundColor: "grey", height:"10rem", display:"flex", alignContent:"center", alignItems:"center"}}>
+            <div style={containerStyles}>
                 <Container style={{width:"auto", border:"solid black 1px", height:"5rem", borderRadius:"1rem", display: "flex", marginLeft:"2rem", marginRight:"2rem"}}>
                     <BarChart width={700} height={100} data={habits}>
                         <XAxis dataKey="name" />
