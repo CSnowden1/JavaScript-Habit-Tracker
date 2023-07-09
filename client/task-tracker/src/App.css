@@ -1,15 +1,156 @@
 .progress-wrapper {
-    overflow: hidden;
+  overflow: hidden;
+}
+
+.progress-wrapper .CircularProgressbar path {
+  stroke-dasharray: 0 400;
+  animation: slide-in 0.5s ease-in-out forwards;
+}
+
+@keyframes slide-in {
+  to {
+    stroke-dasharray: 400 400;
+    stroke-dashoffset: 0;
   }
-  
-  .progress-wrapper .CircularProgressbar path {
-    stroke-dasharray: 0 400;
-    animation: slide-in 0.5s ease-in-out forwards;
+}
+
+/* Add global styles here */
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+.App {
+  display: grid;
+  height: 100vh;
+  width: 100vw;
+}
+
+
+.bodyStyles {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(10, 6%);
+  height: 100%;
+  width: 100%;
+}
+
+.light {
+  /* Add light theme styles here */
+}
+
+.dark {
+  /* Add dark theme styles here */
+}
+
+.navRow {
+  display: flex;
+  width: 100%;
+  grid-column: span 2;
+  height: 10%;
+  margin-bottom: 1rem;
+}
+
+.greetingRow {
+  display: flex;
+  width: 100%;
+  height: 10%;
+  margin-bottom: 1rem;
+  grid-column: span 2;
+}
+
+.ChatRow {
+  display: flex;
+  width: 100%;
+  height: 20%;
+  margin-bottom: 1rem;
+  grid-column: span 2;
+}
+
+.habitRow {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 3rem;
+  grid-column: span 2;
+  height: 40%;
+}
+
+.calendarColumn {
+  height: 100%;
+  display: flex;
+  width: auto;
+  margin-left: 2rem;
+  margin-right: 5rem;
+  justify-content: center;
+  align-content: center;
+}
+
+.habitColumn {
+  height: auto;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-content: center;
+}
+
+.footerRow {
+  height: 5%;
+  margin-bottom: 0.25rem;
+  grid-column: span 2;
+}
+
+.submitRow {
+  height: 5%;
+  margin-bottom: 0.25rem;
+  grid-column: span 2;
+}
+
+
+@media (max-width: 768px) {
+  .bodyStyles {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(16, 6%);
   }
-  
-  @keyframes slide-in {
-    to {
-      stroke-dasharray: 400 400;
-      stroke-dashoffset: 0;
-    }
+
+  .habitRow {
+    height: 50%;
+    margin-top: 2rem;
   }
+
+  .calendarColumn {
+    margin: 0;
+  }
+
+  .habitColumn {
+    margin: 0;
+  }
+}
+
+/* Responsive styles */
+
+@media (max-width: 768px) {
+  .bodyStyles {
+    grid-template-rows: 10% 15% 20% 50% 10%;
+  }
+
+  .habitRow {
+    grid-template-columns: 1fr;
+    grid-gap: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .bodyStyles {
+    grid-template-rows: 10% 15% 20% 50% 15%;
+  }
+}
+
+@media (max-width: 400px) {
+  .bodyStyles {
+    grid-template-rows: 10% 15% 20% 50% 20%;
+  }
+}

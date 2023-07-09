@@ -1,5 +1,4 @@
-import { useState } from "react";
-import "./App.css";
+import React, { useState } from "react";
 import "semantic-ui-css/semantic.min.css";
 import NavBar from "./Components/navComponents/nav";
 import HabitSection from "./Components/habitTackerComponents/habitSection";
@@ -7,7 +6,7 @@ import CalendarSection from "./Components/calendarComponents/calenderSection";
 import Overview from "./Components/habitProgress/overviewContainer";
 import SubmitBtn from "./Components/habitTackerComponents/submitBtn";
 import Greeting from "./Components/greetingComponent/greeting";
-
+import "./App.css";
 
 function App() {
   const [habitsChanged, setHabitsChanged] = useState(false);
@@ -32,102 +31,35 @@ function App() {
     }
   };
 
-  const bodyStyles = {
-    minHeight: "100vh",
-    minWidth: "100vw",
-    display: "flex",
-    flexDirection: "column",
-    backgroundColor: theme !== "light" ? "black" : "white",
-  };
 
-  const navRow = {
-    display: 'flex',
-    width: '100%',
-    height: "10%",
-    marginBottom: "1rem",
-  };
-
-  const greetingRow = {
-    display: 'flex',
-    width: '100%',
-    height: "10%",
-    marginBottom: "1rem",
-  };
-
-  const ChatRow = {
-    display: 'flex',
-    width: '100%',
-    height: "20%",
-    marginBottom: "1rem",
-  }
-
-  const habitRow = {
-    flexGrow: '1',
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-    marginTop: '3rem',
-  };
-
-  const calendarColumn = {
-    height: "70vh",
-    display: "flex",
-    width: 'auto',
-    marginLeft: '2rem',
-    marginRight: '5rem',
-    justifyContent: "center",
-    alignContent: "center"
-  };
-
-  const habitColumn = {
-    height: "70vh",
-    display: "flex",
-    width: '100%',
-    justifyContent: "center",
-    alignContent: "center",
-    overflowY: 'scroll',
-  };
-
-  const footerRow = {
-    height: "10%",
-    marginBottom: ".25rem",
-  };
-
-
-  const submitRow = {
-    height: "10%",
-    marginBottom: ".25rem",
-  };
+const lightDark = {
+  backgroundColor: theme !== "light" ? "black" : "white",
+}
 
   return (
     <div className={`App ${theme}`}>
-      <div style={bodyStyles}>
-        <div style={navRow}>
-            <NavBar theme={theme} handleToggleDarkMode={handleToggleDarkMode} />
+      <div style={lightDark} className="bodyStyles">
+        <div className="navRow">
+          <NavBar theme={theme} handleToggleDarkMode={handleToggleDarkMode} />
         </div>
-        <div style={greetingRow}>
-            <Greeting time="Evening" name="Chris" day="Sunday" />
+        <div className="greetingRow">
+          <Greeting time="Evening" name="Chris" day="Sunday" />
         </div>
-        <div style={ChatRow}>
+        <div className="ChatRow">
           <Overview habitsChanged={habitsChanged} />
         </div>
-        <div style={habitRow} >
-          <div
-            style={calendarColumn}
-          >
+        <div className="habitRow">
+          <div className="calendarColumn">
             <CalendarSection habitsChanged={habitsChanged} />
           </div>
-          <div
-            style={habitColumn}
-          >
+          <div className="habitColumn">
             <HabitSection onHabitsChange={handleHabitsChange} />
           </div>
         </div>
-        <div style={submitRow}>
+        <div className="submitRow">
           <SubmitBtn />
         </div>
-        <div style={footerRow}>
-        </div>
+        <div className="footerRow"></div>
       </div>
     </div>
   );
