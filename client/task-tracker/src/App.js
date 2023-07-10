@@ -57,9 +57,11 @@ const lightDark = {
           </div>
         </div>
         <div className="submitRow">
-          <SubmitBtn />
+          <SubmitBtn title="Create A New Habit" />
         </div>
-        <div className="footerRow"></div>
+        <div className="footerRow">
+            <p>Thank You for using our app</p>
+        </div>
       </div>
     </div>
   );

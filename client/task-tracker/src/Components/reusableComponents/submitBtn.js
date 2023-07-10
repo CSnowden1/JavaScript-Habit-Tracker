@@ -1,6 +1,6 @@
 import { Button } from 'semantic-ui-react';
 
-function CustomButton(props) {
+function CustomButton({title}) {
   const buttonStyles = {
     borderRadius: '1.2rem',
     backgroundColor: 'rgba(49, 21, 219, 0.72)',
@@ -16,7 +16,7 @@ function CustomButton(props) {
 
   return (
     <Button style={buttonStyles} onClick={props.onClick}>
-      {props.title}
+      {title}
     </Button>
   );
 }
