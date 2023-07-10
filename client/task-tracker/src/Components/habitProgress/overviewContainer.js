@@ -16,11 +16,12 @@ export default function Overview() {
         background: "rgba(49, 21, 219, .03)",
         boxShadow: "inset 4px 4px 4px rgba(87, 87, 87, 0.07)",
         borderRadius: "10px",
-        width:"100%",
+        width:"100vw",
         height:"10rem",
         display:"flex",
         alignContent:"center",
-        alignItems:"center"
+        alignItems:"center",
+        overflowX:"scroll"
     }
 
     return (

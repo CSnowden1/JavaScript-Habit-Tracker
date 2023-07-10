@@ -112,13 +112,21 @@ body {
 
 @media (max-width: 768px) {
   .bodyStyles {
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(16, 6%);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .navRow {
+    display: flex;
+    width: 100%;
+    height: auto;
   }
 
   .habitRow {
     height: 50%;
     margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
   }
 
   .calendarColumn {
@@ -134,23 +142,73 @@ body {
 
 @media (max-width: 768px) {
   .bodyStyles {
-    grid-template-rows: 10% 15% 20% 50% 10%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .navRow {
+    display: flex;
+    width: 100vw;
+    height: auto;
   }
 
   .habitRow {
-    grid-template-columns: 1fr;
+    grid-template-columns: 2fr;
     grid-gap: 1rem;
+    display: flex;
+    flex-direction: column;
   }
 }
 
 @media (max-width: 576px) {
   .bodyStyles {
-    grid-template-rows: 10% 15% 20% 50% 15%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .navRow {
+    display: flex;
+    width: 90vw;
+    height: auto;
+  }
+
+  .habitRow {
+    grid-template-columns: 2fr;
+    grid-gap: 1rem;
+    display: flex;
+    flex-direction: column;
   }
 }
 
 @media (max-width: 400px) {
   .bodyStyles {
-    grid-template-rows: 10% 15% 20% 50% 20%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .navRow, .ChatBox, .greetingRow {
+    display: flex;
+    width: 90vw;
+    height: auto;
+  }
+
+  .ChatBox {
+    margin: 1rem;
+  }
+
+  .greetingRow {
+    align-content: center;
+    justify-content: center;
+    margin: 1rem;
+  }
+
+
+  .habitRow {
+    grid-template-columns: 2fr;
+    grid-gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+    width: 90%;
   }
 }
