@@ -1,74 +1,54 @@
-
-.flex-row {
+.body-container {
+    margin: 1rem;
     display: flex;
-    align-items: center;
-    justify-content: space-around;
-    width: auto;
-    margin-bottom: .5rem;
-    border-bottom: solid white 5px;
-    padding: 1rem;
-  };
+    flex-direction: column;
 
-
-.left-styles {
-    display: flex;
-    flex-direction: row;
-    width: auto;
-    align-items: center;
-    justify-content: center;
 }
 
-
-.right-styles {
-    display: flex;
-    width: auto;
-    align-Items: center;
-    justify-content: center;
-};
-
-.middle-styles {
-    width: 5rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    border: solid black 5px;
-};
-
-.middle-styles div {
+.nav-container {
     display: flex;
 }
 
+.intro-container {
+    display: flex;
+}
 
+.profomance-container {
+    display: flex;
+    width: 100%;
+    border: solid black 1px; 
+    height: 5rem;
+}
 
-@media only screen and (max-width: 480px) {
+.habit-tracker-mobule {
+    display: flex;
+}
 
-    .right-styles {
-        flex-direction: column;
+.schedule-container {
+    width: 30%;
+    height: auto;
 
-    }
+}
 
-    .left-styles {
-        flex-direction: column;
-    }
+.schedule-title-box, .habit-title-box {
+    
+}
 
-    .middle-styles {
-        width: 5rem;
-        font-size: 12px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
+.fitler-row {
+    display: flex;
+}
 
-    }
+.habit-container, .schedule-container {
+    display: flex;
+    flex-direction: column;
+}
 
+.habits-container {
+    width: 70%;
+    height: auto;
+}
 
-    .middle-styles div {
-        display: flex;
-        align-content: center;
-        justify-items: center;
-
-    }
-
-
-
+.add-habit-btn-box {
+    display: flex;
+    width: 100%; 
 }
