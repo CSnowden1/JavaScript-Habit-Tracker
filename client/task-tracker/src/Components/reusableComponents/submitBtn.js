@@ -5,17 +5,18 @@ function CustomButton({title}) {
     borderRadius: '1.2rem',
     backgroundColor: 'rgba(49, 21, 219, 0.72)',
     color: "white",
-    width: '100%',
+    width: '50%',
     height: '3rem',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: '1rem',
-    justifySelf: 'center'
+    justifySelf: 'center',
+    alignSelf: "center"
   };
 
   return (
-    <Button style={buttonStyles} onClick={props.onClick}>
+    <Button style={buttonStyles}>
       {title}
     </Button>
   );
