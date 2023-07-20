@@ -30,30 +30,30 @@
   margin-bottom: 2rem;
 }
 
-.profomance-container {
+.performance-container {
   display: flex;
   width: 100%;
   height: auto;
   margin-bottom: 5rem;
 }
 
-.habit-tracker-mobule {
+.habit-tracker-module {
   display: flex;
   margin-top: 2rem;
   justify-content: space-between;
 }
 
 .schedule-container {
-  width: auto;
+  width: 25%;
   height: auto;
 
 }
 
 .schedule-title-box, .habit-title-box {
-  
+
 }
 
-.fitler-row {
+.filter-row {
   display: flex;
 }
 
@@ -63,19 +63,41 @@
 }
 
 .habits-container {
-  width: 50%;
+  width: 65%;
   height: auto;
 }
 
 .add-habit-btn-box {
   display: flex;
-  width: 100%; 
+  width: 100%;
   height: 4rem;
   margin-top: 2rem;
   margin-bottom: 1rem;
   border: solid black 1px;
   align-items: center;
   justify-content: center;
+}
+
+
+@media only screen and (max-width: 480px) {
+
+  .habit-tracker-module {
+    flex-direction: column;
+  }
+
+
+  .habits-container {
+    width: 100%;
+
+  }
+
+  .schedule-container {
+    width: 100%;
+  }
+
+  .footer{
+    display: hidden;
+  }
 
 
 

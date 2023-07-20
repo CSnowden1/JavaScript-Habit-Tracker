@@ -7,10 +7,22 @@ import Overview from "./Components/habitProgress/overviewContainer";
 import Greeting from "./Components/greetingComponent/greeting";
 import "./App.css";
 import CustomButton from "./Components/reusableComponents/submitBtn";
+import { Modal } from 'semantic-ui-react';
+import HabitForm from "./Components/habitTackerComponents/addHabitModel";
 
 function App() {
   const [habitsChanged, setHabitsChanged] = useState(false);
   const [theme, setTheme] = useState("light");
+  const [isModuleVisible, setModuleVisible] = useState(false);
+
+  const openModule = () => {
+    setModuleVisible(true);
+  };
+
+  const closeModule = () => {
+    setModuleVisible(false);
+  };
+
 
   const handleHabitsChange = () => {
     setHabitsChanged(!habitsChanged);
@@ -45,19 +57,22 @@ const lightDark = {
         <div className="intro-container ">
           <Greeting time="Evening" name="Chris" day="Sunday" />
         </div>
-        <div className="profomance-container ">
+        <div className="performance-container">
           <Overview habitsChanged={habitsChanged} />
         </div>
-        <div className="habit-tracker-mobule">
+        <div className="habit-tracker-module">
           <div className="schedule-container ">
             <CalendarSection habitsChanged={habitsChanged} />
           </div>
-          <div className="habit-container">
+          <div className="habits-container">
             <HabitSection onHabitsChange={handleHabitsChange} />
           </div>
         </div>
-        <div className="add-habit-btn-box ">
-          <CustomButton title="Create A New Habit" />
+        <div className="add-habit-btn-box">
+          <CustomButton title="Create A New Habit"  onClick={openModule} />
+          <Modal visible={isModuleVisible} animationType="slide">
+            <HabitForm onClose={closeModule} />
+          </Modal>
         </div>
         <div className="footerRow">
             <p>Thank You for using our app</p>
