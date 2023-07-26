@@ -20,9 +20,10 @@ function HabitSection() {
     console.log("CalendarSection mounted.");
   }, []);
 
+
   const handleOpen = () => {
-    console.log("The Model Open Coming This Log is coming from the habitSection component");
     setOpen(true);
+    console.log("BTN Clciked")
   };
 
   const handleClose = () => {
@@ -99,6 +100,7 @@ function HabitSection() {
           onClose={editingHabit ? handleCancelEdit : handleClose}
           editingHabit={editingHabit}
         />
+        <button style={buttonStyles} onClick={handleOpen}>Create New Habit</button>
       </div>
     </>
   );
@@ -108,6 +110,22 @@ function HabitSection() {
 const containersStyles = {
   height: "auto",
   width: "100%"
+};
+
+
+
+const buttonStyles = {
+  borderRadius: '1.2rem',
+  backgroundColor: 'rgba(49, 21, 219, 0.72)',
+  color: "white",
+  width: '50%',
+  height: '3rem',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  marginBottom: '1rem',
+  justifySelf: 'center',
+  alignSelf: "center"
 };
 
 

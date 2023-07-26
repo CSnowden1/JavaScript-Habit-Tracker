@@ -1,20 +1,21 @@
-import CustomButton from "../reusableComponents/submitBtn";
-import { useState} from "react";
+// CustomButton.js
+import React from "react";
+import { Button } from "semantic-ui-react";
 
-
-function SubmitSection() {
-const [open, setOpen] = useState(false);
-
-
-const handleOpen = () => {
-    console.log("The Model Open Coming This Log is coming from the habitSection component");
-    setOpen(true);
+function CustomButton({ title, isModuleVisible, setModuleVisible }) {
+  const buttonStyles = {
+    // ... (existing styles)
   };
 
-<CustomButton title="Create New Habit" onClick={handleOpen} />
+  const handleButtonClick = () => {
+    setModuleVisible(!isModuleVisible);
+  };
 
+  return (
+    <Button style={buttonStyles} onClick={handleButtonClick}>
+      {title}
+    </Button>
+  );
 }
 
-
-export default SubmitSection
-
+export default CustomButton;

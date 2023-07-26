@@ -73,13 +73,12 @@ const HabitForm = ({ open, onClose, onSave, habit, onEdit }) => {
         { key: "Reddit", value: "https://img.icons8.com/external-wanicon-flat-wanicon/1x/external-breakfast-hotel-wanicon-flat-wanicon.png", text: "Reddit"},
         { key: "Instagram", value: "https://img.icons8.com/3d-fluency/1x/snapchat-squared.png", text: "Instagram"},
         { key: "Healthy Food", value: "https://img.icons8.com/3d-fluency/1x/avocado.png", text: "Healthy Food"},
-        { key: "Unhealthy Food", value: "https://icons8.com/icon/9JK55mRzcjvG/french-fries", text: "Unhealthy Food"},
-        
+        { key: "Unhealthy Food", value: "https://icons8.com/icon/9JK55mRzcjvG/french-fries", text: "Unhealthy Food"}
     ];
 
 
     return (
-        <Modal open={open} onClose={onClose} onSave={addHabit}>
+        <Modal  open={open} onClose={onClose} onSave={addHabit} >
         <Modal.Header>Add a Habit</Modal.Header>
         <Modal.Content>
             <Form>

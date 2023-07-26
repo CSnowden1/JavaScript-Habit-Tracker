@@ -1,16 +1,15 @@
-import { Container } from "semantic-ui-react"
+import { Container } from "semantic-ui-react";
 import { useEffect, useState } from "react";
 import ProgressBar from "./progressBar";
-import { BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, Tooltip } from "recharts";
 
 export default function Overview() {
     const [habits, setHabits] = useState([]);
-    const storedHabits = JSON.parse(localStorage.getItem('habits')) || [];
 
-    useEffect(() => {
-      setHabits(storedHabits);
-    }, [storedHabits]);
-
+  useEffect(() => {
+    const storedHabits = JSON.parse(localStorage.getItem("habits")) || [];
+    setHabits(storedHabits);
+  }, []);
 
     const containerStyles = {
         background: "rgba(49, 21, 219, .03)",
