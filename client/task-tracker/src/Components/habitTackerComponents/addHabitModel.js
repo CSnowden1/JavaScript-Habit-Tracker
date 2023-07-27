@@ -1,7 +1,7 @@
 import { useState, } from "react";
 import { Button, Modal, Form, Select } from "semantic-ui-react";
 import { v4 as uuidv4 } from 'uuid';
-
+import Habit from "../../../../../backend/src/Models/habitModel";
 
 function HabitO(name, image, frequency, time, goal = 0, count = 0) {
     this.id = uuidv4();
@@ -36,9 +36,18 @@ const HabitForm = ({ open, onClose, onSave, habit, onEdit }) => {
       });
 
 
-    const handleSave = () => {
+    const handleSave = async () => {
+
         const newHabit = new HabitO(name, image, frequency, time, goal);
         console.log("Habit Saved");
+
+        try {
+            const newHabit = new Habit(newHabitData);
+            await newHabit.save();
+            console.log("Habit saved to MongoDB");
+          } catch (error) {
+            console.error("Error saving habit to MongoDB:", error);
+          }
 
         if (habit) {
             const updatedHabit = { ...habit, ...newHabit };
