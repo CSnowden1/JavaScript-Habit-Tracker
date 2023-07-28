@@ -1,7 +1,7 @@
 import { useState, } from "react";
 import { Button, Modal, Form, Select } from "semantic-ui-react";
 import { v4 as uuidv4 } from 'uuid';
-import Habit from "../../../backend/src/Models/habitModel";
+import Habit from "../../Models/habitModel";
 
 function HabitO(name, image, frequency, time, goal = 0, count = 0) {
     this.id = uuidv4();

@@ -6,9 +6,7 @@ import CalendarSection from "./Components/calendarComponents/calenderSection";
 import Overview from "./Components/habitProgress/overviewContainer";
 import Greeting from "./Components/greetingComponent/greeting";
 import "./App.css";
-import { Modal } from "semantic-ui-react";
-import HabitForm from "./Components/habitTackerComponents/addHabitModel";
-import SubmitButton from "./Components/habitTackerComponents/submitBtn"
+
 
 function App() {
   const [habitsChanged, setHabitsChanged] = useState(false);
