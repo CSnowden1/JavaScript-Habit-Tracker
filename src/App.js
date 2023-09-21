@@ -62,7 +62,7 @@ const lightDark = {
           <div className="habits-container">
             <HabitSection onHabitsChange={handleHabitsChange} />
           </div>
-        </div>
+        </div>  
       </div>
     </div>
   );
