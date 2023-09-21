@@ -63,9 +63,6 @@ const lightDark = {
             <HabitSection onHabitsChange={handleHabitsChange} />
           </div>
         </div>
-        <div className="footerRow">
-            <p>Thank You for using our app</p>
-        </div>
       </div>
     </div>
   );
