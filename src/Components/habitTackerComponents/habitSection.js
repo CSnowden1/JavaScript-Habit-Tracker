@@ -57,11 +57,18 @@ function HabitSection() {
   };
 
   const handleDelete = (id) => {
-    const listItems = habits.filter((item) => item.id !== id);
-    localStorage.setItem('habits', JSON.stringify(listItems));
-    setHabits(listItems);
+    const confirmDelete = window.confirm("Are you sure you want to delete this habit?");
+    
+    if (confirmDelete) {
+      const listItems = habits.filter((item) => item.id !== id);
+      localStorage.setItem('habits', JSON.stringify(listItems));
+      setHabits(listItems);
+    } else {
+     
+    }
   };
 
+  
   const handleAdd = (id) => {
     const storedHabits = JSON.parse(localStorage.getItem("habits"));
     const updatedHabits = storedHabits.map((habit) => {
