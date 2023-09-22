@@ -2,11 +2,11 @@
   "name": "habit_tracker_backend",
   "version": "1.0.0",
   "description": "backend for habit tracker",
-  "main": "index.js",
+  "main": "src/server.js",
   "scripts": {
-    "start": "node backend/server.js",
-    "server": "node backend/server.js",
-    "dev": "nodemon backend/src/server.js",
+    "start": "node src/server.js",
+    "server": "node",
+    "dev": "nodemon ",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -27,6 +27,7 @@
     "express": "^4.18.2",
     "express-async-handler": "^1.2.0",
     "jsonwebtoken": "^9.0.1",
+    "mongodb": "^6.1.0",
     "mongoose": "^6.11.4",
     "nodemon": "^2.0.20"
   }

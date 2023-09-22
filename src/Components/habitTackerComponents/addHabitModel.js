@@ -36,15 +36,30 @@ const HabitForm = ({ open, onClose, onSave, habit, onEdit }) => {
       });
 
 
-    const handleSave = async () => {
+    const handleSave = async (e) => {
+
+        e.preventDefault();
 
         const newHabit = new HabitO(name, image, frequency, time, goal);
         console.log("Habit Saved");
 
+        await fetch("http://localhost:5000/habits", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newHabit),
+          })
+          .catch(error => {
+            window.alert(error);
+            return;
+          });
+
         try {
-            const newHabit = new Habit(newHabitData);
+            const newHabit = new Habit(newHabit);
             await newHabit.save();
             console.log("Habit saved to MongoDB");
+
           } catch (error) {
             console.error("Error saving habit to MongoDB:", error);
           }
