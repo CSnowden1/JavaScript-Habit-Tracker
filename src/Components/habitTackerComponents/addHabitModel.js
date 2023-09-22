@@ -133,7 +133,7 @@ const HabitForm = ({ open, onClose, onSave, habit, onEdit }) => {
                 </div>
             </Form.Field>
             <Form.Field>
-                <label>Select Time</label>
+                <label>How Frequently Will You Track This Habit?</label>
                 <Select
                     name="time-select"
                     options={options}
