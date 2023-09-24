@@ -56,24 +56,73 @@ router.post("/", async (req, res) => {
   res.status(204).send(result);
 });
 
-// Update a record by id
-router.patch("/:id", async (req, res) => {
-  const query = { _id: new ObjectId(req.params.id) };
-  const updates = {
-    $set: {
-      "habit name": req.body.name, 
-      "frequency": req.body.frequency, 
-      "time": req.body.time,
-      "count": req.body.count,
-      "goal": req.body.goal,
-      "image": req.body.image,
+router.patch("/:uuid", async (req, res) => {
+  try {
+    const { uuid } = req.params;
+    const collection = req.db.collection("habits");
+    const query = { uuid: uuid };
+
+    const updates = {
+      $set: {
+        "habit name": req.body.name,
+        "frequency": req.body.frequency,
+        "time": req.body.time,
+        "goal": req.body.goal,
+        "image": req.body.image,
+      },
+    };
+
+    const result = await collection.updateOne(query, updates);
+
+    if (result.modifiedCount === 0) {
+      return res.status(404).json({ message: 'Habit not found' });
     }
-  };
 
-  const collection = req.db.collection("habits");
-  const result = await collection.updateOne(query, updates);
+    return res.status(200).send(result);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
 
-  res.status(200).send(result);
+router.patch("/:uuid/add", async (req, res) => {
+  try {
+    const { uuid } = req.params;
+    const collection = req.db.collection("habits");
+    const query = { uuid: uuid };
+
+    // Increment the count property
+    const updates = {
+      $inc: { count: 1 },
+    };
+
+    const result = await collection.updateOne(query, updates);
+
+    return res.status(200).send(result);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
+router.patch("/:uuid/minus", async (req, res) => {
+  try {
+    const { uuid } = req.params;
+    const collection = req.db.collection("habits");
+    const query = { uuid: uuid };
+
+    // Decrement the count property
+    const updates = {
+      $inc: { count: -1 },
+    };
+
+    const result = await collection.updateOne(query, updates);
+
+    return res.status(200).send(result);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
 });
 
 
