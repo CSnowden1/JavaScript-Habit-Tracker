@@ -37,7 +37,7 @@ function HabitBar({ habit, deleteFunction, editFunction, Add, Minus, completed})
         </div>
         <div className="right-styles">
           <Button icon="edit" onClick={() => editFunction(habit.id)} />
-          <Button icon="delete" onClick={() => deleteFunction(habit.id)}/>
+          <Button icon="delete" onClick={() => deleteFunction(habit.uuid)}/>
         </div>
       </div>
     </>

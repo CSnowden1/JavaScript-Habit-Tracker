@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Habit from "../../Models/habitModel";
 
 function HabitO(name, image, frequency, time, goal = 0, count = 0) {
-    this.id = uuidv4();
+    this.uuid = uuidv4();
     this.name = name;
     this.image = image;
     this.frequency = frequency;

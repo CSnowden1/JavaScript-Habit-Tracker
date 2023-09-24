@@ -43,7 +43,7 @@ router.get("/:id", async (req, res) => {
 // Create a new record
 router.post("/", async (req, res) => {
   const newDocument = {
-    "id": req.body.id,
+    "uuid": req.body.uuid,
     "habit name": req.body.name, 
     "frequency": req.body.frequency, 
     "time": req.body.time,
@@ -76,13 +76,26 @@ router.patch("/:id", async (req, res) => {
   res.status(200).send(result);
 });
 
-// Delete a record
-router.delete("/:id", async (req, res) => {
-  const query = { _id: new ObjectId(req.params.id) };
-  const collection = req.db.collection("habits");
-  const result = await collection.deleteOne(query);
 
-  res.status(200).send(result);
+router.delete('/:uuid', async (req, res) => {
+  try {
+    const { uuid } = req.params;
+    const collection = req.db.collection("habits");
+    const query = { uuid: uuid }; // Use the "uuid" field to query
+
+    const result = await collection.deleteOne(query);
+
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ message: 'Habit not found' });
+    }
+
+    return res.status(204).send() && console.log('Habit Deleted') // Success, no content response
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
 });
+
+
 
 module.exports = router;

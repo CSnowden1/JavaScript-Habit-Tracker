@@ -55,16 +55,28 @@ function HabitSection() {
     setEditingHabit(null);
     handleClose();
   };
-
-  const handleDelete = (id) => {
+  
+  const handleDelete = async (uuid) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this habit?");
     
     if (confirmDelete) {
-      const listItems = habits.filter((item) => item.id !== id);
-      localStorage.setItem('habits', JSON.stringify(listItems));
-      setHabits(listItems);
-    } else {
-     
+      try {
+        // Remove the habit from the local habits list
+        const listItems = habits.filter((item) => item.uuid !== uuid);
+        localStorage.setItem('habits', JSON.stringify(listItems));
+  
+        // Send a DELETE request to delete the habit on the server
+        await fetch(`http://localhost:5000/habits/${uuid}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+  
+        setHabits(listItems);
+      } catch (error) {
+        window.alert(error.message);
+      }
     }
   };
 
