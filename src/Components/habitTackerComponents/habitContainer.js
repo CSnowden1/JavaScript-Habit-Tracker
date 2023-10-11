@@ -28,7 +28,7 @@ function HabitContainer({ habits, handleSave, deleteFunction, editFunction, Add,
       {habits.length ? (
         <CustomContainer onChange={(e) => handleSave(habits)}>
           {habits.map((habit) => (
-            <HabitBar style={divStyles} key={habit.id} habit={habit} deleteFunction={deleteFunction} editFunction={editFunction} Add={Add} Minus={Minus} />
+            <HabitBar style={divStyles} key={habit._id} habit={habit} deleteFunction={deleteFunction} editFunction={editFunction} Add={Add} Minus={Minus} />
           ))}
         </CustomContainer>
       ) : (

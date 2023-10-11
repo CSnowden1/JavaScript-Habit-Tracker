@@ -21,8 +21,8 @@ function HabitBar({ habit, deleteFunction, editFunction, Add, Minus, completed})
     <>
       <div key={habit.id} habit={habit}  class="flex-row" style={{...animations}}>
         <div className="left-styles">
-          <Button icon="plus" onClick={() => Add(habit.id) } />
-          <Button icon="minus" onClick={() => Minus(habit.id)} />
+          <Button icon="plus" onClick={() => Add(habit._id) } />
+          <Button icon="minus" onClick={() => Minus(habit._id)} />
         </div>
         <div className='middle-styles'>
           <div>
@@ -36,8 +36,8 @@ function HabitBar({ habit, deleteFunction, editFunction, Add, Minus, completed})
           </div>
         </div>
         <div className="right-styles">
-          <Button icon="edit" onClick={() => editFunction(habit.id)} />
-          <Button icon="delete" onClick={() => deleteFunction(habit.uuid)}/>
+          <Button icon="edit" onClick={() => editFunction(habit._id)} />
+          <Button icon="delete" onClick={() => deleteFunction(habit._id)}/>
         </div>
       </div>
     </>

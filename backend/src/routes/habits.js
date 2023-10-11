@@ -85,11 +85,12 @@ router.patch("/:uuid", async (req, res) => {
   }
 });
 
-router.patch("/:uuid/add", async (req, res) => {
+
+router.patch("/:id/add", async (req, res) => {
   try {
-    const { uuid } = req.params;
+    const { id } = req.params; // Change from uuid to id
     const collection = req.db.collection("habits");
-    const query = { uuid: uuid };
+    const query = { _id: new ObjectId(id) }; // Change from uuid to _id
 
     // Increment the count property
     const updates = {
@@ -105,11 +106,11 @@ router.patch("/:uuid/add", async (req, res) => {
   }
 });
 
-router.patch("/:uuid/minus", async (req, res) => {
+router.patch("/:id/minus", async (req, res) => {
   try {
-    const { uuid } = req.params;
+    const { id } = req.params; // Change from uuid to id
     const collection = req.db.collection("habits");
-    const query = { uuid: uuid };
+    const query = { _id: new ObjectId(id) }; // Change from uuid to _id
 
     // Decrement the count property
     const updates = {
@@ -125,6 +126,7 @@ router.patch("/:uuid/minus", async (req, res) => {
   }
 });
 
+
 router.delete('/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -138,7 +140,7 @@ router.delete('/:id', async (req, res) => {
       return res.status(404).json({ message: 'Habit not found' });
     }
 
-    return res.status(204).send() && console.log('Habit Deleted'); // Success, no content response
+    return res.status(204).json({ message: 'Habit Deleted' });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Internal Server Error' });

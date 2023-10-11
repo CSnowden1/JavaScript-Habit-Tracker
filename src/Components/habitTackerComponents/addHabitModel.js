@@ -10,7 +10,7 @@ function HabitO(name, image, frequency, time, goal = 0, count = 0) {
     this.frequency = frequency;
     this.time = time;
     this.goal = parseInt(goal);
-    this.count = count;
+    this.count = parseInt(count);
 
 
 }

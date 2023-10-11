@@ -53,6 +53,8 @@ function HabitSection() {
     setOpen(false);
   };
 
+
+
   const handleSave = async (newHabit) => {
      if (editingHabit) {
     try {
@@ -135,54 +137,46 @@ function HabitSection() {
   
   const handleDelete = async (_id) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this habit?");
+    console.log(_id);
     
     if (confirmDelete) {
       try {
-        // Remove the habit from the local habits list
-        const listItems = habits.filter((item) => item._id !== _id);
-        localStorage.setItem('habits', JSON.stringify(listItems));
-  
         // Send a DELETE request to delete the habit on the server
-        await fetch(`http://localhost:5000/habits/${_id}`, {
+        const response = await fetch(`http://localhost:5000/habits/${_id}`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
           },
         });
   
-        setHabits(listItems);
+        if (!response.ok) {
+          throw new Error(`Failed to delete habit: ${response.statusText}`);
+        }
+  
+        // Update local state immediately after successful deletion
+        setHabits((prevHabits) => prevHabits.filter((habit) => habit._id !== _id));
+  
       } catch (error) {
-        window.alert(error.message);
+        console.error("Error deleting habit:", error);
+        window.alert("Failed to delete habit. Please try again.");
       }
     }
   };
+  
 
   const handleAdd = async (_id) => {
-    const habitData = {
-      _id: _id,
-      // Other properties as needed
-    };
-  
     try {
-      // Add the 'await' keyword here
-      const response = await fetch(`http://localhost:5000/habits/${id}/add`, {
+      const response = await fetch(`http://localhost:5000/habits/${_id}/add`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(habitData),
+        body: JSON.stringify({ _id }),
       });
   
       if (response.ok) {
-        const storedHabits = JSON.parse(localStorage.getItem("habits"));
-        const updatedHabits = storedHabits.map((habit) => {
-          if (habit._id === _id) {
-            habit.count++;
-            console.log("Add Clicked for Habit:", habit._id);
-          }
-          return habit;
-        });
-        localStorage.setItem("habits", JSON.stringify(updatedHabits));
+        // Fetch updated habits from the server
+        const updatedHabits = await fetchHabitsFromServer();
         setHabits(updatedHabits);
       } else {
         console.error("Failed to update habit on the server");
@@ -193,31 +187,18 @@ function HabitSection() {
   };
   
   const handleMinus = async (_id) => {
-    const habitData = {
-      _id: _id,
-      // Other properties as needed
-    };
-  
     try {
-      // Add the 'await' keyword here
-      const response = await fetch(`http://localhost:5000/habits/${id}/minus`, {
+      const response = await fetch(`http://localhost:5000/habits/${_id}/minus`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(habitData),
+        body: JSON.stringify({ _id }),
       });
   
       if (response.ok) {
-        const storedHabits = JSON.parse(localStorage.getItem("habits"));
-        const updatedHabits = storedHabits.map((habit) => {
-          if (habit._id === _id) {
-            habit.count--;
-            console.log("Minus Clicked for Habit:", habit._id); // Corrected log message
-          }
-          return habit;
-        });
-        localStorage.setItem("habits", JSON.stringify(updatedHabits));
+        // Fetch updated habits from the server
+        const updatedHabits = await fetchHabitsFromServer();
         setHabits(updatedHabits);
       } else {
         console.error("Failed to update habit on the server");
@@ -226,6 +207,24 @@ function HabitSection() {
       console.error(error);
     }
   };
+  
+  // Function to fetch habits from the server
+  const fetchHabitsFromServer = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/habits/");
+      if (response.ok) {
+        const habitsData = await response.json();
+        return habitsData;
+      } else {
+        console.error("Failed to fetch habits from the server");
+        return [];
+      }
+    } catch (error) {
+      console.error("Error fetching habits:", error);
+      return [];
+    }
+  };
+  
 
   return (
     <>
