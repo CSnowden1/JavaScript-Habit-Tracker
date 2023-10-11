@@ -35,13 +35,13 @@ function calenderBar({ habit}) {
 
   };
 
-  const frequency = habit.frequency.charAt(0).toUpperCase() + habit.frequency.slice(1);
+ // const frequency = habit.frequency.charAt(0).toUpperCase() + habit.frequency.slice(1);
 
 
 
   return (
     <>
-      <div key={habit.id} habit={habit} style={flexRow}>
+      <div key={habit._id} habit={habit} style={flexRow}>
         <div style={imgStyle}>
           <Image src={habit.image}  />
         </div>
@@ -50,7 +50,7 @@ function calenderBar({ habit}) {
         </div>
         <div style={dividerStyle}>|</div>
         <div>
-          <Header as='h2' style={headerStyle}>{frequency}</Header>
+          <Header as='h2' style={headerStyle}>{habit.frequency}</Header>
         </div>
       </div>
     </>

@@ -125,12 +125,12 @@ router.patch("/:uuid/minus", async (req, res) => {
   }
 });
 
-
-router.delete('/:uuid', async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
-    const { uuid } = req.params;
+    const { id } = req.params;
+    const objectId = new ObjectId(id);
     const collection = req.db.collection("habits");
-    const query = { uuid: uuid }; // Use the "uuid" field to query
+    const query = { _id: objectId };
 
     const result = await collection.deleteOne(query);
 
@@ -138,13 +138,12 @@ router.delete('/:uuid', async (req, res) => {
       return res.status(404).json({ message: 'Habit not found' });
     }
 
-    return res.status(204).send() && console.log('Habit Deleted') // Success, no content response
+    return res.status(204).send() && console.log('Habit Deleted'); // Success, no content response
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 });
-
 
 
 module.exports = router;

@@ -7,11 +7,30 @@ import CustomContainer from '../reusableComponents/container';
 function CalendarSection() {
   const [selectedOption, setSelectedOption] = useState("option1");
   const [habits, setHabits] = useState([]);
-  const storedHabits = JSON.parse(localStorage.getItem('habits')) || [];
+  //const storedHabits = JSON.parse(localStorage.getItem('habits')) || [];
 
-  useEffect(() => {
-    setHabits(storedHabits);
-  }, [storedHabits]);
+ // useEffect(() => {
+  //  setHabits(storedHabits);
+ //}, [storedHabits]);
+
+ useEffect(() => {
+  // Fetch habits from the server
+  const fetchHabits = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/habits/");
+      if (response.ok) {
+        const habitsData = await response.json();
+        setHabits(habitsData);
+      } else {
+        console.error("Failed to fetch habits from the server");
+      }
+    } catch (error) {
+      console.error("Error fetching habits:", error);
+    }
+  };
+
+  fetchHabits();
+}, []);
 
   useEffect(() => {
     console.log("Selected option:", selectedOption);
@@ -57,7 +76,7 @@ function CalendarSection() {
         />
         <CustomContainer id="calendar-container">
           {filteredHabits.map((habit) => (
-            <CalenderBar key={habit.id} habit={habit} />
+            <CalenderBar key={habit._id} habit={habit} />
           ))}
         </CustomContainer>
       </div>

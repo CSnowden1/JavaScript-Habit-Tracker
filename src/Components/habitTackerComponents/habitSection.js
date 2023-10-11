@@ -9,16 +9,39 @@ import SearchBar from "../reusableComponents/search";
 function HabitSection() {
   const [open, setOpen] = useState(false);
   const [habits, setHabits] = useState([]);
-  const storedHabits = JSON.parse(localStorage.getItem('habits')) || [];
+  //const storedHabits = JSON.parse(localStorage.getItem('habits')) || [];
   const [editingHabit, setEditingHabit] = useState(null);
 
-  useEffect(() => {
-    setHabits(storedHabits);
-  }, [storedHabits]);
+  //useEffect(() => {
+  //  setHabits(storedHabits);
+ // }, [storedHabits]);
 
   useEffect(() => {
     console.log("CalendarSection mounted.");
   }, []);
+
+
+
+
+  useEffect(() => {
+    // Fetch habits from the server
+    const fetchHabits = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/habits/");
+        if (response.ok) {
+          const habitsData = await response.json();
+          setHabits(habitsData);
+        } else {
+          console.error("Failed to fetch habits from the server");
+        }
+      } catch (error) {
+        console.error("Error fetching habits:", error);
+      }
+    };
+
+    fetchHabits();
+  }, []);
+
 
 
   const handleOpen = () => {
@@ -31,28 +54,49 @@ function HabitSection() {
   };
 
   const handleSave = async (newHabit) => {
-    if (editingHabit) {
-      try {
-        const updatedHabits = habits.map((habit) =>
-          habit.uuid === editingHabit.uuid ? { ...newHabit, uuid: habit.uuid } : habit
-        );
-        localStorage.setItem("habits", JSON.stringify(updatedHabits));
-  
-        // Send a PATCH request to update the habit on the server
-        await fetch(`http://localhost:5000/habits/${editingHabit.uuid}`, {
+     if (editingHabit) {
+    try {
+      const updatedHabits = habits.map((habit) =>
+        habit._id === editingHabit._id ? { ...newHabit, _id: habit._id } : habit
+      );
+      localStorage.setItem("habits", JSON.stringify(updatedHabits));
+
+      if (editingHabit._id) {
+        // If the habit has a MongoDB _id, update it on the server
+        await fetch(`http://localhost:5000/habits/${editingHabit._id}`, {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(newHabit), // Include the updated habit data in the request body
+          body: JSON.stringify(newHabit),
         });
-  
-        setHabits(updatedHabits);
-        setEditingHabit(null);
-        handleClose();
-      } catch (error) {
-        window.alert(error.message);
+      } else {
+        // If the habit doesn't have a MongoDB _id, save it to the server
+        const response = await fetch("http://localhost:5000/habits", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newHabit),
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          const updatedHabitsWithId = updatedHabits.map((habit) =>
+            habit === editingHabit ? { ...result, _id: result._id } : habit
+          );
+          localStorage.setItem("habits", JSON.stringify(updatedHabitsWithId));
+        } else {
+          window.alert("Failed to add a new habit.");
+        }
       }
+
+      setHabits(updatedHabits);
+      setEditingHabit(null);
+      handleClose();
+    } catch (error) {
+      window.alert(error.message);
+    }
     } else {
       // Adding a new habit
       try {
@@ -89,17 +133,17 @@ function HabitSection() {
     handleClose();
   };
   
-  const handleDelete = async (uuid) => {
+  const handleDelete = async (_id) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this habit?");
     
     if (confirmDelete) {
       try {
         // Remove the habit from the local habits list
-        const listItems = habits.filter((item) => item.uuid !== uuid);
+        const listItems = habits.filter((item) => item._id !== _id);
         localStorage.setItem('habits', JSON.stringify(listItems));
   
         // Send a DELETE request to delete the habit on the server
-        await fetch(`http://localhost:5000/habits/${uuid}`, {
+        await fetch(`http://localhost:5000/habits/${_id}`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
@@ -112,16 +156,16 @@ function HabitSection() {
       }
     }
   };
-  const handleAdd = async (uuid) => {
-    // Assuming you have the habit data in a format suitable for sending to the server
+
+  const handleAdd = async (_id) => {
     const habitData = {
-      uuid: uuid,
+      _id: _id,
       // Other properties as needed
     };
   
     try {
-      // Send a PATCH request to update the habit on the server
-      const response = await fetch(`http://localhost:5000/habits/${uuid}/add`, {
+      // Add the 'await' keyword here
+      const response = await fetch(`http://localhost:5000/habits/${id}/add`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -130,13 +174,11 @@ function HabitSection() {
       });
   
       if (response.ok) {
-        // Successfully updated on the server, you can update the local storage or state
-        // as needed.
         const storedHabits = JSON.parse(localStorage.getItem("habits"));
         const updatedHabits = storedHabits.map((habit) => {
-          if (habit.uuid === uuid) {
+          if (habit._id === _id) {
             habit.count++;
-            console.log("Add Clicked for Habit:", habit.uuid);
+            console.log("Add Clicked for Habit:", habit._id);
           }
           return habit;
         });
@@ -149,18 +191,16 @@ function HabitSection() {
       console.error(error);
     }
   };
-
-
   
-  const handleMinus = (uuid) => {
+  const handleMinus = async (_id) => {
     const habitData = {
-      uuid: uuid,
+      _id: _id,
       // Other properties as needed
     };
   
     try {
-      // Send a PATCH request to update the habit on the server
-      const response = await fetch(`http://localhost:5000/habits/${uuid}/minus`, {
+      // Add the 'await' keyword here
+      const response = await fetch(`http://localhost:5000/habits/${id}/minus`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -169,13 +209,11 @@ function HabitSection() {
       });
   
       if (response.ok) {
-        // Successfully updated on the server, you can update the local storage or state
-        // as needed.
         const storedHabits = JSON.parse(localStorage.getItem("habits"));
         const updatedHabits = storedHabits.map((habit) => {
-          if (habit.uuid === uuid) {
+          if (habit._id === _id) {
             habit.count--;
-            console.log("Add Clicked for Habit:", habit.uuid);
+            console.log("Minus Clicked for Habit:", habit._id); // Corrected log message
           }
           return habit;
         });
@@ -187,7 +225,6 @@ function HabitSection() {
     } catch (error) {
       console.error(error);
     }
-  };
   };
 
   return (
