@@ -1,11 +1,10 @@
-import { useState } from 'react';
 import { Button } from 'semantic-ui-react';
 
-function NavigationBar() {
+function NavigationBar({open}) {
 
     return (
       <div>
-            <Button>Log in</Button>
+            <Button onClick={open}>Log in</Button>
       </div>
     );
   }
