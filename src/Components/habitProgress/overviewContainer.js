@@ -6,10 +6,32 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip } from "recharts";
 export default function Overview() {
     const [habits, setHabits] = useState([]);
 
+ // useEffect(() => {
+  //  const storedHabits = JSON.parse(localStorage.getItem("habits")) || [];
+  //  setHabits(storedHabits);
+  //}, []);
+
+
+
   useEffect(() => {
-    const storedHabits = JSON.parse(localStorage.getItem("habits")) || [];
-    setHabits(storedHabits);
+    // Fetch habits from the server
+    const fetchHabits = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/habits/");
+        if (response.ok) {
+          const habitsData = await response.json();
+          setHabits(habitsData);
+        } else {
+          console.error("Failed to fetch habits from the server");
+        }
+      } catch (error) {
+        console.error("Error fetching habits:", error);
+      }
+    };
+
+    fetchHabits();
   }, []);
+
 
     const containerStyles = {
         background: "rgba(49, 21, 219, .03)",
