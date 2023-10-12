@@ -4,6 +4,8 @@ const express = require('express');
 const app = express();
 const cors = require("cors");
 const habits = require("./routes/habits.js");
+const users = require("./routes/users.js");
+
 require("./loadEnvironment.js");
 const connectToDatabase = require("./db/conn.js");
 
@@ -16,6 +18,10 @@ app.use(express.json());
 
 // Use the habits route
 app.use("/habits", habits);
+
+
+// Use User routes
+app.use("/users", users);
 
 
 app.get('/', (req, res) => {
