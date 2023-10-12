@@ -1,19 +1,21 @@
-// middleware/authMiddleware.js
-
 const jwt = require('jsonwebtoken');
 
-const authMiddleware = (req, res, next) => {
-  const token = req.header('x-auth-token');
-  if (!token) {
-    return res.status(401).json({ error: 'Access denied. No token provided.' });
-  }
+function authenticateToken(req, res, next) {
+  const token = req.header('Authorization');
 
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded.userId;
+  if (!token) return res.status(401).json({ message: 'Unauthorized' });
+
+  jwt.verify(token, 'your-secret-key', (err, user) => {
+    if (err) return res.status(403).json({ message: 'Forbidden' });
+
+    req.user = user;
     next();
-  } catch (error) {
-    res.status(401).json({ error: 'Invalid token.' });
-  }
-};
+  });
+}
 
+
+
+// Use the middleware in routes that require authentication
+router.get('/secure-route', authenticateToken, (req, res) => {
+  res.json({ message: 'Secure Route', user: req.user });
+});

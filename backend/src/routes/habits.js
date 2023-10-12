@@ -39,7 +39,7 @@ router.post("/", async (req, res) => {
     "count": req.body.count,
     "goal": req.body.goal,
     "image": req.body.image,
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'Users' },
   };
   const collection = req.db.collection("habits");
   const result = await collection.insertOne(newDocument);
