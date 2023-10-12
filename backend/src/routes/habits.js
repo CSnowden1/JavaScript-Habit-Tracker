@@ -1,7 +1,7 @@
 const express = require('express');
 const { ObjectId } = require('mongodb');
 const connectToDbMiddleware = require('../Middleware/databaseConnection.js');
-
+const mongoose = require('mongoose');
 const router = express.Router();
 
 
@@ -39,6 +39,7 @@ router.post("/", async (req, res) => {
     "count": req.body.count,
     "goal": req.body.goal,
     "image": req.body.image,
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   };
   const collection = req.db.collection("habits");
   const result = await collection.insertOne(newDocument);

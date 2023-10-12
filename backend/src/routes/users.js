@@ -1,6 +1,7 @@
 const express = require('express');
 const connectToDbMiddleware = require('../Middleware/databaseConnection.js');
 const { ObjectId } = require('mongodb');
+const mongoose = require('mongoose');
 
 
 const router = express.Router();
@@ -26,6 +27,7 @@ router.get("/", async (req, res) => {
         "last name": req.body['last name'],
         "username": req.body.username,
         "password": req.body.password,
+        habits: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Habit' }],
       };
   
       const collection = req.db.collection("users");
