@@ -1,8 +1,5 @@
 const express = require('express');
-const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const passport = require('passport'); // Import Passport
-const LocalStrategy = require('passport-local').Strategy;
 const User = require('../Models/userModel');
 const connectToDatabase = require('../db/conn.js');
 
@@ -20,61 +17,33 @@ async function connectToDbMiddleware(req, res, next) {
   }
 }
 
-// Passport initialization
-passport.use(
-  new LocalStrategy({ usernameField: 'email' }, async (email, password, done) => {
-    try {
-      const user = await User.findOne({ email });
-      if (!user) {
-        return done(null, false, { message: 'Invalid credentials.' });
-      }
 
-      const isPasswordValid = await bcrypt.compare(password, user.password);
-      if (!isPasswordValid) {
-        return done(null, false, { message: 'Invalid credentials.' });
-      }
 
-      return done(null, user);
-    } catch (error) {
-      return done(error);
-    }
-  })
-);
+router.post('/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
 
-passport.serializeUser((user, done) => {
-  done(null, user.id);
-});
+    // Authenticate the user
+    const user = await User.findOne({ email });
 
-passport.deserializeUser((id, done) => {
-  User.findById(id, (err, user) => {
-    done(err, user);
-  });
-});
-
-router.use(passport.initialize());
-router.use(passport.session());
-
-router.post('/register', async (req, res) => {
-  // ... (your registration logic)
-});
-
-router.post('/login', (req, res, next) => {
-  passport.authenticate('local', (err, user, info) => {
-    if (err) {
-      return next(err);
-    }
-    if (!user) {
+    if (!user || !(await user.comparePassword(password))) {
+      // Invalid credentials
       return res.status(401).json({ error: 'Invalid credentials.' });
     }
-    req.logIn(user, (err) => {
-      if (err) {
-        return next(err);
-      }
-      const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
-      return res.json({ token });
-    });
-  })(req, res, next);
+
+    // Generate a token for the authenticated user
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
+
+    // Send a JSON response indicating successful login with the token
+    res.json({ token });
+  } catch (error) {
+    console.error('Error during login:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
+
+
+
 
 module.exports = {
   router,

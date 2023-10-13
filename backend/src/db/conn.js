@@ -1,24 +1,23 @@
-const { MongoClient } = require("mongodb");
+// db/conn.js
+const mongoose = require('mongoose');
 
-const connectionString = 'mongodb+srv://ChiefTweet:94112103@snowdencluster.hjug07l.mongodb.net';
-const dbName = 'User-Habits'; // Replace with your actual database name
-
-const client = new MongoClient(connectionString);
-
-// Wrap the code in an async function
 async function connectToDatabase() {
-  let conn;
   try {
-    conn = await client.connect();
-    console.log('Connected to database');
-  } catch (e) {
-    console.error(e);
+    const uri = process.env.MONGO_PROD_URI;
+    const options = {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    };
+
+    const client = await mongoose.connect(uri, options);
+    console.log('Database connected!');
+    
+    const db = client.connection.db; // Get the database from the client
+    return db;
+  } catch (error) {
+    console.error('Error connecting to the database:', error);
+    throw error;
   }
-
-  let db = conn.db(dbName); // Use the correct database name here
-
-  return db;
 }
 
-// Export the async function
 module.exports = connectToDatabase;

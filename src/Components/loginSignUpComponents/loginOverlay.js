@@ -20,7 +20,7 @@ const LoginOverlay = ({ open, close }) => {
       : { firstName, lastName, username, password };
   
     try {
-      const response = await fetch(`http://localhost:5000/users/${isLogin ? 'login' : 'register'}`, {
+      const response = await fetch(`http://localhost:5000/users/auth/${isLogin ? 'login' : 'register'}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

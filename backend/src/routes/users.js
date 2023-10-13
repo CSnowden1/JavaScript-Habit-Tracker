@@ -1,11 +1,10 @@
 const express = require('express');
 const authDBConnection = require('../Middleware/authDBConnection.js');
 const User = require('../Models/userModel.js');
-const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const { ObjectId } = require('mongodb');
-
+const connectToDatabase = require('../db/conn.js')
 const router = express.Router();
 
 
@@ -29,15 +28,18 @@ const authenticateToken = (req, res, next) => {
   });
 };
 
+
+
+
+
+
 router.use(authDBConnection.connectToDbMiddleware);
 router.use('/auth', authDBConnection.router);
 
 
-//const authRoutes = require('./auth');
-//router.use('/auth', authRoutes);
 
 
-router.post('/register', async (req, res) => {
+router.post('/auth/register', async (req, res) => {
   try {
     const { firstName, lastName, username, password } = req.body;
 
