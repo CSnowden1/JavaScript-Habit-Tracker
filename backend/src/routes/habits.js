@@ -1,6 +1,6 @@
 const express = require('express');
 const { ObjectId } = require('mongodb');
-const connectToDbMiddleware = require('../Middleware/databaseConnection.js');
+const authDBConnection = require('../Middleware/authDBConnection.js');
 const mongoose = require('mongoose');
 const router = express.Router();
 
@@ -8,7 +8,7 @@ const router = express.Router();
 
 
 
-router.use(connectToDbMiddleware);
+router.use(authDBConnection.connectToDbMiddleware);
 // Get a list of all the records.
 router.get("/", async (req, res) => {
   const collection = req.db.collection("habits");

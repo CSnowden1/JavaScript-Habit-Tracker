@@ -1,5 +1,5 @@
 const express = require('express');
-const connectToDbMiddleware = require('../Middleware/databaseConnection.js');
+const authDBConnection = require('../Middleware/authDBConnection.js');
 const User = require('../Models/userModel.js');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
@@ -7,6 +7,7 @@ const crypto = require('crypto');
 const { ObjectId } = require('mongodb');
 
 const router = express.Router();
+
 
 
 const generateSecretKey = () => {
@@ -28,21 +29,31 @@ const authenticateToken = (req, res, next) => {
   });
 };
 
-router.use(connectToDbMiddleware);
+router.use(authDBConnection.connectToDbMiddleware);
+router.use('/auth', authDBConnection.router);
+
+
+//const authRoutes = require('./auth');
+//router.use('/auth', authRoutes);
+
+
 router.post('/register', async (req, res) => {
   try {
     const { firstName, lastName, username, password } = req.body;
 
     const collection = req.db.collection("users");
 
+    // Check if the username is already taken
     const existingUser = await collection.findOne({ username });
     if (existingUser) {
       return res.status(400).json({ message: 'Username already taken' });
     }
 
+    // Create a new user instance
     const newUser = new User({ firstName, lastName, username, password });
 
-    const result = await collection.insertOne(newUser);
+    // Save the new user to the database
+    await newUser.save()
 
     // Generate a token for the new user
     const token = jwt.sign({ userId: newUser._id }, secretKey, { expiresIn: '100h' });
@@ -56,11 +67,24 @@ router.post('/register', async (req, res) => {
   }
 });
 
-
-router.post('/login', passport.authenticate('local'), async (req, res) => {
+router.post('/login', async (req, res) => {
   try {
-    const token = jwt.sign({ userId: req.user._id }, secretKey, { expiresIn: '3h' });
-    res.json({ message: 'Login successful', token, user: req.user });
+    const { username, password } = req.body;
+
+    // Authenticate the user
+    const collection = req.db.collection("users");
+    const user = await collection.findOne({ username });
+
+    if (!user || !(await user.comparePassword(password))) {
+      // Invalid credentials
+      return res.status(401).json({ message: 'Invalid credentials' });
+    }
+
+    // Generate a token for the authenticated user
+    const token = jwt.sign({ userId: user._id }, secretKey, { expiresIn: '3h' });
+
+    // Send a JSON response indicating successful login with the token
+    res.json({ message: 'Login successful', token, user });
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).json({ message: 'Internal Server Error' });
