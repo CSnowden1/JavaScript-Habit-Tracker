@@ -1,20 +1,21 @@
 const express = require('express');
-const authDBConnection = require('../Middleware/authDBConnection.js');
-const User = require('../Models/userModel.js');
+const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const crypto = require('crypto');
 const { ObjectId } = require('mongodb');
-const connectToDatabase = require('../db/conn.js')
+const User = require('../Models/userModel.js');
+const connectToDatabase = require('../db/conn.js');
+const authDBConnection = require('../Middleware/authDBConnection.js');
+
 const router = express.Router();
 
-
-
+// Generate a secret key for JWT or use from environment variables
 const generateSecretKey = () => {
   return crypto.randomBytes(32).toString('hex');
 };
 
 const secretKey = process.env.SECRET_KEY || generateSecretKey();
 
+// Middleware to authenticate JWT token
 const authenticateToken = (req, res, next) => {
   const token = req.header('Authorization');
 
@@ -28,21 +29,16 @@ const authenticateToken = (req, res, next) => {
   });
 };
 
-
-
-
-
-
+// Middleware to connect to the database
 router.use(authDBConnection.connectToDbMiddleware);
+
+// Additional routes defined in separate file
 router.use('/auth', authDBConnection.router);
 
-
-
-
+// Register a new user
 router.post('/auth/register', async (req, res) => {
   try {
     const { firstName, lastName, username, password } = req.body;
-
     const collection = req.db.collection("users");
 
     // Check if the username is already taken
@@ -55,7 +51,7 @@ router.post('/auth/register', async (req, res) => {
     const newUser = new User({ firstName, lastName, username, password });
 
     // Save the new user to the database
-    await newUser.save()
+    await newUser.save();
 
     // Generate a token for the new user
     const token = jwt.sign({ userId: newUser._id }, secretKey, { expiresIn: '100h' });
@@ -69,16 +65,21 @@ router.post('/auth/register', async (req, res) => {
   }
 });
 
-router.post('/login', async (req, res) => {
+router.post('/auth/login', async (req, res) => {
   try {
     const { username, password } = req.body;
+    //const collection = req.db.collection("users");
+    // Ensure that you are getting the full user object from the database
+    //const user = await collection.findOne({ username });
+    const user = await User.findOne({ username });
 
-    // Authenticate the user
-    const collection = req.db.collection("users");
-    const user = await collection.findOne({ username });
 
-    if (!user || !(await user.comparePassword(password))) {
+
+
+    // Check if user exists and has the comparePassword method
+    if (!user ||  !(await user.comparePassword(password))) {
       // Invalid credentials
+      console.log('Invalid credentials:', { user });
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
@@ -87,12 +88,14 @@ router.post('/login', async (req, res) => {
 
     // Send a JSON response indicating successful login with the token
     res.json({ message: 'Login successful', token, user });
+
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
 });
 
+// Get all users
 router.get("/", async (req, res) => {
   try {
     const collection = req.db.collection("users");
@@ -104,6 +107,7 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Delete a user by ID
 router.delete('/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -124,11 +128,12 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
+// Secure route requiring authentication
 router.get('/secure-route', authenticateToken, (req, res) => {
   res.json({ message: 'Secure Route', user: req.user });
 });
 
-// Function to hash the password
+// Function to hash the password (missing import for crypto)
 const hashPassword = async (password) => {
   const saltRounds = 10;
   return bcrypt.hash(password, saltRounds);

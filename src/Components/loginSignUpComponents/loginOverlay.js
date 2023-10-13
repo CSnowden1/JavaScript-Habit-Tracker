@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Form, Header, Segment, Modal } from 'semantic-ui-react';
+import { useAuth } from '../../Context/authContext';
 
 const LoginOverlay = ({ open, close }) => {
   const [isLogin, setIsLogin] = useState(true);
@@ -7,6 +8,7 @@ const LoginOverlay = ({ open, close }) => {
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const { user, login, logout } = useAuth();
 
   const toggleMode = () => {
     setIsLogin(!isLogin);
@@ -14,11 +16,11 @@ const LoginOverlay = ({ open, close }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const formData = isLogin
       ? { username, password }
       : { firstName, lastName, username, password };
-  
+
     try {
       const response = await fetch(`http://localhost:5000/users/auth/${isLogin ? 'login' : 'register'}`, {
         method: 'POST',
@@ -27,18 +29,28 @@ const LoginOverlay = ({ open, close }) => {
         },
         body: JSON.stringify(formData),
       });
-  
-      if (!response.ok) {
-        console.error('Error:', response.statusText);
-        return;
-      }
-  
+
       const data = await response.json();
-      console.log('Response data:', data); // Log the response data
+
+      if (response.ok) {
+        console.log(`${isLogin ? 'Login' : 'Registration'} successful`);
+        login(data); // Update the global authentication state
+
+        // Close the modal after successful login
+        close();
+      } else {
+        console.error('Authentication failed:', data.message || 'Unknown error');
+        // Handle authentication failure, e.g., show an error message
+      }
     } catch (error) {
       console.error(`Error during ${isLogin ? 'login' : 'registration'}:`, error);
     }
   };
+
+  if (!open || user) {
+    // If the modal is closed or the user is logged in, don't render anything
+    return null;
+  }
 
   return (
     <Modal open={open} close style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 'auto' }}>

@@ -17,31 +17,55 @@ async function connectToDbMiddleware(req, res, next) {
   }
 }
 
+router.use(connectToDbMiddleware);
 
-
-router.post('/login', async (req, res) => {
+router.post('/auth/register', async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { firstName, lastName, username, password } = req.body;
+    const collection = req.db.collection("users");
 
-    // Authenticate the user
-    const user = await User.findOne({ email });
-
-    if (!user || !(await user.comparePassword(password))) {
-      // Invalid credentials
-      return res.status(401).json({ error: 'Invalid credentials.' });
+    // Check if the username is already taken
+    const existingUser = await collection.findOne({ username });
+    if (existingUser) {
+      return res.status(400).json({ message: 'Username already taken' });
     }
 
-    // Generate a token for the authenticated user
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
+    // Create a new user instance
+    const newUser = new User({ firstName, lastName, username, password });
 
-    // Send a JSON response indicating successful login with the token
-    res.json({ token });
+    // Save the new user to the database
+    await newUser.save();
+
+    // Generate a token for the new user
+    const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, { expiresIn: '100h' });
+
+    // Send a JSON response indicating successful registration
+    res.status(201).json({ message: 'Registration successful', token });
+
   } catch (error) {
-    console.error('Error during login:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error("Error creating user:", error);
+    res.status(500).json({ message: 'Internal Server Error' });
   }
 });
 
+router.post('/auth/login', async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    const collection = req.db.collection("users");
+    const user = await collection.findOne({ username });
+
+    if (!user || !(await user.comparePassword(password))) {
+      return res.status(401).json({ message: 'Invalid credentials' });
+    }
+
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '3h' });
+    res.json({ message: 'Login successful', token, user });
+
+  } catch (error) {
+    console.error("Error during login:", error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
 
 
 

@@ -29,12 +29,14 @@ userSchema.pre('save', async function (next) {
       console.error('Error hashing password:', error);
       next(error); // Call next with the error to continue the flow
     }
-  });
+});
 
 // Method to compare a plaintext password with the hashed password
 userSchema.methods.comparePassword = async function (candidatePassword) {
   try {
-    return await bcrypt.compare(candidatePassword, this.password);
+    const result = await bcrypt.compare(candidatePassword, this.password);
+    console.log('Password comparison result:', result);
+    return result;
   } catch (error) {
     throw error;
   }
