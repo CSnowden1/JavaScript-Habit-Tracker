@@ -1,6 +1,12 @@
 const mongoose = require("mongoose");
 
 const habitSchema = new mongoose.Schema({
+  // Add a reference to the User model
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
   id: {
     type: String,
     required: true,
@@ -31,6 +37,11 @@ const habitSchema = new mongoose.Schema({
   },
 });
 
-const Habit = mongoose.model("Habit", habitSchema);
+const Habit = mongoose.model("habit", habitSchema);
+console.log("Habit model created successfully!");
 
-module.exports = Habit;
+
+module.exports = {
+  Habit,
+  habitSchema,
+};
