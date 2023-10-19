@@ -11,19 +11,7 @@ router.use(authDBConnection.connectToDbMiddleware);
 
 // Get a list of all the records.
 router.get("/", async (req, res) => {
-  try {
-    if (req.user) {
-      // Fetch habits associated with the logged-in user
-      const user = await User.findById(req.user.userId);
-      console.log("User:", user);  // Added console.log for debugging
-      res.status(200).send(user.habits);
-    } else {
-      res.status(500).send("No user found");  // Changed 'results' to a string
-    }
-  } catch (error) {
-    console.error("Error fetching habits:", error);
-    res.status(500).send("Internal Server Error");
-  }
+  
 });
 
 // Get a single record by id

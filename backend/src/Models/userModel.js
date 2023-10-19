@@ -7,7 +7,16 @@ const userSchema = new mongoose.Schema({
     lastName: { type: String, required: true },
     username: { type: String, unique: true, required: true },
     password: { type: String, required: true },
-    habits: [{ type: mongoose.Schema.Types.ObjectId, ref: 'habit' }], // Correct reference to the Habit model
+    habits: [
+        {
+            name: String,
+            image: String,
+            frequency: String,
+            time: String,
+            goal: Number,
+            count: Number
+        }
+    ]
 });
 
 // Middleware to hash the password before saving

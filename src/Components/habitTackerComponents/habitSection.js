@@ -4,13 +4,15 @@ import CustomButton from "../reusableComponents/submitBtn";
 import HabitForm from "./addHabitModel";
 import HabitContainer from "../habitTackerComponents/habitContainer";
 import SearchBar from "../reusableComponents/search";
-
+import { useAuth } from "../../Context/authContext";
 
 function HabitSection() {
   const [open, setOpen] = useState(false);
   const [habits, setHabits] = useState([]);
   //const storedHabits = JSON.parse(localStorage.getItem('habits')) || [];
   const [editingHabit, setEditingHabit] = useState(null);
+  const { user } = useAuth();
+
 
   //useEffect(() => {
   //  setHabits(storedHabits);
@@ -24,23 +26,15 @@ function HabitSection() {
 
 
   useEffect(() => {
-    // Fetch habits from the server
-    const fetchHabits = async () => {
-      try {
-        const response = await fetch("http://localhost:5000/habits/");
-        if (response.ok) {
-          const habitsData = await response.json();
+        if (user) {
+          const habitsData = user.user.habits;
+          console.log(habitsData)
           setHabits(habitsData);
         } else {
           console.error("Failed to fetch habits from the server");
         }
-      } catch (error) {
-        console.error("Error fetching habits:", error);
-      }
-    };
-
-    fetchHabits();
-  }, []);
+    }, [user]
+  );
 
 
 

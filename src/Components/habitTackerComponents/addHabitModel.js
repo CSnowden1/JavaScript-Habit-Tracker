@@ -1,7 +1,14 @@
-import { useState, } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Modal, Form, Select } from "semantic-ui-react";
 import { v4 as uuidv4 } from 'uuid';
 import Habit from "../../Models/habitModel";
+import { useAuth } from "../../Context/authContext";
+
+
+
+
+
+
 
 function HabitO(name, image, frequency, time, goal = 0, count = 0) {
     this.uuid = uuidv4();
@@ -17,6 +24,12 @@ function HabitO(name, image, frequency, time, goal = 0, count = 0) {
 
 
 const HabitForm = ({ open, onClose, onSave, habit, onEdit }) => {
+
+    const { user } = useAuth();
+    const userId = user ? user.user._id : null;
+
+
+
     const [name, setName] = useState(habit ? habit.name : "");
     const [image, setImage] = useState(habit ? habit.image : "");
     const [frequency, setFrequency] = useState(habit ? habit.frequency : "");
@@ -35,48 +48,48 @@ const HabitForm = ({ open, onClose, onSave, habit, onEdit }) => {
         return storedHabits ? JSON.parse(storedHabits) : [];
       });
 
-
-    const handleSave = async (e) => {
-
+      
+      const handleSave = async (e) => {
         e.preventDefault();
-
+      
+        // Create a new habit object
         const newHabit = new HabitO(name, image, frequency, time, goal);
-        console.log("Habit Saved");
-
-        await fetch("http://localhost:5000/habits", {
+      
+        try {
+          const response = await fetch(`http://localhost:5000/users/${userId}/habits`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify(newHabit),
-          })
-          .catch(error => {
-            window.alert(error);
-            return;
           });
-
-        try {
-            const newHabit = new Habit(newHabit);
-            await newHabit.save();
-            console.log("Habit saved to MongoDB");
-
-          } catch (error) {
-            console.error("Error saving habit to MongoDB:", error);
+      
+          if (response.status === 201) {
+            // The habit was successfully created on the server
+      
+            // If you want to update your local state (assuming you're using React's state)
+            if (habit) {
+              const updatedHabit = { ...habit, ...newHabit };
+              onEdit(updatedHabit);
+            } else {
+              setHabits([...habits, newHabit]);
+              onSave(newHabit);
+            }
+      
+            // Close the modal
+            onClose();
+      
+            // Update your local storage
+            const updatedHabits = JSON.parse(localStorage.getItem("habits")).concat(newHabit);
+            localStorage.setItem("habits", JSON.stringify(updatedHabits));
+          } else {
+            // Handle an error response here
+            console.error("Failed to create the habit on the server.");
           }
-
-        if (habit) {
-            const updatedHabit = { ...habit, ...newHabit };
-            onEdit(updatedHabit);
-        } else {
-            setHabits([...habits, newHabit]);
-            onSave(newHabit);
+        } catch (error) {
+          console.error("Error creating habit:", error);
         }
-
-        onClose();
-        const updatedHabits = JSON.parse(localStorage.getItem("habits")).concat(newHabit);
-        localStorage.setItem("habits", JSON.stringify(updatedHabits));
-    };
-
+      };
 
 
     const addHabit = (newHabit) => {

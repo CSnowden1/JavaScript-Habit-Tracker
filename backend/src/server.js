@@ -24,8 +24,7 @@ app.use(express.json());
       next();
     });
 
-    // Use the habits route
-    app.use('/habits', habits);
+ 
 
     // Use User routes
     app.use('/users', users);

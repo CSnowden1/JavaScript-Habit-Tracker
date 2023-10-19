@@ -107,6 +107,24 @@ router.get("/", async (req, res) => {
   }
 });
 
+//get User by id
+router.get('/:id', async (req, res) => {
+  try {
+    const collection = req.db.collection("users");
+    const query = { _id: new ObjectId(req.params.id) };
+    const user = await collection.findOne(query);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(200).json({ user });
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
 // Delete a user by ID
 router.delete('/:id', async (req, res) => {
   try {
@@ -127,6 +145,43 @@ router.delete('/:id', async (req, res) => {
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 });
+
+
+
+
+
+//Add habit to user by id
+router.post('/:id/habits', async (req, res) => {
+  try {
+    const { name, image, frequency, time, goal, count } = req.body;
+    const { id } = req.params;
+
+    const user = await User.findById(id);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const newHabit = {
+      name,
+      image,
+      frequency,
+      time,
+      goal,
+      count,
+    };
+
+    user.habits.push(newHabit);
+
+    await user.save();
+
+    res.status(201).json({ message: 'Habit added successfully' });
+  } catch (error) {
+    console.error("Error creating habit:", error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
 
 // Secure route requiring authentication
 router.get('/secure-route', authenticateToken, (req, res) => {
