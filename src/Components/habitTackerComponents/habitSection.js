@@ -12,11 +12,8 @@ function HabitSection() {
   //const storedHabits = JSON.parse(localStorage.getItem('habits')) || [];
   const [editingHabit, setEditingHabit] = useState(null);
   const { user } = useAuth();
+  const userId = user ? user.user._id : null;
 
-
-  //useEffect(() => {
-  //  setHabits(storedHabits);
- // }, [storedHabits]);
 
   useEffect(() => {
     console.log("CalendarSection mounted.");
@@ -129,14 +126,13 @@ function HabitSection() {
     handleClose();
   };
   
-  const handleDelete = async (_id) => {
+  const handleDelete = async ( {userId, _id}) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this habit?");
-    console.log(_id);
     
     if (confirmDelete) {
       try {
         // Send a DELETE request to delete the habit on the server
-        const response = await fetch(`http://localhost:5000/habits/${_id}`, {
+        const response = await fetch(`http://localhost:5000/${userId}/habits/${_id}`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
@@ -147,8 +143,7 @@ function HabitSection() {
           throw new Error(`Failed to delete habit: ${response.statusText}`);
         }
   
-        // Update local state immediately after successful deletion
-        setHabits((prevHabits) => prevHabits.filter((habit) => habit._id !== _id));
+        setHabits(user.user.habits);
   
       } catch (error) {
         console.error("Error deleting habit:", error);
@@ -158,14 +153,14 @@ function HabitSection() {
   };
   
 
-  const handleAdd = async (_id) => {
+  const handleAdd = async ( {userId, _id} ) => {
     try {
-      const response = await fetch(`http://localhost:5000/habits/${_id}/add`, {
+      const response = await fetch(`http://localhost:5000/${userId}/habits/${_id}/add`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ _id }),
+        body: JSON.stringify({ _userId }),
       });
   
       if (response.ok) {
@@ -182,7 +177,7 @@ function HabitSection() {
   
   const handleMinus = async (_id) => {
     try {
-      const response = await fetch(`http://localhost:5000/habits/${_id}/minus`, {
+      const response = await fetch(`http://localhost:5000/habits/${_id}/${_id}/minus`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -202,23 +197,7 @@ function HabitSection() {
     }
   };
   
-  // Function to fetch habits from the server
-  const fetchHabitsFromServer = async () => {
-    try {
-      const response = await fetch("http://localhost:5000/habits/");
-      if (response.ok) {
-        const habitsData = await response.json();
-        return habitsData;
-      } else {
-        console.error("Failed to fetch habits from the server");
-        return [];
-      }
-    } catch (error) {
-      console.error("Error fetching habits:", error);
-      return [];
-    }
-  };
-  
+
 
   return (
     <>
