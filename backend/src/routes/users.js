@@ -125,6 +125,58 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+
+
+
+router.get('/:id/habits', async (req, res) => {
+  try {
+    const collection = req.db.collection("users");
+    const query = { _id: new ObjectId(req.params.id) };
+    const user = await collection.findOne(query);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(200).json({ habits: user.habits });
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
+
+
+router.get('/:userId/habits/:habitId', async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const habitId = req.params.habitId;
+
+    const collection = req.db.collection("users");
+    const query = { _id: new ObjectId(userId) };
+    const user = await collection.findOne(query);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Find the habit by ID within the user's habits array
+    const habit = user.habits.find(h => h._id.toString() === habitId);
+
+    if (!habit) {
+      return res.status(404).json({ message: 'Habit not found' });
+    }
+
+    res.status(200).json({ habit });
+  } catch (error) {
+    console.error("Error fetching habit:", error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
+
+
+
 // Delete a user by ID
 router.delete('/:id', async (req, res) => {
   try {
@@ -182,6 +234,101 @@ router.post('/:id/habits', async (req, res) => {
   }
 });
 
+
+
+router.delete('/:userId/habits/:habitId', async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const habitId = req.params.habitId;
+
+    const collection = req.db.collection("users");
+    const query = { _id: new ObjectId(userId) };
+    const user = await collection.findOne(query);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const habitIndex = user.habits.findIndex(h => h._id.toString() === habitId);
+
+    if (habitIndex === -1) {
+      return res.status(404).json({ message: 'Habit not found' });
+    }
+
+    user.habits.splice(habitIndex, 1);
+
+    await collection.updateOne({ _id: user._id }, { $set: { habits: user.habits } });
+
+    res.status(204).json({ message: 'Habit Deleted' });
+  } catch (error) {
+    console.error("Error deleting habit:", error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
+
+router.patch('/:userId/habits/:habitId/increment', async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const habitId = req.params.habitId;
+
+    const collection = req.db.collection("users");
+    const query = { _id: new ObjectId(userId) };
+    const user = await collection.findOne(query);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const habit = user.habits.find(h => h._id.toString() === habitId);
+
+    if (!habit) {
+      return res.status(404).json({ message: 'Habit not found' });
+    }
+
+    habit.count++;
+
+    await collection.updateOne({ _id: user._id }, { $set: { habits: user.habits } });
+
+    res.status(200).json({ message: 'Count Incremented', habit });
+  } catch (error) {
+    console.error("Error incrementing habit count:", error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
+
+router.patch('/:userId/habits/:habitId/decrement', async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const habitId = req.params.habitId;
+
+    const collection = req.db.collection("users");
+    const query = { _id: new ObjectId(userId) };
+    const user = await collection.findOne(query);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const habit = user.habits.find(h => h._id.toString() === habitId);
+
+    if (!habit) {
+      return res.status(404).json({ message: 'Habit not found' });
+    }
+
+    if (habit.count > 0) {
+      habit.count--;
+    }
+
+    await collection.updateOne({ _id: user._id }, { $set: { habits: user.habits } });
+
+    res.status(200).json({ message: 'Count Decremented', habit });
+  } catch (error) {
+    console.error("Error decrementing habit count:", error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
 
 // Secure route requiring authentication
 router.get('/secure-route', authenticateToken, (req, res) => {

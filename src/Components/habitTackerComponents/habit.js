@@ -1,8 +1,17 @@
 import {  Button } from 'semantic-ui-react';
 import CircularProgressbar from '../habitTackerComponents/progressCircle';
+import { useAuth } from "../../Context/authContext";
 import "./habit.css"
 
-function HabitBar({ habit, deleteFunction, editFunction, Add, Minus, completed}) {
+
+
+
+
+function HabitBar({ habit, deleteFunction, editFunction, Add, Minus, completed,  habitId}) {
+
+  const { user } = useAuth();
+const userId = user ? user.user._id : null;
+
 
   const animations = {
     backgroundColor: habit.count >= habit.goal ? 'gold' : 'transparent',
@@ -19,10 +28,10 @@ function HabitBar({ habit, deleteFunction, editFunction, Add, Minus, completed})
 
   return (
     <>
-      <div key={habit.id} habit={habit}  class="flex-row" style={{...animations}}>
+      <div key={habit._id} habit={habit}  class="flex-row" style={{...animations}}>
         <div className="left-styles">
-          <Button icon="plus" onClick={() => Add(habit._id) } />
-          <Button icon="minus" onClick={() => Minus(habit._id)} />
+          <Button icon="plus" onClick={() => Add( userId, habit._id) } />
+          <Button icon="minus" onClick={() => Minus(userId, habit._id)} />
         </div>
         <div className='middle-styles'>
           <div>
@@ -36,8 +45,8 @@ function HabitBar({ habit, deleteFunction, editFunction, Add, Minus, completed})
           </div>
         </div>
         <div className="right-styles">
-          <Button icon="edit" onClick={() => editFunction(habit._id)} />
-          <Button icon="delete" onClick={() => deleteFunction(habit._id)}/>
+          <Button icon="edit" onClick={() => editFunction(habitId)} />
+          <Button icon="delete" onClick={() => deleteFunction(habitId)}/>
         </div>
       </div>
     </>

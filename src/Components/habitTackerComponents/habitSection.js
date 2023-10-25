@@ -126,13 +126,14 @@ function HabitSection() {
     handleClose();
   };
   
-  const handleDelete = async ( {userId, _id}) => {
+
+  const handleDelete = async (userId, habitId) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this habit?");
     
     if (confirmDelete) {
       try {
         // Send a DELETE request to delete the habit on the server
-        const response = await fetch(`http://localhost:5000/${userId}/habits/${_id}`, {
+        const response = await fetch(`http://localhost:5000/users/${userId}/habits/${habitId}`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
@@ -143,7 +144,9 @@ function HabitSection() {
           throw new Error(`Failed to delete habit: ${response.statusText}`);
         }
   
-        setHabits(user.user.habits);
+        // Update the local state with the updated habits
+        const updatedHabits = habits.filter((habit) => habit._id !== habitId);
+        setHabits(updatedHabits);
   
       } catch (error) {
         console.error("Error deleting habit:", error);
@@ -151,21 +154,21 @@ function HabitSection() {
       }
     }
   };
-  
 
-  const handleAdd = async ( {userId, _id} ) => {
+
+  const handleAdd = async (userId, habitId) => {
     try {
-      const response = await fetch(`http://localhost:5000/${userId}/habits/${_id}/add`, {
+      const response = await fetch(`http://localhost:5000/users/${userId}/habits/${habitId}/increment`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ _userId }),
+        body: JSON.stringify({}),
       });
   
       if (response.ok) {
-        // Fetch updated habits from the server
-        const updatedHabits = await fetchHabitsFromServer();
+        const updatedHabits = await fetchHabitsFromServer(userId);
+
         setHabits(updatedHabits);
       } else {
         console.error("Failed to update habit on the server");
@@ -174,20 +177,47 @@ function HabitSection() {
       console.error(error);
     }
   };
-  
-  const handleMinus = async (_id) => {
+
+
+  async function fetchHabitsFromServer(userId) {
     try {
-      const response = await fetch(`http://localhost:5000/habits/${_id}/${_id}/minus`, {
+      const response = await fetch(`http://localhost:5000/users/${userId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+  
+      if (response.ok) {
+        const habits = await response.json();
+        console.log(habits);
+        const habitData = habits.user.habits
+        return habitData;
+      } else {
+        console.error("Failed to fetch habits from the server");
+        return [];
+      }
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
+  }
+
+  
+
+  const handleMinus = async (userId, habitId) => {
+    try {
+      const response = await fetch(`http://localhost:5000/users/${userId}/habits/${habitId}/decrement`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ _id }),
+        body: JSON.stringify({}),
       });
   
       if (response.ok) {
         // Fetch updated habits from the server
-        const updatedHabits = await fetchHabitsFromServer();
+        const updatedHabits = await fetchHabitsFromServer(userId);
         setHabits(updatedHabits);
       } else {
         console.error("Failed to update habit on the server");
