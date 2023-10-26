@@ -5,7 +5,7 @@ import { useAuth } from '../../Context/authContext';
   
   
   
-  export default function Overview({ habitsChanged, onHabitsChange }) {
+  export default function Overview({ habitsChanged, onHabitsChange, theme }) {
     const { user } = useAuth();
     const userId = user ? user.user._id : null;
     const [habits, setHabits] = useState([]);
@@ -49,7 +49,6 @@ import { useAuth } from '../../Context/authContext';
     }, [habitsChanged, userId, onHabitsChange]);
   
     const containerStyles = {
-      background: "rgba(49, 21, 219, .03)",
       boxShadow: "inset 4px 4px 4px rgba(87, 87, 87, 0.07)",
       borderRadius: "10px",
       width: "100vw",
@@ -57,6 +56,7 @@ import { useAuth } from '../../Context/authContext';
       display: "flex",
       alignContent: "center",
       alignItems: "center",
+      backgroundColor: theme !== 'light' ? '#101010' : 'rgba(49, 21, 219, .03)',
     };
   
     const renderCustomBar = ({ x, y, width, height, payload}) => {
@@ -88,6 +88,7 @@ import { useAuth } from '../../Context/authContext';
               display: "flex",
               marginLeft: "2rem",
               marginRight: "2rem",
+              backgroundColor: theme !== 'light' ? '#101010' : 'rgba(49, 21, 219, .03)',
             }}
           >
             <BarChart width={700} height={100} data={habits}>

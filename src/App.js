@@ -54,7 +54,7 @@ const lightDark = {
           <Greeting time="Evening" name="Chris" day="Sunday" />
         </div>
         <div className="performance-container">
-          <Overview  onHabitsChange={handleHabitsChange}  habitsChanged={habitsChanged} />
+          <Overview  theme={theme} onHabitsChange={handleHabitsChange}  habitsChanged={habitsChanged} />
         </div>
         <div className="habit-tracker-module">
           <div className="schedule-container ">

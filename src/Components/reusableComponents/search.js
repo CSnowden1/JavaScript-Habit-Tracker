@@ -9,7 +9,7 @@ function SearchBar({ theme }) {
 
   const inputStyles = {
     height: 'auto',
-    width: 'auto',
+    width: '20%',
     marginBottom: '1rem',
     color: theme !== 'light' ? 'white' : 'black',
     backgroundColor: theme !== 'light' ? 'black' : 'white',

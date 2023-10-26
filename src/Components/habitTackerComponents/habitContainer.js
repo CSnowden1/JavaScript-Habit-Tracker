@@ -29,13 +29,13 @@ function HabitContainer({ habits, handleSave, deleteFunction, editFunction, Add,
   return (
     <>
       {habits.length ? (
-        <CustomContainer onChange={(e) => handleSave(habits)}>
+        <CustomContainer theme={theme} onChange={(e) => handleSave(habits)}>
           {habits.map((habit) => (
             <HabitBar style={divStyles} key={habit._id} habit={habit} deleteFunction={deleteFunction} editFunction={editFunction} habitId={habit._id} Add={Add} Minus={Minus} />
           ))}
         </CustomContainer>
       ) : (
-        <CustomContainer>
+        <CustomContainer theme={theme} >
           <div style={noHabit}>Add a Habit to Track</div>
         </CustomContainer>
       )}

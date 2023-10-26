@@ -229,6 +229,30 @@ function HabitSection({ onHabitsChange, theme }) {
       console.error(error);
     }
   };
+  const containersStyles = {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: "center",
+    height: "auto",
+    width: "100%"
+    };
+  
+  
+  
+  const buttonStyles = {
+    borderRadius: '.5rem',
+    backgroundColor: theme !== 'light' ? '#431D56' : 'rgba(49, 21, 219, 0.72)',
+    border:"none",
+    color: theme !== 'light' ? 'white' : 'white',
+    width: '50%',
+    height: '3rem',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: '1rem',
+    justifySelf: 'center',
+    alignSelf: "center",
+  };
   
 
 
@@ -248,33 +272,13 @@ function HabitSection({ onHabitsChange, theme }) {
       </div>
     </>
   );
+
+
+
+  
 }
 
 
-const containersStyles = {
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: "center",
-  height: "auto",
-  width: "100%"
-};
-
-
-
-const buttonStyles = {
-  borderRadius: '.5rem',
-  backgroundColor: 'rgba(49, 21, 219, 0.72)',
-  border:"none",
-  color: "white",
-  width: '50%',
-  height: '3rem',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  marginBottom: '1rem',
-  justifySelf: 'center',
-  alignSelf: "center",
-};
 
 
 
