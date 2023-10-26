@@ -6,13 +6,13 @@ import HabitContainer from "../habitTackerComponents/habitContainer";
 import SearchBar from "../reusableComponents/search";
 import { useAuth } from "../../Context/authContext";
 
-function HabitSection() {
+function HabitSection({ onHabitsChange }) {
   const [open, setOpen] = useState(false);
   const [habits, setHabits] = useState([]);
   //const storedHabits = JSON.parse(localStorage.getItem('habits')) || [];
   const [editingHabit, setEditingHabit] = useState(null);
-  const { user } = useAuth();
-  const userId = user ? user.user._id : null;
+    const { user } = useAuth();
+    const userId = user ? user.user._id : null;
 
 
   useEffect(() => {
@@ -27,6 +27,7 @@ function HabitSection() {
           const habitsData = user.user.habits;
           console.log(habitsData)
           setHabits(habitsData);
+          onHabitsChange();
         } else {
           console.error("Failed to fetch habits from the server");
         }
@@ -144,10 +145,10 @@ function HabitSection() {
           throw new Error(`Failed to delete habit: ${response.statusText}`);
         }
   
-        // Update the local state with the updated habits
-        const updatedHabits = habits.filter((habit) => habit._id !== habitId);
+        const updatedHabits = await fetchHabitsFromServer(userId);
         setHabits(updatedHabits);
-  
+
+        
       } catch (error) {
         console.error("Error deleting habit:", error);
         window.alert("Failed to delete habit. Please try again.");
@@ -170,6 +171,7 @@ function HabitSection() {
         const updatedHabits = await fetchHabitsFromServer(userId);
 
         setHabits(updatedHabits);
+        onHabitsChange();
       } else {
         console.error("Failed to update habit on the server");
       }
@@ -219,6 +221,7 @@ function HabitSection() {
         // Fetch updated habits from the server
         const updatedHabits = await fetchHabitsFromServer(userId);
         setHabits(updatedHabits);
+        onHabitsChange();
       } else {
         console.error("Failed to update habit on the server");
       }

@@ -45,8 +45,8 @@ const userId = user ? user.user._id : null;
           </div>
         </div>
         <div className="right-styles">
-          <Button icon="edit" onClick={() => editFunction(habitId)} />
-          <Button icon="delete" onClick={() => deleteFunction(habitId)}/>
+          <Button icon="edit" onClick={() => editFunction(userId, habitId)} />
+          <Button icon="delete" onClick={() => deleteFunction(userId, habitId)}/>
         </div>
       </div>
     </>

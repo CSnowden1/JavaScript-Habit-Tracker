@@ -3,8 +3,9 @@ import Subheading from "../reusableComponents/subHeading";
 import Switch from "../reusableComponents/filter";
 import CalenderBar from "./calanderBar";
 import CustomContainer from '../reusableComponents/container';
+import { useAuth } from "../../Context/authContext";
 
-function CalendarSection() {
+function CalendarSection({ habitsChanged, onHabitsChange }) {
   const [selectedOption, setSelectedOption] = useState("option1");
   const [habits, setHabits] = useState([]);
   //const storedHabits = JSON.parse(localStorage.getItem('habits')) || [];
@@ -12,25 +13,46 @@ function CalendarSection() {
  // useEffect(() => {
   //  setHabits(storedHabits);
  //}, [storedHabits]);
+ const { user } = useAuth();
+ const userId = user ? user.user._id : null;
+
+ async function fetchHabitsFromServer(userId) {
+   try {
+     const response = await fetch(`http://localhost:5000/users/${userId}`, {
+       method: "GET",
+       headers: {
+         "Content-Type": "application/json",
+       },
+     });
+
+     if (response.ok) {
+       const habits = await response.json();
+       console.log(habits);
+       const habitData = habits.user.habits;
+       return habitData;
+     } else {
+       console.error("Failed to fetch habits from the server");
+       return [];
+     }
+   } catch (error) {
+     console.error(error);
+     return [];
+   }
+ }
 
  useEffect(() => {
-  // Fetch habits from the server
-  const fetchHabits = async () => {
-    try {
-      const response = await fetch("http://localhost:5000/habits/");
-      if (response.ok) {
-        const habitsData = await response.json();
-        setHabits(habitsData);
-      } else {
-        console.error("Failed to fetch habits from the server");
-      }
-    } catch (error) {
-      console.error("Error fetching habits:", error);
-    }
-  };
+   // Define an async function to fetch habits and update the state
+   const fetchAndSetHabits = async () => {
+     const habitsData = await fetchHabitsFromServer(userId);
+     setHabits(habitsData);
+     onHabitsChange();
+   };
 
-  fetchHabits();
-}, []);
+   // Check if habitsChanged prop changed, if it did, fetch new habits
+   if (habitsChanged) {
+     fetchAndSetHabits();
+   }
+ }, [habitsChanged, userId, onHabitsChange]);
 
   useEffect(() => {
     console.log("Selected option:", selectedOption);

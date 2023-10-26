@@ -53,11 +53,11 @@ const lightDark = {
           <Greeting time="Evening" name="Chris" day="Sunday" />
         </div>
         <div className="performance-container">
-          <Overview habitsChanged={habitsChanged} />
+          <Overview  onHabitsChange={handleHabitsChange}  habitsChanged={habitsChanged} />
         </div>
         <div className="habit-tracker-module">
           <div className="schedule-container ">
-            <CalendarSection habitsChanged={habitsChanged} />
+            <CalendarSection onHabitsChange={handleHabitsChange} habitsChanged={habitsChanged} />
           </div>
           <div className="habits-container">
             <HabitSection onHabitsChange={handleHabitsChange} />
