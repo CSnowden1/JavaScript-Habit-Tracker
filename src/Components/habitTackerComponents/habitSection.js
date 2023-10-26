@@ -236,7 +236,7 @@ function HabitSection({ onHabitsChange, theme }) {
     <>
       <div style={containersStyles} className="column">
         <Subheading theme={theme} title="Habits" />
-        <SearchBar />
+        <SearchBar theme={theme} />
         <HabitContainer theme={theme} habits={habits} deleteFunction={handleDelete} editFunction={handleEdit} Add={handleAdd} Minus={handleMinus} />
         <HabitForm
           open={open}
@@ -252,6 +252,9 @@ function HabitSection({ onHabitsChange, theme }) {
 
 
 const containersStyles = {
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: "center",
   height: "auto",
   width: "100%"
 };
@@ -259,8 +262,9 @@ const containersStyles = {
 
 
 const buttonStyles = {
-  borderRadius: '1.2rem',
+  borderRadius: '.5rem',
   backgroundColor: 'rgba(49, 21, 219, 0.72)',
+  border:"none",
   color: "white",
   width: '50%',
   height: '3rem',
@@ -269,7 +273,7 @@ const buttonStyles = {
   alignItems: 'center',
   marginBottom: '1rem',
   justifySelf: 'center',
-  alignSelf: "center"
+  alignSelf: "center",
 };
 
 

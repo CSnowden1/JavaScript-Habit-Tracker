@@ -8,10 +8,10 @@ function ThemeToggle({ theme, handleToggleDarkMode }) {
   };
 
   const buttonStyle = {
-    background: 'white',
-    color: 'black',
-    border: '1px solid black',
-  };
+    border: theme !== 'light' ? '1px solid white' : '1px solid black',
+    color: theme !== 'light' ? 'white' : 'black',
+    backgroundColor: theme !== 'light' ? 'black' : 'white',
+  }
 
   return (
     <>

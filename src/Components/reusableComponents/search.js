@@ -1,30 +1,32 @@
-import { useState } from 'react';
-import { Input } from 'semantic-ui-react';
+import React, { useState } from 'react';
 
-function SearchBar() {
+function SearchBar({ theme }) {
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
   };
 
-
-
-
-  const filterStyles = {
-    height: "auto",
-    width: "auto",
-    marginBottom: "1rem",
+  const inputStyles = {
+    height: 'auto',
+    width: 'auto',
+    marginBottom: '1rem',
+    color: theme !== 'light' ? 'white' : 'black',
+    backgroundColor: theme !== 'light' ? 'black' : 'white',
+    border: '1px solid ' + (theme !== 'light' ? 'gray' : 'black'),
+    padding: '0.67857143em 1em',
+    borderRadius: '0.28571429rem',
+    outline: 'none',
+    transition: 'box-shadow 0.1s ease, border-color 0.1s ease',
   };
 
-
   return (
-    <Input
-      icon='search'
-      placeholder='Search...'
+    <input
+      type="text"
+      placeholder="Search..."
       value={searchTerm}
       onChange={handleSearch}
-      style={filterStyles}
+      style={inputStyles} 
     />
   );
 }

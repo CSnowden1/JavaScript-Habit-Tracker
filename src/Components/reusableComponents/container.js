@@ -3,7 +3,7 @@ import { Container } from 'semantic-ui-react';
 
 function CustomContainer({ children }) {
   const containerStyles = {
-    width: 'auto',
+    width: '100%',
     height: '24rem',
     backgroundColor: 'rgba(49, 21, 219, .03)',
     borderRadius: '1.2rem',

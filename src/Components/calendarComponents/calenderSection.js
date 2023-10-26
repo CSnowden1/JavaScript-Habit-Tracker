@@ -85,10 +85,7 @@ function CalendarSection({ habitsChanged, onHabitsChange, theme }) {
     }
   };
 
-  const lightDark = {
-    color: theme !== "light" ? "white" : "black"
-  };
-
+  
   const filteredHabits = filterHabitsByTimeOfDay(habits);
 
   return (
@@ -99,6 +96,7 @@ function CalendarSection({ habitsChanged, onHabitsChange, theme }) {
           options={options}
           selectedOption={selectedOption}
           onChange={handleOptionChange}
+          theme={theme}
         />
         <CustomContainer id="calendar-container">
           {filteredHabits.map((habit) => (

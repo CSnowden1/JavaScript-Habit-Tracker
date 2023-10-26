@@ -14,14 +14,14 @@ function HabitContainer({ habits, handleSave, deleteFunction, editFunction, Add,
   };
 
   const noHabit = {
-    width: '100%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     fontWeight: '700',
     fontSize: '1.25rem',
     marginTop: '1rem',
-    color: theme !== "light" ? "white" : "black"
+    color: theme !== "light" ? "white" : "black",
+    width: '100%',
   };
 
 

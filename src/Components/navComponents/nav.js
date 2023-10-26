@@ -46,9 +46,9 @@ function navBar({theme, handleToggleDarkMode}) {
             <div style={navBoxStyles}>
                 <div style={navStyles}>
                     <ThemeToggle  theme={theme} handleToggleDarkMode={handleToggleDarkMode} />
-                    <NavigationBar open={handleOpen} />
-                    <InboxButton/>
-                    <SettingsButton/>
+                    <NavigationBar theme={theme} open={handleOpen} />
+                    <InboxButton theme={theme} />
+                    <SettingsButton theme={theme} />
                     <LoginOverlay open={open} close={handleClose}/>
                 </div>
             </div>
