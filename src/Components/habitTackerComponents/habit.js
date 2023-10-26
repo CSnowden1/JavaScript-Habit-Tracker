@@ -7,7 +7,7 @@ import "./habit.css"
 
 
 
-function HabitBar({ habit, deleteFunction, editFunction, Add, Minus, completed,  habitId}) {
+function HabitBar({ habit, deleteFunction, editFunction, Add, Minus, completed,  habitId, theme}) {
 
   const { user } = useAuth();
 const userId = user ? user.user._id : null;
@@ -18,6 +18,9 @@ const userId = user ? user.user._id : null;
     transition: 'background-color 0.5s ease-in-out',
     animation: habit.count >= habit.goal ? 'flash 1s 5s' : 'none',
     animationDelay: habit.count >= habit.goal ? '0.5s' : 'none',
+    borderBottom: theme !== 'light' ? 'black' : 'white',
+    color: theme !== "light" ? "white" : "black",
+
   };
 
 

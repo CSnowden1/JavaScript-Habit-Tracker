@@ -23,7 +23,7 @@ function HabitO(name, image, frequency, time, goal = 0, count = 0) {
 }
 
 
-const HabitForm = ({ open, onClose, onSave, habit, onEdit }) => {
+const HabitForm = ({ open, onClose, onSave, habit, onEdit, theme }) => {
 
     const { user } = useAuth();
     const userId = user ? user.user._id : null;
@@ -124,8 +124,14 @@ const HabitForm = ({ open, onClose, onSave, habit, onEdit }) => {
     ];
     
 
+    const buttonStyle = {
+      color: theme !== 'light' ? 'white' : 'black',
+      backgroundColor: "black",
+      //backgroundColor: theme !== 'light' ? 'black' : 'white',
+    };
+
     return (
-        <Modal  open={open} onClose={onClose} onSave={addHabit} >
+        <Modal style={buttonStyle} open={open} onClose={onClose} onSave={addHabit} >
         <Modal.Header>Add a Habit</Modal.Header>
         <Modal.Content>
             <Form>

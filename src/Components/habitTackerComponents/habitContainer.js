@@ -31,7 +31,7 @@ function HabitContainer({ habits, handleSave, deleteFunction, editFunction, Add,
       {habits.length ? (
         <CustomContainer theme={theme} onChange={(e) => handleSave(habits)}>
           {habits.map((habit) => (
-            <HabitBar style={divStyles} key={habit._id} habit={habit} deleteFunction={deleteFunction} editFunction={editFunction} habitId={habit._id} Add={Add} Minus={Minus} />
+            <HabitBar theme={theme}  style={divStyles} key={habit._id} habit={habit} deleteFunction={deleteFunction} editFunction={editFunction} habitId={habit._id} Add={Add} Minus={Minus} />
           ))}
         </CustomContainer>
       ) : (

@@ -263,6 +263,7 @@ function HabitSection({ onHabitsChange, theme }) {
         <SearchBar theme={theme} />
         <HabitContainer theme={theme} habits={habits} deleteFunction={handleDelete} editFunction={handleEdit} Add={handleAdd} Minus={handleMinus} />
         <HabitForm
+        theme={theme}
           open={open}
           onSave={handleSave}
           onClose={editingHabit ? handleCancelEdit : handleClose}

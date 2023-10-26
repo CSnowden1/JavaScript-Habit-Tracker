@@ -1,6 +1,6 @@
 import { Image, Header } from 'semantic-ui-react';
 
-function calenderBar({ habit}) {
+function calenderBar({ habit, theme}) {
 
   const flexRow = {
     display: 'flex',
@@ -16,11 +16,15 @@ function calenderBar({ habit}) {
     borderBottom: 'solid white 2px',
     height: '7rem',
     padding: '3rem',
+    borderBottom: theme !== 'light' ? 'black' : 'white',
+    color: theme !== "light" ? "white" : "black",
   };
 
   const dividerStyle = {
     fontSize: '3rem',
     marginBottom: '.5rem',
+    Color: theme !== "light" ? "white" : "black",
+    
   }
 
 
@@ -32,6 +36,8 @@ function calenderBar({ habit}) {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    color: theme !== "light" ? "white" : "black",
+
 
   };
 
@@ -46,7 +52,7 @@ function calenderBar({ habit}) {
           <Image src={habit.image}  />
         </div>
         <div>
-          <Header as='h2'>{habit.name}</Header>
+          <Header style={headerStyle} as='h2'>{habit.name}</Header>
         </div>
         <div style={dividerStyle}>|</div>
         <div>

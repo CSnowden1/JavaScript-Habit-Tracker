@@ -100,7 +100,7 @@ function CalendarSection({ habitsChanged, onHabitsChange, theme }) {
         />
         <CustomContainer theme={theme} id="calendar-container">
           {filteredHabits.map((habit) => (
-            <CalenderBar key={habit._id} habit={habit} />
+            <CalenderBar theme={theme} key={habit._id} habit={habit} />
           ))}
         </CustomContainer>
       </div>

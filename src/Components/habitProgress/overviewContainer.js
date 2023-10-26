@@ -59,24 +59,6 @@ import { useAuth } from '../../Context/authContext';
       backgroundColor: theme !== 'light' ? '#101010' : 'rgba(49, 21, 219, .03)',
     };
   
-    const renderCustomBar = ({ x, y, width, height, payload}) => {
-      const { value, payload: habits } = payload;
-  
-      const fillPercentage = (habits.count / habits.goal) * 100;
-  
-      return (
-        <g>
-          {/* Outline (border) */}
-          <rect x={x} y={y} width={width} height={height} fill="black" stroke="white" strokeWidth="2" />
-          {/* Filled part based on count */}
-          <rect x={x} y={y} width={width * (fillPercentage / 100)} height={height} fill="gold" />
-          <text x={x + width / 2} y={y + height / 2} fill="black" textAnchor="middle" dominantBaseline="middle">
-            {value}
-          </text>
-        </g>
-      );
-    };
-  
     return (
       <>
         <div style={containerStyles}>
@@ -95,7 +77,7 @@ import { useAuth } from '../../Context/authContext';
               <XAxis dataKey="name" />
               <YAxis />
               <Tooltip />
-              <Bar dataKey="goal" fill="transparent" shape={renderCustomBar} />
+              <Bar dataKey="count" fill="gold" />
             </BarChart>
           </Container>
         </div>
