@@ -6,7 +6,7 @@ import HabitContainer from "../habitTackerComponents/habitContainer";
 import SearchBar from "../reusableComponents/search";
 import { useAuth } from "../../Context/authContext";
 
-function HabitSection({ onHabitsChange }) {
+function HabitSection({ onHabitsChange, theme }) {
   const [open, setOpen] = useState(false);
   const [habits, setHabits] = useState([]);
   //const storedHabits = JSON.parse(localStorage.getItem('habits')) || [];
@@ -235,9 +235,9 @@ function HabitSection({ onHabitsChange }) {
   return (
     <>
       <div style={containersStyles} className="column">
-        <Subheading title="Habits" />
+        <Subheading theme={theme} title="Habits" />
         <SearchBar />
-        <HabitContainer habits={habits} deleteFunction={handleDelete} editFunction={handleEdit} Add={handleAdd} Minus={handleMinus} />
+        <HabitContainer theme={theme} habits={habits} deleteFunction={handleDelete} editFunction={handleEdit} Add={handleAdd} Minus={handleMinus} />
         <HabitForm
           open={open}
           onSave={handleSave}

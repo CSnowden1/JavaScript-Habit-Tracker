@@ -27,7 +27,6 @@ html, body {
 
 .nav-container {
   display: flex;
-  border: solid black;
 }
 
 .intro-container {

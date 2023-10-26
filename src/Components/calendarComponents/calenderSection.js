@@ -5,7 +5,7 @@ import CalenderBar from "./calanderBar";
 import CustomContainer from '../reusableComponents/container';
 import { useAuth } from "../../Context/authContext";
 
-function CalendarSection({ habitsChanged, onHabitsChange }) {
+function CalendarSection({ habitsChanged, onHabitsChange, theme }) {
   const [selectedOption, setSelectedOption] = useState("option1");
   const [habits, setHabits] = useState([]);
   //const storedHabits = JSON.parse(localStorage.getItem('habits')) || [];
@@ -85,12 +85,16 @@ function CalendarSection({ habitsChanged, onHabitsChange }) {
     }
   };
 
+  const lightDark = {
+    color: theme !== "light" ? "white" : "black"
+  };
+
   const filteredHabits = filterHabitsByTimeOfDay(habits);
 
   return (
     <>
-      <div >
-        <Subheading title="Calendar" />
+      <div  >
+        <Subheading theme={theme} title="Calendar" />
         <Switch
           options={options}
           selectedOption={selectedOption}
@@ -104,6 +108,7 @@ function CalendarSection({ habitsChanged, onHabitsChange }) {
       </div>
     </>
   );
+
 }
 
 export default CalendarSection;

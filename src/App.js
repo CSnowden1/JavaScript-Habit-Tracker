@@ -58,10 +58,10 @@ const lightDark = {
         </div>
         <div className="habit-tracker-module">
           <div className="schedule-container ">
-            <CalendarSection onHabitsChange={handleHabitsChange} habitsChanged={habitsChanged} />
+            <CalendarSection theme={theme} onHabitsChange={handleHabitsChange} habitsChanged={habitsChanged} />
           </div>
           <div className="habits-container">
-            <HabitSection onHabitsChange={handleHabitsChange} />
+            <HabitSection theme={theme} onHabitsChange={handleHabitsChange} />
           </div>
         </div>  
       </div>

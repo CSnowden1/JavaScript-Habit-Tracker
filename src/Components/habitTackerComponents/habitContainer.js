@@ -1,7 +1,7 @@
 import CustomContainer from '../reusableComponents/container';
 import HabitBar from './habit';
 
-function HabitContainer({ habits, handleSave, deleteFunction, editFunction, Add, Minus }) {
+function HabitContainer({ habits, handleSave, deleteFunction, editFunction, Add, Minus, theme }) {
 
   const divStyles = {
     width: 'auto',
@@ -9,7 +9,8 @@ function HabitContainer({ habits, handleSave, deleteFunction, editFunction, Add,
     alignItems: 'center',
     justifyContent: 'center',
     border: 'solid black 1px',
-    color: 'black',
+    color: theme !== "light" ? "white" : "black"
+
   };
 
   const noHabit = {
@@ -17,11 +18,13 @@ function HabitContainer({ habits, handleSave, deleteFunction, editFunction, Add,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    color: 'black',
     fontWeight: '700',
     fontSize: '1.25rem',
     marginTop: '1rem',
+    color: theme !== "light" ? "white" : "black"
   };
+
+
 
   return (
     <>

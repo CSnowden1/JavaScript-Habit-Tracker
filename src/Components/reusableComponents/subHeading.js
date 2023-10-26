@@ -1,10 +1,17 @@
 import { Header } from 'semantic-ui-react';
 
 
-function Subheading(prop) {
+function Subheading({ title, theme }) {
+
+  const lightDark = {
+    color: theme !== "light" ? "white" : "black"
+  };
+
+
+
     return (
-      <Header as="h3" dividing>
-        {prop.title}
+      <Header style={lightDark} as="h3" dividing>
+        {title}
       </Header>
     );
   }

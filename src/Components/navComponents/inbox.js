@@ -1,8 +1,21 @@
 import { Button, Icon } from 'semantic-ui-react';
 
+
+
+
+
 function InboxButton() {
+
+
+  const buttonStyle = {
+    background: 'white',
+    color: 'black',
+    border: '1px solid black',
+  };
+
+
     return (
-      <Button icon class="ui inverted yellow button">
+      <Button style={buttonStyle} icon class="ui inverted yellow button">
         <Icon name='inbox' />
       </Button>
     );
