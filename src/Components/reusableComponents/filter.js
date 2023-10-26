@@ -8,7 +8,6 @@ const Switch = ({ options, selectedOption, onChange }) => {
   const filterStyles = {
     height: "auto",
     width: "auto",
-    padding: "1rem",
     marginBottom: "1rem",
   };
 
@@ -25,7 +24,6 @@ const Switch = ({ options, selectedOption, onChange }) => {
 
   return (
     <div style={filterStyles} className="switch">
-      <label style={{marginRight: "0.5rem"}}>Time of Day:</label>
       <Dropdown
         fluid
         selection

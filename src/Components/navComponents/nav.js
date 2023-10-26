@@ -27,8 +27,10 @@ function navBar({theme, handleToggleDarkMode}) {
         height: '7rem',
         width: "100%",
         margin: '1rem',
+        marginBottom: '0rem',
         marginRight: "1rem",
-        padding: '1rem'
+        padding: '1rem',
+        paddingBottom: '0rem'
     };
 
     const navStyles = {

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Container } from 'semantic-ui-react';
-  import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
-  import { useAuth } from '../../Context/authContext';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
+import { useAuth } from '../../Context/authContext';
   
   
   
@@ -57,7 +57,6 @@ import { Container } from 'semantic-ui-react';
       display: "flex",
       alignContent: "center",
       alignItems: "center",
-      overflowX: "scroll",
     };
   
     const renderCustomBar = ({ x, y, width, height, payload}) => {
@@ -68,7 +67,7 @@ import { Container } from 'semantic-ui-react';
       return (
         <g>
           {/* Outline (border) */}
-          <rect x={x} y={y} width={width} height={height} fill="transparent" stroke="black" strokeWidth="2" />
+          <rect x={x} y={y} width={width} height={height} fill="black" stroke="white" strokeWidth="2" />
           {/* Filled part based on count */}
           <rect x={x} y={y} width={width * (fillPercentage / 100)} height={height} fill="gold" />
           <text x={x + width / 2} y={y + height / 2} fill="black" textAnchor="middle" dominantBaseline="middle">
@@ -83,8 +82,7 @@ import { Container } from 'semantic-ui-react';
         <div style={containerStyles}>
           <Container
             style={{
-              width: "auto",
-              border: "solid black 1px",
+              width: "100%",
               height: "5rem",
               borderRadius: "1rem",
               display: "flex",

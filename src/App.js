@@ -41,6 +41,7 @@ function App() {
 
 const lightDark = {
   backgroundColor: theme !== "light" ? "black" : "white",
+  color: theme !== "light" ? "white" : "black",
 }
 
   return (

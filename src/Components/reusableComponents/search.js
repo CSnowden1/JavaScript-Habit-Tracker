@@ -14,7 +14,6 @@ function SearchBar() {
   const filterStyles = {
     height: "auto",
     width: "auto",
-    padding: "1rem",
     marginBottom: "1rem",
   };
 

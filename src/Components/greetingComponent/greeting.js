@@ -28,11 +28,11 @@ const getTimeOfDay = () => {
 
   const dayString = getDayString(currentDay);
 
-  if (currentHour >= 4 && currentHour < 10) {
+  if (currentHour >= 0 && currentHour < 10) {
     return `${dayString}, morning`;
-  } else if (currentHour >= 11 && currentHour < 15) {
+  } else if (currentHour >= 10 && currentHour < 15) {
     return `${dayString}, afternoon`;
-  } else if (currentHour >= 16 && currentHour < 19){
+  } else if (currentHour >= 15 && currentHour < 19){
     return `${dayString}, evening`;
   } else {
     return `${dayString}, night`;
@@ -62,7 +62,7 @@ export default function Greeting() {
   return (
     <div>
       <h2>
-        {greeting}. We hope you have a great {timeOfDay}.
+        {greeting}. We hope you're having a great {timeOfDay}.
       </h2>
     </div>
   );
