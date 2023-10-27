@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { Container } from 'semantic-ui-react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 import { useAuth } from '../../Context/authContext';
-  
-  
+import "./media.css";
+import mock from "../../exmapleHabit/mock.json"  
   
   export default function Overview({ habitsChanged, onHabitsChange, theme }) {
     const { user } = useAuth();
@@ -35,7 +35,7 @@ import { useAuth } from '../../Context/authContext';
     }
   
     useEffect(() => {
-      // Define an async function to fetch habits and update the state
+      if(user) {
       const fetchAndSetHabits = async () => {
         const habitsData = await fetchHabitsFromServer(userId);
         setHabits(habitsData);
@@ -46,23 +46,35 @@ import { useAuth } from '../../Context/authContext';
       if (habitsChanged) {
         fetchAndSetHabits();
       }
+
+    } else {
+      setHabits(mock);
+    }
     }, [habitsChanged, userId, onHabitsChange]);
   
+
+
+
     const containerStyles = {
       boxShadow: "inset 4px 4px 4px rgba(87, 87, 87, 0.07)",
       borderRadius: "10px",
       width: "100vw",
-      height: "10rem",
+      height: "auto",
       display: "flex",
       alignContent: "center",
       alignItems: "center",
       backgroundColor: theme !== 'light' ? '#101010' : 'rgba(49, 21, 219, .03)',
+      overflow: 'scroll',
+    
+      
+    
     };
   
     return (
       <>
-        <div style={containerStyles}>
+        <div class="media" style={containerStyles}>
           <Container
+            class="media"
             style={{
               width: "100%",
               height: "5rem",

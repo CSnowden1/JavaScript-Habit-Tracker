@@ -1,72 +1,74 @@
-.flex-row {
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-        width: auto;
-        margin-bottom: .5rem;
-        padding: 1rem;
 
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    padding: 1rem;
 }
 
-.left-styles {
-        display: flex;
-        flex-direction: row;
-        width: auto;
-        align-items: center;
-        justify-content: center;
-
+.title-row {
+    display: flex;
+    height: 50%;
+    color: black;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 800;
+    padding-bottom: .5rem;
 }
 
 
-.right-styles {
-        display: flex;
-        width: auto;
-        align-Items: center;
-        justify-content: center;
-};
-
-
-.middle-styles {
-    width: 5rem;
+.action-row {
     display: flex;
     flex-direction: row;
+    height: 50%;
+    width: 100%;
     justify-content: space-between;
-    border: solid black 5px;
-};
-
-
-.middle-styles div {
-        display: flex;
 }
 
-
-@media only screen and (max-width: 480px) {
-
-.right-styles {
-    flex-direction: column;
+.habit-img {
+    display: flex;
+    justify-self: flex-start;
+    align-self: baseline;
 
 }
 
-.left-styles {
-    flex-direction: column;
+.circ-box {
+    align-self: center;
+    justify-self: center;
 }
 
-.middle-styles {
-    width: 5rem;
+.middle {
+    justify-self: center;
+    align-self: center;
+    display: flex;
+}
+
+@media only screen and (max-width: 780px) {
+
+
+
+.middle{
+    width: auto;
     font-size: 12px;
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
 
 }
 
-
-.middle-styles div {
-    display: flex;
-    align-content: center;
-    justify-items: center;
-
+.circ-box {
+    margin-right: .25rem;
 }
+
+.flex-column {
+    padding: .5rem;
+}
+
+
+
+
 
 }

@@ -86,7 +86,10 @@ html, body {
 
 
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 1000px) {
+  html, body {
+    overflow: scroll; 
+  }
 
   .habit-tracker-module {
     flex-direction: column;
@@ -104,6 +107,11 @@ html, body {
 
   .footer{
     display: hidden;
+  }
+
+  .nav-container {
+    width: 100%;
+    display: flex;
   }
 
 

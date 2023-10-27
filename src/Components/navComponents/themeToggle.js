@@ -11,6 +11,10 @@ function ThemeToggle({ theme, handleToggleDarkMode }) {
     border: theme !== 'light' ? '1px solid white' : '1px solid black',
     color: theme !== 'light' ? 'white' : 'black',
     backgroundColor: theme !== 'light' ? 'black' : 'white',
+    height: "3rem",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   }
 
   return (

@@ -4,6 +4,7 @@ import Switch from "../reusableComponents/filter";
 import CalenderBar from "./calanderBar";
 import CustomContainer from '../reusableComponents/container';
 import { useAuth } from "../../Context/authContext";
+import Mock from "../../exmapleHabit/mock.json"
 
 function CalendarSection({ habitsChanged, onHabitsChange, theme }) {
   const [selectedOption, setSelectedOption] = useState("option1");
@@ -41,8 +42,8 @@ function CalendarSection({ habitsChanged, onHabitsChange, theme }) {
  }
 
  useEffect(() => {
-   // Define an async function to fetch habits and update the state
-   const fetchAndSetHabits = async () => {
+ 
+  const fetchAndSetHabits = async () => {
      const habitsData = await fetchHabitsFromServer(userId);
      setHabits(habitsData);
      onHabitsChange();
@@ -90,23 +91,32 @@ function CalendarSection({ habitsChanged, onHabitsChange, theme }) {
 
   return (
     <>
-      <div  >
-        <Subheading theme={theme} title="Calendar" />
-        <Switch
-          options={options}
-          selectedOption={selectedOption}
-          onChange={handleOptionChange}
-          theme={theme}
-        />
-        <CustomContainer theme={theme} id="calendar-container">
-          {filteredHabits.map((habit) => (
-            <CalenderBar theme={theme} key={habit._id} habit={habit} />
-          ))}
-        </CustomContainer>
+      <div>
+        {user ? (
+          <>
+            <Subheading theme={theme} title="Calendar" />
+            <Switch
+              options={options}
+              selectedOption={selectedOption}
+              onChange={handleOptionChange}
+              theme={theme}
+            />
+            <CustomContainer theme={theme} id="calendar-container">
+              {filteredHabits.map((habit) => (
+                <CalenderBar theme={theme} key={habit._id} habit={habit} />
+              ))}
+            </CustomContainer>
+          </>
+        ) : (
+          <CustomContainer theme={theme}>
+            <div>
+              Please Login to See the Calendar 
+            </div>
+          </CustomContainer>
+        )}
       </div>
     </>
   );
-
 }
 
 export default CalendarSection;

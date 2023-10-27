@@ -5,12 +5,16 @@ import HabitForm from "./addHabitModel";
 import HabitContainer from "../habitTackerComponents/habitContainer";
 import SearchBar from "../reusableComponents/search";
 import { useAuth } from "../../Context/authContext";
+import mock from "../../exmapleHabit/mock.json"
+
 
 function HabitSection({ onHabitsChange, theme }) {
   const [open, setOpen] = useState(false);
   const [habits, setHabits] = useState([]);
   //const storedHabits = JSON.parse(localStorage.getItem('habits')) || [];
   const [editingHabit, setEditingHabit] = useState(null);
+  const [editingHabitData, setEditingHabitData] = useState(null);
+
     const { user } = useAuth();
     const userId = user ? user.user._id : null;
 
@@ -22,6 +26,8 @@ function HabitSection({ onHabitsChange, theme }) {
 
 
 
+
+
   useEffect(() => {
         if (user) {
           const habitsData = user.user.habits;
@@ -29,7 +35,7 @@ function HabitSection({ onHabitsChange, theme }) {
           setHabits(habitsData);
           onHabitsChange();
         } else {
-          console.error("Failed to fetch habits from the server");
+          setHabits(mock);
         }
     }, [user]
   );
@@ -38,95 +44,45 @@ function HabitSection({ onHabitsChange, theme }) {
 
   const handleOpen = () => {
     setOpen(true);
-    console.log("BTN Clciked")
   };
 
   const handleClose = () => {
     setOpen(false);
+
   };
 
 
-
-  const handleSave = async (newHabit) => {
-     if (editingHabit) {
+  const handleSave = async () => {
+    const updatedHabits = await fetchHabitsFromServer(userId);
+    setHabits(updatedHabits);
+    onHabitsChange();
+  };
+  
+  const handleEdit = async (userId, habitId) => {
+    console.log("HAndle Edit Btn")
     try {
-      const updatedHabits = habits.map((habit) =>
-        habit._id === editingHabit._id ? { ...newHabit, _id: habit._id } : habit
-      );
-      localStorage.setItem("habits", JSON.stringify(updatedHabits));
-
-      if (editingHabit._id) {
-        // If the habit has a MongoDB _id, update it on the server
-        await fetch(`http://localhost:5000/habits/${editingHabit._id}`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newHabit),
-        });
+      console.log(`http://localhost:5000/users/${userId}/habits/${habitId}`)
+      const response = await fetch(`http://localhost:5000/users/${userId}/habits/${habitId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (response.ok) {
+        const editingData = await response.json();
+        console.log(editingData);
+        setEditingHabitData(editingData);
+        handleOpen();
       } else {
-        // If the habit doesn't have a MongoDB _id, save it to the server
-        const response = await fetch("http://localhost:5000/habits", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newHabit),
-        });
-
-        if (response.ok) {
-          const result = await response.json();
-          const updatedHabitsWithId = updatedHabits.map((habit) =>
-            habit === editingHabit ? { ...result, _id: result._id } : habit
-          );
-          localStorage.setItem("habits", JSON.stringify(updatedHabitsWithId));
-        } else {
-          window.alert("Failed to add a new habit.");
-        }
+        console.error("Failed to fetch habit data.");
       }
-
-      setHabits(updatedHabits);
-      setEditingHabit(null);
-      handleClose();
     } catch (error) {
-      window.alert(error.message);
-    }
-    } else {
-      // Adding a new habit
-      try {
-        const response = await fetch("http://localhost:5000/habits", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newHabit), // Include the new habit data in the request body
-        });
-  
-        if (response.status === 204) {
-          // Successfully added the habit on the server
-          setHabits([...habits, newHabit]);
-          handleClose();
-        } else {
-          // Handle any error responses from the server
-          window.alert("Failed to add a new habit.");
-        }
-      } catch (error) {
-        window.alert(error.message);
-      }
+      console.error("Error fetching habit data:", error);
     }
   };
-  
 
-  const handleEdit = (habit) => {
-    setEditingHabit(habit);
-    handleOpen();
-  };
 
-  const handleCancelEdit = () => {
-    setEditingHabit(null);
-    handleClose();
-  };
-  
+
 
   const handleDelete = async (userId, habitId) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this habit?");
@@ -139,7 +95,9 @@ function HabitSection({ onHabitsChange, theme }) {
           headers: {
             "Content-Type": "application/json",
           },
-        });
+        },
+        
+        );
   
         if (!response.ok) {
           throw new Error(`Failed to delete habit: ${response.statusText}`);
@@ -267,7 +225,8 @@ function HabitSection({ onHabitsChange, theme }) {
           open={open}
           onSave={handleSave}
           onClose={editingHabit ? handleCancelEdit : handleClose}
-          editingHabit={editingHabit}
+          onEdit={handleEdit}
+          habit={editingHabitData}
         />
         <button style={buttonStyles} onClick={handleOpen}>Create New Habit</button>
       </div>

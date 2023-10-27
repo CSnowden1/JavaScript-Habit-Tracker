@@ -1,0 +1,10 @@
+
+        {
+            "name": "Example Habit",
+            "image": "https://img.icons8.com/3d-fluency/1x/avocado.png",
+            "frequency": "weekly",
+            "time": "morning",
+            "goal": 10,
+            "count": 0,
+            "_id": "6531b480d3404c66e0777c57"
+        }

@@ -4,7 +4,7 @@ import InboxButton from "./inbox";
 import SettingsButton from "./settings";
 import { useState } from 'react';
 import LoginOverlay from "../loginSignUpComponents/loginOverlay";
-
+import "./btn.css"
 
 function navBar({theme, handleToggleDarkMode}) {
     const [open, setOpen] = useState(false);
@@ -36,15 +36,15 @@ function navBar({theme, handleToggleDarkMode}) {
     const navStyles = {
         width: '100%',
         display: 'flex',
-        justifyContent: "space-between",
+        justifyContent: "space-around",
         alignItems: 'center',
         gap: '1rem'
     }
 
     return (
         <>
-            <div style={navBoxStyles}>
-                <div style={navStyles}>
+            <div class="nav-nav" style={navBoxStyles}>
+                <div class="nav-media" style={navStyles}>
                     <ThemeToggle  theme={theme} handleToggleDarkMode={handleToggleDarkMode} />
                     <NavigationBar theme={theme} open={handleOpen} />
                     <InboxButton theme={theme} />

@@ -32,24 +32,24 @@ const userId = user ? user.user._id : null;
   return (
     <>
       <div key={habit._id} habit={habit}  class="flex-row" style={{...animations}}>
-        <div className="left-styles">
-          <Button icon="plus" onClick={() => Add( userId, habit._id) } />
-          <Button icon="minus" onClick={() => Minus(userId, habit._id)} />
-        </div>
-        <div className='middle-styles'>
-          <div>
-            <img  alt="habit" src={habit.image}/>
+        <div class="flex-column">
+          <div class="title-row">
+              {habit.name}
           </div>
-          <div>
-            <p>{habit.name}</p>
+          <div class="action-row">
+              <div class="habit-img">
+                <img alt="habit" src={habit.image}/>              
+              </div>
+              <div class="circ-box">
+                <CircularProgressbar habit={habit} />           
+              </div>
+              <div class="middle">
+              <Button icon="plus" onClick={() => Add( userId, habit._id) } />
+              <Button icon="minus" onClick={() => Minus(userId, habit._id)} />
+              <Button icon="edit" onClick={() => editFunction(userId, habit._id)} />
+              <Button icon="delete" onClick={() => deleteFunction(userId, habit._id)}/>
+              </div>
           </div>
-          <div>
-            <CircularProgressbar habit={habit} />
-          </div>
-        </div>
-        <div className="right-styles">
-          <Button icon="edit" onClick={() => editFunction(userId, habitId)} />
-          <Button icon="delete" onClick={() => deleteFunction(userId, habitId)}/>
         </div>
       </div>
     </>

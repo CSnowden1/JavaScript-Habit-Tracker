@@ -235,6 +235,35 @@ router.post('/:id/habits', async (req, res) => {
 });
 
 
+router.patch('/users/:userId/habits/:habitId/edit', (req, res) => {
+  const userId = req.params.userId;
+  const habitId = req.params.habitId;
+  const updatedHabit = req.body;
+
+  const user = users.find((user) => user.id === userId);
+
+  if (!user) {
+    return res.status(404).json({ error: 'User not found' });
+  }
+
+  const habitIndex = user.habits.findIndex((habit) => habit.id === habitId);
+
+  if (habitIndex === -1) {
+    return res.status(404).json({ error: 'Habit not found' });
+  }
+
+  // Update the habit with updatedHabit properties
+  user.habits[habitIndex] = { ...user.habits[habitIndex], ...updatedHabit };
+
+  // Save the updated user object (you might use a database update operation here)
+  // ...
+
+  res.status(200).json(user.habits[habitIndex]);
+});
+
+
+
+
 
 router.delete('/:userId/habits/:habitId', async (req, res) => {
   try {
