@@ -234,33 +234,57 @@ router.post('/:id/habits', async (req, res) => {
   }
 });
 
+router.patch('/users/:userId/habits/:habitId/edit', async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const habitId = req.params.habitId;
+    const updatedHabit = req.body;
 
-router.patch('/users/:userId/habits/:habitId/edit', (req, res) => {
-  const userId = req.params.userId;
-  const habitId = req.params.habitId;
-  const updatedHabit = req.body;
+    console.log(`Received PATCH request for userId: ${userId}, habitId: ${habitId}`);
+    console.log('Updated habit data:', updatedHabit);
 
-  const user = users.find((user) => user.id === userId);
+    const user = await User.findById(userId);
 
-  if (!user) {
-    return res.status(404).json({ error: 'User not found' });
+    if (!user) {
+      console.error('User not found');
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    console.log('Found user:', user);
+
+    const habitIndex = user.habits.findIndex((habit) => habit._id.toString() === habitId);
+
+    if (habitIndex === -1) {
+      console.error('Habit not found');
+      return res.status(404).json({ error: 'Habit not found' });
+    }
+
+    console.log('Found habit:', user.habits[habitIndex]);
+
+    // Update the habit with updatedHabit properties
+    user.habits[habitIndex] = { ...user.habits[habitIndex], ...updatedHabit };
+
+    console.log('Updated habit:', user.habits[habitIndex]);
+
+    // Simulate a delay (e.g., for database update)
+    setTimeout(() => {
+      // Simulate a patch failure
+      if (Math.random() < 0.5) {
+        console.error('Failed to update habit in the database');
+        return res.status(500).json({ error: 'Failed to update habit' });
+      }
+
+      // Simulate a successful update
+      console.log('User object updated in the database.');
+
+      // Respond with the updated habit
+      res.status(200).json(user.habits[habitIndex]);
+    }, 1000); // Simulate a 1-second delay (adjust as needed for your use case)
+  } catch (error) {
+    console.error('Error updating habit:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
-
-  const habitIndex = user.habits.findIndex((habit) => habit.id === habitId);
-
-  if (habitIndex === -1) {
-    return res.status(404).json({ error: 'Habit not found' });
-  }
-
-  // Update the habit with updatedHabit properties
-  user.habits[habitIndex] = { ...user.habits[habitIndex], ...updatedHabit };
-
-  // Save the updated user object (you might use a database update operation here)
-  // ...
-
-  res.status(200).json(user.habits[habitIndex]);
 });
-
 
 
 

@@ -12,9 +12,8 @@ function HabitSection({ onHabitsChange, theme }) {
   const [open, setOpen] = useState(false);
   const [habits, setHabits] = useState([]);
   //const storedHabits = JSON.parse(localStorage.getItem('habits')) || [];
-  const [editingHabit, setEditingHabit] = useState(null);
-  const [editingHabitData, setEditingHabitData] = useState(null);
-
+  const [editingHabit, setEditingHabit] = useState(false);
+  const [editingHabitData, setEditingHabitData] = useState();
     const { user } = useAuth();
     const userId = user ? user.user._id : null;
 
@@ -44,12 +43,14 @@ function HabitSection({ onHabitsChange, theme }) {
 
   const handleOpen = () => {
     setOpen(true);
+    console.log("BTN Clciked")
   };
 
   const handleClose = () => {
     setOpen(false);
-
+    setEditingHabit(false)
   };
+
 
 
   const handleSave = async () => {
@@ -58,10 +59,11 @@ function HabitSection({ onHabitsChange, theme }) {
     onHabitsChange();
   };
   
+
+   
   const handleEdit = async (userId, habitId) => {
     console.log("HAndle Edit Btn")
     try {
-      console.log(`http://localhost:5000/users/${userId}/habits/${habitId}`)
       const response = await fetch(`http://localhost:5000/users/${userId}/habits/${habitId}`, {
         method: "GET",
         headers: {
@@ -71,7 +73,9 @@ function HabitSection({ onHabitsChange, theme }) {
       if (response.ok) {
         const editingData = await response.json();
         console.log(editingData);
-        setEditingHabitData(editingData);
+        console.log(editingData.habit)
+        setEditingHabitData(editingData.habit);
+        setEditingHabit(true)
         handleOpen();
       } else {
         console.error("Failed to fetch habit data.");
@@ -81,8 +85,7 @@ function HabitSection({ onHabitsChange, theme }) {
     }
   };
 
-
-
+  
 
   const handleDelete = async (userId, habitId) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this habit?");
@@ -95,9 +98,7 @@ function HabitSection({ onHabitsChange, theme }) {
           headers: {
             "Content-Type": "application/json",
           },
-        },
-        
-        );
+        });
   
         if (!response.ok) {
           throw new Error(`Failed to delete habit: ${response.statusText}`);
@@ -223,9 +224,8 @@ function HabitSection({ onHabitsChange, theme }) {
         <HabitForm
         theme={theme}
           open={open}
-          onSave={handleSave}
-          onClose={editingHabit ? handleCancelEdit : handleClose}
-          onEdit={handleEdit}
+          onClose={handleClose}
+          onEdit={editingHabit}
           habit={editingHabitData}
         />
         <button style={buttonStyles} onClick={handleOpen}>Create New Habit</button>

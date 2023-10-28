@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Button, Modal, Form, Select } from "semantic-ui-react";
-import { v4 as uuidv4 } from 'uuid';
 import { useAuth } from "../../Context/authContext";
 
 
@@ -10,7 +9,6 @@ import { useAuth } from "../../Context/authContext";
 
 
 function HabitO(name, image, frequency, time, goal = 0, count = 0) {
-    this.uuid = uuidv4();
     this.name = name;
     this.image = image;
     this.frequency = frequency;
@@ -22,18 +20,32 @@ function HabitO(name, image, frequency, time, goal = 0, count = 0) {
 }
 
 
-const HabitForm = ({ open, onClose, onSave, habit, onEdit, theme }) => {
+const HabitForm = ({ open, onClose, habit, onEdit, theme }) => {
 
     const { user } = useAuth();
     const userId = user ? user.user._id : null;
 
 
 
-    const [name, setName] = useState(habit ? habit.name : ""); // If habit is provided, use its name
-    const [image, setImage] = useState(habit ? habit.image : ""); // If habit is provided, use its image
-    const [frequency, setFrequency] = useState(habit ? habit.frequency : ""); // If habit is provided, use its frequency
-    const [time, setTime] = useState(habit ? habit.time : ""); // If habit is provided, use its time
+    const [name, setName] = useState(habit ? habit.name : ""); 
+    const [image, setImage] = useState(habit ? habit.image : ""); 
+    const [frequency, setFrequency] = useState(habit ? habit.frequency : ""); 
+    const [time, setTime] = useState(habit ? habit.time : ""); 
     const [goal, setGoal] = useState(habit ? habit.goal : ""); 
+
+
+
+
+    useEffect(() => {
+      if (open) {
+          if (onEdit) {
+              console.log("Form in Edit Mode");
+              console.log(habit);
+          } else {
+              console.log("Form in Habit Mode");
+          }
+      }
+  }, [open, onEdit]);
 
 
     console.log("HabitForm open prop is:", open);
@@ -48,7 +60,7 @@ const HabitForm = ({ open, onClose, onSave, habit, onEdit, theme }) => {
         if (onEdit) {
           console.log("Form in Edit MOde")
           // Edit mode: Send a PATCH request to update the habit
-          const response = await fetch(`/api/users/${userId}/habits/${habit._id}/edit`, {
+          const response = await fetch(`http://localhost:5000/${userId}/habits/${habit._id}/edit`, {
             method: "PATCH",
             headers: {
               "Content-Type": "application/json",
@@ -65,8 +77,8 @@ const HabitForm = ({ open, onClose, onSave, habit, onEdit, theme }) => {
             window.alert("Failed to edit the habit.");
           }
         } else {
-          // Create mode: Send a POST request to create a new habit
-          const response = await fetch(`/api/users/${userId}/habits`, {
+          console.log("Create Habit Mode")
+          const response = await fetch(`http://localhost:5000//users/${userId}/habits`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -92,9 +104,7 @@ const HabitForm = ({ open, onClose, onSave, habit, onEdit, theme }) => {
     };
     
 
-    const addHabit = (newHabit) => {
-        setHabits([...habits, newHabit]);
-      };
+   
 
     const options = [
         { key: "daily", value: "daily", text: "Daily" },
@@ -131,7 +141,7 @@ const HabitForm = ({ open, onClose, onSave, habit, onEdit, theme }) => {
     };
 
     return (
-        <Modal style={buttonStyle} open={open} onClose={onClose} onSave={addHabit} >
+        <Modal style={buttonStyle} open={open} onClose={onClose}  >
         <Modal.Header>Add a Habit</Modal.Header>
         <Modal.Content>
             <Form>
@@ -139,7 +149,7 @@ const HabitForm = ({ open, onClose, onSave, habit, onEdit, theme }) => {
                 <label>Habit Name</label>
                 <input
                 type="text"
-                placeholder="Habit Name"
+                placeholder={habit ? habit.name : "Habit Name"}
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 />
@@ -175,12 +185,12 @@ const HabitForm = ({ open, onClose, onSave, habit, onEdit, theme }) => {
             </Form.Field>
             <Form.Field>
                 <label>What is your Goal?</label>
-                <input type="number" placeholder="Goal" value={goal} onChange={(e) => setGoal(e.target.value)} />
+                <input type="number" placeholder={habit ? habit.goal : "Goal"} value={goal} onChange={(e) => setGoal(e.target.value)} />
             </Form.Field>
             <Form.Field>
                 <label>Choose an Image</label>
                 <Select
-                    placeholder="Select an Image"
+                    placeholder={habit ? habit.img : "Choose an image" }
                     options={imgOptions}
                     value={image}
                     onChange={(e, { value }) => setImage(value)}
