@@ -53,9 +53,10 @@ function HabitSection({ onHabitsChange, theme }) {
 
 
 
-  const handleSave = async () => {
+  const handleSaveData = async () => {
     const updatedHabits = await fetchHabitsFromServer(userId);
     setHabits(updatedHabits);
+    handleClose();
     onHabitsChange();
   };
   
@@ -222,11 +223,12 @@ function HabitSection({ onHabitsChange, theme }) {
         <SearchBar theme={theme} />
         <HabitContainer theme={theme} habits={habits} deleteFunction={handleDelete} editFunction={handleEdit} Add={handleAdd} Minus={handleMinus} />
         <HabitForm
-        theme={theme}
+          theme={theme}
           open={open}
-          onClose={handleClose}
+          onClose={handleClose} // Always pass the onClose function
           onEdit={editingHabit}
           habit={editingHabitData}
+          bigSave={handleSaveData}
         />
         <button style={buttonStyles} onClick={handleOpen}>Create New Habit</button>
       </div>

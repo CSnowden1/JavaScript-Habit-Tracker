@@ -234,7 +234,7 @@ router.post('/:id/habits', async (req, res) => {
   }
 });
 
-router.patch('/users/:userId/habits/:habitId/edit', async (req, res) => {
+router.patch('/:userId/habits/:habitId/edit', async (req, res) => {
   try {
     const userId = req.params.userId;
     const habitId = req.params.habitId;
@@ -264,22 +264,9 @@ router.patch('/users/:userId/habits/:habitId/edit', async (req, res) => {
     // Update the habit with updatedHabit properties
     user.habits[habitIndex] = { ...user.habits[habitIndex], ...updatedHabit };
 
-    console.log('Updated habit:', user.habits[habitIndex]);
+    console.log('Updated habit:', user.habits[habitIndex]);   
+    console.log('User object updated in the database.');
 
-    // Simulate a delay (e.g., for database update)
-    setTimeout(() => {
-      // Simulate a patch failure
-      if (Math.random() < 0.5) {
-        console.error('Failed to update habit in the database');
-        return res.status(500).json({ error: 'Failed to update habit' });
-      }
-
-      // Simulate a successful update
-      console.log('User object updated in the database.');
-
-      // Respond with the updated habit
-      res.status(200).json(user.habits[habitIndex]);
-    }, 1000); // Simulate a 1-second delay (adjust as needed for your use case)
   } catch (error) {
     console.error('Error updating habit:', error);
     res.status(500).json({ error: 'Internal Server Error' });

@@ -46,7 +46,7 @@ const userId = user ? user.user._id : null;
               <div class="middle">
               <Button icon="plus" onClick={() => Add( userId, habit._id) } />
               <Button icon="minus" onClick={() => Minus(userId, habit._id)} />
-              <Button icon="edit" onClick={() => editFunction(userId, habit._id)} />
+               {/* <Button icon="edit" onClick={() => editFunction(userId, habit._id)} /> */}
               <Button icon="delete" onClick={() => deleteFunction(userId, habit._id)}/>
               </div>
           </div>

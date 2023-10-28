@@ -20,7 +20,7 @@ function HabitO(name, image, frequency, time, goal = 0, count = 0) {
 }
 
 
-const HabitForm = ({ open, onClose, habit, onEdit, theme }) => {
+const HabitForm = ({ open, onClose, habit, onEdit, theme, bigSave }) => {
 
     const { user } = useAuth();
     const userId = user ? user.user._id : null;
@@ -58,9 +58,9 @@ const HabitForm = ({ open, onClose, habit, onEdit, theme }) => {
     
       try {
         if (onEdit) {
-          console.log("Form in Edit MOde")
+          console.log("Form in Edit Mode");
           // Edit mode: Send a PATCH request to update the habit
-          const response = await fetch(`http://localhost:5000/${userId}/habits/${habit._id}/edit`, {
+          const response = await fetch(`http://localhost:5000/users/${userId}/habits/${habit._id}/edit`, {
             method: "PATCH",
             headers: {
               "Content-Type": "application/json",
@@ -68,17 +68,18 @@ const HabitForm = ({ open, onClose, habit, onEdit, theme }) => {
             body: JSON.stringify(newHabit),
           });
     
-          if (response.ok) {
-            // Update your local state and close the modal
-            const updatedHabits = await fetchHabitsFromServer(userId);
-            setHabits(updatedHabits);
-            handleClose();
+          if (response.statusCode === 200) {
+
+
+            bigSave();
+            onClose();
+
           } else {
             window.alert("Failed to edit the habit.");
           }
         } else {
-          console.log("Create Habit Mode")
-          const response = await fetch(`http://localhost:5000//users/${userId}/habits`, {
+          console.log("Create Habit Mode");
+          const response = await fetch(`http://localhost:5000/users/${userId}/habits`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -89,10 +90,8 @@ const HabitForm = ({ open, onClose, habit, onEdit, theme }) => {
           if (response.status === 201) {
             // The habit was successfully created on the server
     
-            // Update your local state and close the modal
-            const updatedHabits = await fetchHabitsFromServer(userId);
-            setHabits(updatedHabits);
-            onClose();
+            bigSave();
+            onClose(); // Use onClose() to close the modal
           } else {
             // Handle an error response here
             console.error("Failed to create the habit on the server.");
@@ -120,14 +119,14 @@ const HabitForm = ({ open, onClose, habit, onEdit, theme }) => {
         { key: "Reddit", value: "https://img.icons8.com/external-wanicon-flat-wanicon/1x/external-breakfast-hotel-wanicon-flat-wanicon.png", text: "Reddit"},
         { key: "Instagram", value: "https://img.icons8.com/3d-fluency/1x/snapchat-squared.png", text: "Instagram"},
         { key: "Healthy Food", value: "https://img.icons8.com/3d-fluency/1x/avocado.png", text: "Healthy Food"},
-        { key: "Unhealthy Food", value: "https://icons8.com/icon/9JK55mRzcjvG/french-fries", text: "Unhealthy Food"},
-        { key: "Strength Training", value: "https://icons8.com/icon/bocBCRpgDfu8/dumbbell", text: "Strength Training"},
-        { key: "Yoga Mat", value: "https://icons8.com/icon/k44QTJ9QjVOS/yoga-mat", text: "Yoga Mat"},
+        { key: "Unhealthy Food", value: "https://img.icons8.com/3d-fluency/94/french-fries.png", alt: "french-fries", text: "Unhealthy Food"},
+        { key: "Strength Training", value: "https://img.icons8.com/3d-fluency/94/dumbbell.png", text: "Strength Training"},
+        { key: "Yoga Mat", value: "https://img.icons8.com/3d-fluency/94/sleeping-mat.png", alt:"sleeping-mat", text: "Yoga Mat"},
         { key: "Video Game", value: "https://img.icons8.com/?size=80&id=YObj0fzpW3Re&format=png", text: "Video Game"},
         { key: "Ball Point Pen", value: "https://img.icons8.com/?size=80&id=FEmOY5BS5dPs&format=png", text: "Ball Point Pen"},
-        { key: "Design", value: "https://icons8.com/icon/yEzFx4cwLDIh/design", text: "Design"},
-        { key: "Paint Pallette", value: "https://icons8.com/icon/sO1mMMNJxeLB/paint-palette", text: "Paint Pallette"},
-        { key: "Pencil", value: "https://icons8.com/icon/6rM43YNMgkta/pencil-drawing", text: "Pencil"},
+        { key: "Design", value: "https://img.icons8.com/3d-fluency/94/design.png", text: "Design"},
+        { key: "Paint Pallette", value: "https://img.icons8.com/3d-fluency/94/paint-palette.png", alt:"paint-palette", text: "Paint Pallette"},
+        { key: "Pencil", value: "https://img.icons8.com/3d-fluency/94/pencil-tip.png", text: "Pencil"},
 
 
 
