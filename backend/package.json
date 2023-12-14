@@ -33,7 +33,7 @@
     "mongoose": "^7.6.1",
     "nodemon": "^3.0.1",
     "passport": "^0.6.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0"  
   },
   "engines": {
     "node": "18.18.0",
