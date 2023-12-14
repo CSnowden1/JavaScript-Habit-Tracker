@@ -5,6 +5,7 @@ const { ObjectId } = require('mongodb');
 const User = require('../Models/userModel.js');
 const connectToDatabase = require('../db/conn.js');
 const authDBConnection = require('../Middleware/authDBConnection.js');
+const crypto = require('crypto');
 
 const router = express.Router();
 
