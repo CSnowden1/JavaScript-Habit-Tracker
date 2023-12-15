@@ -1,5 +1,6 @@
 // server.js
 require('dotenv').config();
+const path = require('path');
 const express = require('express');
 const app = express();
 const cors = require('cors');
@@ -40,7 +41,7 @@ app.use(express.json());
     });
 
     app.listen(PORT, () => {
-      console.log('Node API is running on port 5000');
+      console.log(`Node API is running on port ${PORT}`);
     });
   } catch (error) {
     console.error('Error starting the server:', error);
