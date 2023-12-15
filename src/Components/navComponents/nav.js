@@ -1,7 +1,5 @@
 import ThemeToggle from "./themeToggle";
 import NavigationBar from "./login";
-import InboxButton from "./inbox";
-import SettingsButton from "./settings";
 import { useState } from 'react';
 import LoginOverlay from "../loginSignUpComponents/loginOverlay";
 import "./btn.css"
@@ -47,8 +45,6 @@ function navBar({theme, handleToggleDarkMode}) {
                 <div class="nav-media" style={navStyles}>
                     <ThemeToggle  theme={theme} handleToggleDarkMode={handleToggleDarkMode} />
                     <NavigationBar theme={theme} open={handleOpen} />
-                    <InboxButton theme={theme} />
-                    <SettingsButton theme={theme} />
                     <LoginOverlay open={open} close={handleClose}/>
                 </div>
             </div>

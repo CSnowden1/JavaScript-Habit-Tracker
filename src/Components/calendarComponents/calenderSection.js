@@ -92,15 +92,16 @@ function CalendarSection({ habitsChanged, onHabitsChange, theme }) {
   return (
     <>
       <div>
-        {user ? (
-          <>
-            <Subheading theme={theme} title="Calendar" />
+      <Subheading theme={theme} title="Calendar" />
             <Switch
               options={options}
               selectedOption={selectedOption}
               onChange={handleOptionChange}
               theme={theme}
             />
+        {user ? (
+          <>
+            
             <CustomContainer theme={theme} id="calendar-container">
             {filteredHabits.map((habit) => (
                 <CalenderBar theme={theme} key={habit._id} habit={habit} />
@@ -109,9 +110,11 @@ function CalendarSection({ habitsChanged, onHabitsChange, theme }) {
           </>
         ) : (
           <CustomContainer theme={theme}>
-            <div>
-              Please Login to See the Calendar 
-            </div>
+            <h3 style={{ 
+              textAlign: 'center',
+            }}>
+              Please Login to See the Calendar
+            </h3>
           </CustomContainer>
         )}
       </div>
